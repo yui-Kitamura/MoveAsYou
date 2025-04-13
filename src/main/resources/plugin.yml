@@ -1,0 +1,10 @@
+name: MoveAsYou
+version: '${project.version}'
+description: ''
+main: eng.pro.yui.mcpl.moveAsYou.MoveAsYou
+
+author: Yui-KITAMURA
+
+permissions:
+
+commands:
