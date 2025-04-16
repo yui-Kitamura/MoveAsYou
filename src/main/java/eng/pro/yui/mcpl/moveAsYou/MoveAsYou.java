@@ -1,6 +1,7 @@
 package eng.pro.yui.mcpl.moveAsYou;
 
 import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
+import eng.pro.yui.mcpl.moveAsYou.web.WebServer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -17,6 +18,10 @@ public final class MoveAsYou extends JavaPlugin {
         return plugin.getLogger();
     }
     
+    private static WebServer webServer;
+    public static WebServer webServer(){
+        return webServer;
+    }
 
     // constructor
     public MoveAsYou(){
@@ -60,10 +65,15 @@ public final class MoveAsYou extends JavaPlugin {
         super.onEnable();
         this.getLogger().info("MoveAsYou is enabled!");
         addCommandHandler();
+        startUpWebServer();
     }
     private void addCommandHandler(){
 //        super.getCommand(cmdName).setExecutor(new CommandHandler());
 //        super.getCommand(cmdName).setTabCompleter(new CmdMngTabCompleter());
+    }
+    private void startUpWebServer(){
+        webServer = WebServer.create(MoveAsYouConfig.webPort);
+        webServer.start();
     }
 
     @Override
