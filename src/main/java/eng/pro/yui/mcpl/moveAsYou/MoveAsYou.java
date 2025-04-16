@@ -3,6 +3,8 @@ package eng.pro.yui.mcpl.moveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Logger;
+
 public final class MoveAsYou extends JavaPlugin {
 
     // fields
@@ -10,6 +12,11 @@ public final class MoveAsYou extends JavaPlugin {
     public static MoveAsYou plugin(){
         return plugin;
     }
+    
+    public static Logger log(){
+        return plugin.getLogger();
+    }
+    
 
     // constructor
     public MoveAsYou(){
