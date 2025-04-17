@@ -7,6 +7,7 @@ import java.util.UUID;
 public class PlayerSetting {
     
     public UUID playerUUID;
+    public String playerName;
     public int BackGroundColor = BgColor.GREEN.getColorCode();
     public boolean DoSneak;
     
