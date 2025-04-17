@@ -11,7 +11,6 @@ public class WebServer {
     
     private static HttpServer server;
     
-    
     public static void create(int port){
         if(server != null && server.getAddress().getPort() == port){
             return;
@@ -23,6 +22,7 @@ public class WebServer {
             throw new RuntimeMAYException("failed to create web server");
         }
         
+        // pathへのバインド
         server.createContext("/", new MAYHttpHandler());
     }
     public static void start(){
