@@ -22,6 +22,8 @@ public class WebServer {
         }catch(IOException e) {
             throw new RuntimeMAYException("failed to create web server");
         }
+        
+        server.createContext("/", new MAYHttpHandler());
     }
     public static void start(){
         if(server == null){
