@@ -1,6 +1,7 @@
 package eng.pro.yui.mcpl.moveAsYou;
 
 import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
+import eng.pro.yui.mcpl.moveAsYou.mc.EventHandlers;
 import eng.pro.yui.mcpl.moveAsYou.web.WebServer;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -65,11 +66,15 @@ public final class MoveAsYou extends JavaPlugin {
         super.onEnable();
         this.getLogger().info("MoveAsYou is enabled!");
         addCommandHandler();
+        addEventHandler();
         startUpWebServer();
     }
     private void addCommandHandler(){
 //        super.getCommand(cmdName).setExecutor(new CommandHandler());
 //        super.getCommand(cmdName).setTabCompleter(new CmdMngTabCompleter());
+    }
+    private void addEventHandler(){
+        this.getServer().getPluginManager().registerEvents(new EventHandlers(), this);
     }
     private void startUpWebServer(){
         webServer = WebServer.create(MoveAsYouConfig.webPort);
