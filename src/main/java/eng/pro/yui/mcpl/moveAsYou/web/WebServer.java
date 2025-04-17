@@ -1,20 +1,41 @@
 package eng.pro.yui.mcpl.moveAsYou.web;
 
 import com.sun.net.httpserver.HttpServer;
+import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-public abstract class WebServer extends HttpServer {
+public class WebServer {
     
-    public static WebServer create(int port){
+    private static HttpServer server;
+    
+    
+    public static void create(int port){
+        if(server != null && server.getAddress().getPort() == port){
+            return;
+        }
         try {
-            HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-            return (WebServer)server;
+            stop();
+            server = HttpServer.create(new InetSocketAddress(port), 0);
         }catch(IOException e) {
             throw new RuntimeMAYException("failed to create web server");
         }
-    }   
+    }
+    public static void start(){
+        if(server == null){
+            MoveAsYou.log().throwing(WebServer.class.getName(), "start", new NullPointerException());
+            return;
+        }
+        server.start();
+    }
+    public static void stop(){
+        if(server == null){
+            MoveAsYou.log().throwing(WebServer.class.getName(), "stop", new NullPointerException());
+            return;
+        }
+        server.stop(0);
+    }
     
 }

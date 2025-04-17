@@ -19,11 +19,6 @@ public final class MoveAsYou extends JavaPlugin {
         return plugin.getLogger();
     }
     
-    private static WebServer webServer;
-    public static WebServer webServer(){
-        return webServer;
-    }
-
     // constructor
     public MoveAsYou(){
         super();
@@ -77,8 +72,8 @@ public final class MoveAsYou extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EventHandlers(), this);
     }
     private void startUpWebServer(){
-        webServer = WebServer.create(MoveAsYouConfig.webPort);
-        webServer.start();
+        WebServer.create(MoveAsYouConfig.webPort);
+        WebServer.start();
     }
 
     @Override
