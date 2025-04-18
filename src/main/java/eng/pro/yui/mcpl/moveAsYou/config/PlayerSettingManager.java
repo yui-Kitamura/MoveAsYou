@@ -25,6 +25,11 @@ public class PlayerSettingManager {
     }
     
     // methods
+
+    /**
+     * Load settings. If file not exists, then generate and load.
+     * @param playerUUID
+     */
     public void loadPlayerSetting(UUID playerUUID){
         if(playerSettings.containsKey(playerUUID)) {
             return;
