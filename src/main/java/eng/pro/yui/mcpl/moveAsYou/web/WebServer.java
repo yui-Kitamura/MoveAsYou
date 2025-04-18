@@ -23,7 +23,7 @@ public class WebServer {
         }
         
         // pathへのバインド
-        server.createContext(MAYHttpHandler.PATH, new MAYHttpHandler());
+        server.createContext(MAYHttpHandler.PATH, new MAYHttpHandler()); // contains 404
         server.createContext(PlayerNameHandler.PATH, new PlayerNameHandler());
     }
     public static void start(){
