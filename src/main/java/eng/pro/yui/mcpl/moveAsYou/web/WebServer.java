@@ -23,7 +23,8 @@ public class WebServer {
         }
         
         // pathへのバインド
-        server.createContext("/", new MAYHttpHandler());
+        server.createContext(MAYHttpHandler.PATH, new MAYHttpHandler());
+        server.createContext(PlayerNameHandler.PATH, new PlayerNameHandler());
     }
     public static void start(){
         if(server == null){

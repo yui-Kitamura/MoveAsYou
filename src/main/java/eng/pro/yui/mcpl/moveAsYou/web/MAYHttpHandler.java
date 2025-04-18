@@ -11,7 +11,8 @@ import java.nio.file.Files;
 
 public class MAYHttpHandler implements HttpHandler {
     
-    private File rootIndex;
+    public static final String PATH = "/";
+    private final File rootIndex;
     
     public MAYHttpHandler(){
         this.rootIndex = new File("webroot/index.html");
@@ -22,7 +23,7 @@ public class MAYHttpHandler implements HttpHandler {
         try {
             String requestPath = exchange.getRequestURI().getPath();
             String resStr;
-            if(requestPath.equals("/")){
+            if(PATH.equals(requestPath)){
                 resStr = Files.readString(rootIndex.toPath());
                 exchange.sendResponseHeaders(200, resStr.getBytes().length);
             }else{
