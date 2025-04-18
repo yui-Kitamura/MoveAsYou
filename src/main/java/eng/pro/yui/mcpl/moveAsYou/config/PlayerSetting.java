@@ -1,6 +1,8 @@
 package eng.pro.yui.mcpl.moveAsYou.config;
 
+import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.consts.BgColor;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.UUID;
 
@@ -36,6 +38,18 @@ public class PlayerSetting {
     }
     public void setDoSneak(boolean doSneak) {
         DoSneak = doSneak;
+    }
+    
+    public PlayerSetting(UUID playerUUID, YamlConfiguration config){
+        setPlayerUUID(playerUUID);
+        setPlayerName(config.getString("playerName"));
+        setBackGroundColor(BgColor.get(config.getInt("backGroundColor")));
+        setDoSneak(config.getBoolean("doSneak"));
+
+        MoveAsYou.log().info("Player Setting has loaded for player " + getPlayerName());
+        MoveAsYou.log().info("UUID: " + getPlayerUUID());
+        MoveAsYou.log().info("BackGroundColor: " + getBackGroundColor().name());
+        MoveAsYou.log().info("DoSneak: " + isDoSneak());
     }
 
 }
