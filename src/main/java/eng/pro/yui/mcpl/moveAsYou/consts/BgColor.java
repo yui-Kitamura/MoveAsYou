@@ -25,6 +25,14 @@ public enum BgColor {
         }
         throw new IllegalArgumentException("color not defined");
     }
+    public static BgColor get(String name){
+        for(BgColor c : BgColor.values()){
+            if(c.name().equals(name)){
+                return c;
+            }
+        }
+        throw new IllegalArgumentException("color not defined");
+    }
     
     
 }
