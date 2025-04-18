@@ -51,5 +51,14 @@ public class PlayerSetting {
         MoveAsYou.log().info("BackGroundColor: " + getBackGroundColor().name());
         MoveAsYou.log().info("DoSneak: " + isDoSneak());
     }
+    
+    public YamlConfiguration toFile(){
+        YamlConfiguration config = new YamlConfiguration();
+        config.set("playerUUID", getPlayerUUID());
+        config.set("playerName", getPlayerName());
+        config.set("backGroundColor", getBackGroundColor().name());
+        config.set("doSneak", isDoSneak());
+        return config;
+    }
 
 }
