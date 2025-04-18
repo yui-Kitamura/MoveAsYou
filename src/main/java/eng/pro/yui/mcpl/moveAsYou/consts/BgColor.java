@@ -17,5 +17,14 @@ public enum BgColor {
         this.color = color;
     }
     
+    public static BgColor get(int color){
+        for(BgColor c : BgColor.values()){
+            if(c.color == color){
+                return c;
+            }
+        }
+        throw new IllegalArgumentException("color not defined");
+    }
+    
     
 }
