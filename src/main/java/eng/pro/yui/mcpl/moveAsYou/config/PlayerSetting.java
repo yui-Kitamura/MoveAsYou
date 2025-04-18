@@ -40,6 +40,18 @@ public class PlayerSetting {
         DoSneak = doSneak;
     }
     
+    public PlayerSetting(UUID playerUUID){
+        setPlayerUUID(playerUUID);
+        setPlayerName(MoveAsYou.plugin().getServer().getOfflinePlayer(playerUUID).getName());
+        setBackGroundColor(BgColor.GREEN);
+        setDoSneak(true);
+
+        MoveAsYou.log().info("Player Setting has created for player " + getPlayerName());
+        MoveAsYou.log().info("UUID: " + getPlayerUUID());
+        MoveAsYou.log().info("BackGroundColor: " + getBackGroundColor().name());
+        MoveAsYou.log().info("DoSneak: " + isDoSneak());
+    }
+    
     public PlayerSetting(UUID playerUUID, YamlConfiguration config){
         setPlayerUUID(playerUUID);
         setPlayerName(config.getString("playerName"));
