@@ -6,9 +6,36 @@ import java.util.UUID;
 
 public class PlayerSetting {
     
-    public UUID playerUUID;
-    public String playerName;
-    public int BackGroundColor = BgColor.GREEN.getColorCode();
-    public boolean DoSneak;
+    private UUID playerUUID;
+    public UUID getPlayerUUID() {
+        return playerUUID;
+    }
+    public void setPlayerUUID(UUID playerUUID) {
+        this.playerUUID = playerUUID;
+    }
+
+    private String playerName;
+    public String getPlayerName() {
+        return playerName;
+    }
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    private BgColor backGroundColor = BgColor.GREEN;
+    public BgColor getBackGroundColor() {
+        return backGroundColor;
+    }
+    public void setBackGroundColor(BgColor backGroundColor) {
+        this.backGroundColor = backGroundColor;
+    }
     
+    private boolean DoSneak;
+    public boolean isDoSneak() {
+        return DoSneak;
+    }
+    public void setDoSneak(boolean doSneak) {
+        DoSneak = doSneak;
+    }
+
 }
