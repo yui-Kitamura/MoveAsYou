@@ -1,6 +1,7 @@
 package eng.pro.yui.mcpl.moveAsYou;
 
 import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
+import eng.pro.yui.mcpl.moveAsYou.config.PlayerSettingManager;
 import eng.pro.yui.mcpl.moveAsYou.mc.EventHandlers;
 import eng.pro.yui.mcpl.moveAsYou.web.WebServer;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +19,8 @@ public final class MoveAsYou extends JavaPlugin {
     public static Logger log(){
         return plugin.getLogger();
     }
+    
+    public final PlayerSettingManager playerSettingManager = new PlayerSettingManager();
     
     // constructor
     public MoveAsYou(){
