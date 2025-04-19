@@ -10,12 +10,12 @@ public class EventHandlers implements Listener {
 
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent event) {
-        MoveAsYou.playerSettings.loadPlayerSetting(event.getPlayer().getUniqueId());
+        MoveAsYou.playerSettings().loadPlayerSetting(event.getPlayer().getUniqueId());
     }
     
     @EventHandler
     public void onQuitEvent(PlayerQuitEvent event) {
-        MoveAsYou.playerSettings.unloadPlayerSetting(event.getPlayer().getUniqueId());
+        MoveAsYou.playerSettings().unloadPlayerSetting(event.getPlayer().getUniqueId());
     }
 
 }
