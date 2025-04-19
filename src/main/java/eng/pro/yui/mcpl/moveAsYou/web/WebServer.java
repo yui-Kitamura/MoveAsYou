@@ -5,6 +5,7 @@ import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
 public class WebServer {
@@ -39,6 +40,14 @@ public class WebServer {
             return;
         }
         server.stop(0);
+    }
+    
+    public static void send(int code, String html, HttpExchange exchange) throws IOException{
+        exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
+        exchange.sendResponseHeaders(code, html.length());
+        try(OutputStream out = exchange.getResponseBody()){
+            out.write(html.getBytes());
+        }
     }
     
 }
