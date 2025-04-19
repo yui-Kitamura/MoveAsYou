@@ -20,7 +20,10 @@ public final class MoveAsYou extends JavaPlugin {
         return plugin.getLogger();
     }
     
-    public static final PlayerSettingManager playerSettings = new PlayerSettingManager();
+    private static PlayerSettingManager playerSettingManager;
+    public static PlayerSettingManager playerSettings(){
+        return playerSettingManager;
+    }
     
     // constructor
     public MoveAsYou(){
@@ -32,6 +35,7 @@ public final class MoveAsYou extends JavaPlugin {
     public void onLoad(){
         super.onLoad();
         plugin = this;
+        playerSettingManager = new PlayerSettingManager();
         createDataFolder();
         generateDefaultConfig();
         loadConfig();
