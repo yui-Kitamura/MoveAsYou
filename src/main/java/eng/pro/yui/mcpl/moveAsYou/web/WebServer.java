@@ -7,7 +7,9 @@ import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
 
 public class WebServer {
     
@@ -24,7 +26,7 @@ public class WebServer {
         }
         try {
             stop();
-            server = HttpServer.create(new InetSocketAddress(port), 0);
+            server = HttpServer.create(new InetSocketAddress(InetAddress.getLoopbackAddress(), port), 0); //localhost
         }catch(IOException e) {
             throw new RuntimeMAYException("failed to create web server");
         }
@@ -40,21 +42,38 @@ public class WebServer {
             MoveAsYou.log().throwing(WebServer.class.getName(), "start", new NullPointerException());
             return;
         }
-        server.start();
+        try {
+            server.start();
+            MoveAsYou.log().info("Web server started at " + server.getAddress());
+        }catch(Exception unexpected) {
+            MoveAsYou.log().severe("FAILED to start web server: " + unexpected.getMessage());
+            unexpected.printStackTrace();
+        }
     }
     public static void stop(){
         if(server == null){
             MoveAsYou.log().throwing(WebServer.class.getName(), "stop", new NullPointerException());
             return;
         }
-        server.stop(0);
+        try {
+            MoveAsYou.log().info("Web server stopping at " + server.getAddress() + " --->");
+            server.stop(2);
+            MoveAsYou.log().info("Web server stopped at " + server.getAddress());
+        }catch(Exception unexpected) {
+            MoveAsYou.log().severe("FAILED to stop web server: " + unexpected.getMessage());
+            unexpected.printStackTrace();
+        }finally {
+            server = null;
+        }
     }
     
     public static void send(int code, String html, HttpExchange exchange) throws IOException{
+        byte[] byteBased = html.getBytes(StandardCharsets.UTF_8);
+        
         exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
-        exchange.sendResponseHeaders(code, html.length());
+        exchange.sendResponseHeaders(code, byteBased.length);
         try(OutputStream out = exchange.getResponseBody()){
-            out.write(html.getBytes());
+            out.write(byteBased);
         }
     }
     
