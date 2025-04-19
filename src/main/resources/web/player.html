@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${playerName}">｜MoveAsYou</title>
+</head>
+<body>
+  <header>
+    <h1 th:text="${playerName}"></h1>
+  </header>
+  <main>
+    <p>UUID: <span th:text="playerUuid"></span></p>
+  </main>
+</body>
+</html>

@@ -2,20 +2,16 @@ package eng.pro.yui.mcpl.moveAsYou.web;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
 
 public class MAYHttpHandler implements HttpHandler {
     
     public static final String PATH = "/";
-    private final File rootIndex;
+    private final String rootIndex = "index";
     
     public MAYHttpHandler(){
-        this.rootIndex = new File("webroot/index.html");
+        //nothing to do
     }
     
     @Override
@@ -24,17 +20,14 @@ public class MAYHttpHandler implements HttpHandler {
             String requestPath = exchange.getRequestURI().getPath();
             String resStr;
             if(PATH.equals(requestPath)){
-                resStr = Files.readString(rootIndex.toPath());
-                exchange.sendResponseHeaders(200, resStr.getBytes().length);
+                String html = WebServer.getRenderer().render(rootIndex, null);
+                WebServer.send(200, html, exchange);
             }else{
                 resStr = "404 not found";
-                exchange.sendResponseHeaders(404, resStr.getBytes().length);
+                WebServer.send(404, resStr, exchange);
             }
-            OutputStream out = exchange.getResponseBody();
-            out.write(resStr.getBytes());
-            out.close();
         }catch(IOException e){
-            throw new RuntimeMAYException(e);
+            WebServer.send(e, exchange);
         }
     }
 }
