@@ -3,6 +3,7 @@ package eng.pro.yui.mcpl.moveAsYou.web;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -22,25 +23,39 @@ public class PlayerNameHandler implements HttpHandler {
             return;
         }
         
+        // 指定されたplayer名
         String pathPlayerName = exchange.getRequestURI().getPath().substring(PATH.length());
 
-        Player player = MoveAsYou.plugin().getServer().getPlayer(pathPlayerName);
-        
         try {
-            if (player == null) {
-                WebServer.send(400, "Player not found", exchange);
+            // online検索
+            Player player = MoveAsYou.plugin().getServer().getPlayer(pathPlayerName);
+            if (player != null) {
+                sendPlayerPage(player, exchange);
                 return;
             }
 
-            Map<String, Object> variables = new HashMap<>();
-            variables.put("playerName", pathPlayerName);
-            variables.put("playerUuid", player.getUniqueId().toString());
-
-            String html = WebServer.getRenderer().render(playerTemplate, variables);
-            WebServer.send(200, html, exchange);
-
+            // offline検索 Deprecated だが代替なし
+            OfflinePlayer offlinePlayer = MoveAsYou.plugin().getServer().getOfflinePlayer(pathPlayerName);
+            if (offlinePlayer.hasPlayedBefore()) {
+                sendPlayerPage(offlinePlayer, exchange);
+                //return;
+            } else {
+                WebServer.send(400, "Player not found", exchange);
+                //return;
+            }
         }catch(IOException ioe) {
-            WebServer.send(ioe, exchange);
+            MoveAsYou.log().throwing(PlayerNameHandler.class.getName(), "handle", ioe);
+            ioe.printStackTrace();
         }
+    }
+    
+    private void sendPlayerPage(OfflinePlayer player, HttpExchange exchange) throws IOException {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("playerName", player.getName());
+        variables.put("playerUuid", player.getUniqueId().toString());
+        variables.put("isOnline", player.isOnline());
+
+        String html = WebServer.getRenderer().render(playerTemplate, variables);
+        WebServer.send(200, html, exchange);
     }
 }
