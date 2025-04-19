@@ -47,7 +47,7 @@ public class PlayerSetting {
         setDoSneak(true);
 
         MoveAsYou.log().info("Player Setting has created for player " + getPlayerName());
-        MoveAsYou.log().info("UUID: " + getPlayerUUID());
+        MoveAsYou.log().info("UUID: " + getPlayerUUID().toString());
         MoveAsYou.log().info("BackGroundColor: " + getBackGroundColor().name());
         MoveAsYou.log().info("DoSneak: " + isDoSneak());
     }
@@ -59,14 +59,14 @@ public class PlayerSetting {
         setDoSneak(config.getBoolean("doSneak"));
 
         MoveAsYou.log().info("Player Setting has loaded for player " + getPlayerName());
-        MoveAsYou.log().info("UUID: " + getPlayerUUID());
+        MoveAsYou.log().info("UUID: " + getPlayerUUID().toString());
         MoveAsYou.log().info("BackGroundColor: " + getBackGroundColor().name());
         MoveAsYou.log().info("DoSneak: " + isDoSneak());
     }
     
     public YamlConfiguration toFile(){
         YamlConfiguration config = new YamlConfiguration();
-        config.set("playerUUID", getPlayerUUID());
+        config.set("playerUUID", getPlayerUUID().toString());
         config.set("playerName", getPlayerName());
         config.set("backGroundColor", getBackGroundColor().name());
         config.set("doSneak", isDoSneak());
