@@ -77,4 +77,19 @@ public class WebServer {
         }
     }
     
+    public static void send(Exception ex, HttpExchange exchange){
+        String errMsg = "<!DOCTYPE html><html><body>500 error</body></html>";
+        try {
+            send(500, errMsg, exchange);
+        }catch(IOException ioe) {
+            MoveAsYou.log().severe("FAILED to send 500 error: " + ioe.getMessage());
+            ioe.printStackTrace();
+        }
+        MoveAsYou.log().throwing(
+                ex.getStackTrace()[0].getClassName(),
+                ex.getStackTrace()[0].getMethodName(),
+                ex);
+        ex.printStackTrace();
+    }
+    
 }
