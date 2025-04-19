@@ -34,7 +34,7 @@ public class PlayerNameHandler implements HttpHandler {
 
             Map<String, Object> variables = new HashMap<>();
             variables.put("playerName", pathPlayerName);
-            variables.put("playerUid", player.getUniqueId().toString());
+            variables.put("playerUuid", player.getUniqueId().toString());
 
             String html = WebServer.getRenderer().render(playerTemplate, variables);
             WebServer.send(200, html, exchange);
