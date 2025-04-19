@@ -82,6 +82,7 @@ public final class MoveAsYou extends JavaPlugin {
     @Override
     public void onDisable() {
         super.onDisable();
+        WebServer.stop();
         this.getLogger().info("MoveAsYou is disabled!");
     }
 }
