@@ -2,6 +2,7 @@ package eng.pro.yui.mcpl.moveAsYou;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import eng.pro.yui.mcpl.moveAsYou.auth.WebViewTokenManager;
 import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
 import eng.pro.yui.mcpl.moveAsYou.config.PlayerSettingManager;
 import eng.pro.yui.mcpl.moveAsYou.mc.EventHandlers;
@@ -25,6 +26,11 @@ public final class MoveAsYou extends JavaPlugin {
     private static PlayerSettingManager playerSettingManager;
     public static PlayerSettingManager playerSettings(){
         return playerSettingManager;
+    }
+    
+    private static WebViewTokenManager webViewTokenManager;
+    public static WebViewTokenManager tokenManager(){
+        return webViewTokenManager;
     }
     
     private static Gson gson;
