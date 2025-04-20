@@ -1,5 +1,7 @@
 package eng.pro.yui.mcpl.moveAsYou;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
 import eng.pro.yui.mcpl.moveAsYou.config.PlayerSettingManager;
 import eng.pro.yui.mcpl.moveAsYou.mc.EventHandlers;
@@ -25,6 +27,15 @@ public final class MoveAsYou extends JavaPlugin {
         return playerSettingManager;
     }
     
+    private static Gson gson;
+    public static Gson gson(){
+        return gson;
+    }
+    private static Gson compactGson;
+    public static Gson compactGson(){
+        return compactGson;
+    }
+    
     // constructor
     public MoveAsYou(){
         super();
@@ -36,6 +47,8 @@ public final class MoveAsYou extends JavaPlugin {
         super.onLoad();
         plugin = this;
         playerSettingManager = new PlayerSettingManager();
+        gson = new GsonBuilder().serializeNulls().setPrettyPrinting().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        compactGson = new GsonBuilder().serializeNulls().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         createDataFolder();
         generateDefaultConfig();
         loadConfig();
