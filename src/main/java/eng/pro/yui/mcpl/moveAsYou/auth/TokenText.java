@@ -1,5 +1,8 @@
 package eng.pro.yui.mcpl.moveAsYou.auth;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 public final class TokenText {
     
     private static final String DELIMITER = "-";
@@ -20,7 +23,8 @@ public final class TokenText {
         }
     }
     
-    public static TokenText generate(){
+    @Contract(" -> new")
+    public static @NotNull TokenText generate(){
         return new TokenText("test-token-that-valid"); //TODO use itemName list
     }
     
