@@ -8,12 +8,12 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 public class TokenInfo {
-    final String playerName;
-    final TokenType tokenType;
-    final TokenText token;
-    final long getGeneratedTimeStamp;
-    long lastActivityTimeStamp;
-    long expireAt;
+    /* pkg-prv */ final String playerName;
+    /* pkg-prv */ final TokenType tokenType;
+    /* pkg-prv */ final TokenText token;
+    /* pkg-prv */ final long getGeneratedTimeStamp;
+    /* pkg-prv */ long lastActivityTimeStamp;
+    /* pkg-prv */ long expireAt;
     
     public TokenInfo(TokenText token, Player player, TokenType type){
         this.playerName = player.getName();
