@@ -2,6 +2,7 @@ package eng.pro.yui.mcpl.moveAsYou.auth;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.exception.RateLimitedException;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -42,6 +43,12 @@ public class WebViewTokenManager {
         TokenInfo generated = new TokenInfo(TokenText.generate(), player, requestType);
         tokenStore.put(generated.token.value(), generated);
         return tokenStore.get(generated.token.value()); 
+    }
+    public TokenInfo generateToken(ConsoleCommandSender admin) throws RateLimitedException {
+        rateLimiter.check(admin);
+        TokenInfo generated = new TokenInfo(TokenText.generate(), admin);
+        tokenStore.put(generated.token.value(), generated);
+        return tokenStore.get(generated.token.value());
     }
     
     public boolean validate(TokenText token){

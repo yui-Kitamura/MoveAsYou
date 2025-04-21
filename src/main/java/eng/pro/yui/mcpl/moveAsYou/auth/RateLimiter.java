@@ -1,6 +1,8 @@
 package eng.pro.yui.mcpl.moveAsYou.auth;
 
 import eng.pro.yui.mcpl.moveAsYou.exception.RateLimitedException;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -11,14 +13,15 @@ public class RateLimiter extends AbstRateLimiter {
     private final RateRecord globalLimit = new RateRecord();
     /** playerName から Rate状況を取得 */
     private final Map<String, RateRecord> playerLimits = new HashMap<>();
-    private RateRecord getPlayerRecord(Player p){
+    private RateRecord getPlayerRecord(CommandSender s){
         synchronized (playerLimits){
-            return playerLimits.computeIfAbsent(p.getName(), k -> new RateRecord());
+            String name = (s instanceof ConsoleCommandSender) ? String.format("*%s*",s.getName()) : s.getName();
+            return playerLimits.computeIfAbsent(name, k -> new RateRecord());
         }
     }
     
     @Override
-    public void check(Player player) throws RateLimitedException {
+    public void check(CommandSender player) throws RateLimitedException {
         if(checkGlobalLimit() == false){
             throw new RateLimitedException("global limited situation");
         }
@@ -53,7 +56,7 @@ public class RateLimiter extends AbstRateLimiter {
         return true;
     }
     
-    private boolean checkPlayerLimit(Player player){
+    private boolean checkPlayerLimit(CommandSender player){
         RateRecord playerStats = getPlayerRecord(player);
         //check
         synchronized (playerStats) {

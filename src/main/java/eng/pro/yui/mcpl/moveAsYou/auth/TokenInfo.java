@@ -1,6 +1,7 @@
 package eng.pro.yui.mcpl.moveAsYou.auth;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.time.Instant;
@@ -10,13 +11,19 @@ import java.time.format.DateTimeFormatter;
 public class TokenInfo {
     /* pkg-prv */ final String playerName;
     /* pkg-prv */ final TokenType tokenType;
-    /* pkg-prv */ final TokenText token;
+    public final TokenText token;
     /* pkg-prv */ final long getGeneratedTimeStamp;
     /* pkg-prv */ long lastActivityTimeStamp;
     /* pkg-prv */ long expireAt;
     
-    public TokenInfo(TokenText token, Player player, TokenType type){
-        this.playerName = player.getName();
+    public TokenInfo(TokenText token, Player player, TokenType type) {
+        this(token, player.getName(), type);
+    }
+    public TokenInfo(TokenText token, ConsoleCommandSender console) {
+        this(token, String.format("*%s*",console.getName()), TokenType.ADMIN);
+    }
+    private TokenInfo(TokenText token, String authName, TokenType type){
+        this.playerName = authName;
         this.tokenType = type;
         this.token = token;
         this.getGeneratedTimeStamp = System.currentTimeMillis();
