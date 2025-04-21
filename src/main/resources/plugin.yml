@@ -6,5 +6,18 @@ main: eng.pro.yui.mcpl.moveAsYou.MoveAsYou
 author: Yui-KITAMURA
 
 permissions:
+  moveAsYou.token:
+    description: トークンを発行する基本権限
+    default: true
+  moveAsYou.token.admin:
+    description: 管理者向けトークンを有効にする拡張権限
+    default: op
 
 commands:
+  MoveAsYou:
+    description: MoveAsYouプラグインのコマンド
+    aliases: [may, ma]
+    subcommands:
+      token:
+        description: トークン発行
+        usage: /MoveAsYou token [type]
