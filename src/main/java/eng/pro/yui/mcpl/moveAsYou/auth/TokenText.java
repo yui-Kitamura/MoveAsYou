@@ -64,11 +64,11 @@ public final class TokenText {
         }
 
         String[] parts = applicant.split(DELIMITER);
-        if (parts.length < 3 || 4 < parts.length) {
+        if (parts.length < 3 || 5 < parts.length) {
             return false;
         }
         for (String part : parts) {
-            if (part.length() < 3 || 7 < part.length()) {
+            if (part.length() < 3 || 9 < part.length()) {
                 return false;
             }
         }
