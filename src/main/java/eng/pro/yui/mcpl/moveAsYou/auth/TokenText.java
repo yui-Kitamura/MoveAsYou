@@ -11,6 +11,7 @@ import java.util.List;
 public final class TokenText {
     
     private static final String DELIMITER = "-";
+    private static final SecureRandom random = new SecureRandom();
     
     private final String value;
     public String value(){
@@ -28,9 +29,31 @@ public final class TokenText {
         }
     }
     
-    @Contract(" -> new")
-    public static @NotNull TokenText generate(){
-        return new TokenText("test-token-that-valid"); //TODO use itemName list
+    @Contract("_ -> new")
+    public static @NotNull TokenText generate(@NotNull TokenType type){
+        switch(type){
+            case ONE_TIME -> { return generateToken(3); }
+            case STREAMING -> { return new TokenText(generateToken(3).value + "-stream"); }
+            case ADMIN -> { return generateToken(4); }
+            default -> throw new IllegalArgumentException("Invalid token type");
+        }
+    }
+    private static TokenText generateToken(int wordCount){
+        if(wordCount < 2 || 6 < wordCount){
+            throw new IllegalArgumentException("Invalid token count (must be between 3 and 5)");
+        }
+        List<String> parts = new ArrayList<>();
+        parts.add(SPECIAL_ITEMS.get(random.nextInt(SPECIAL_ITEMS.size())));
+        parts.add(MODIFIERS.get(random.nextInt(MODIFIERS.size())));
+        for(int i = 2; i < wordCount; i++){
+            parts.add(all().get(random.nextInt(all().size())));
+        }
+
+        Collections.shuffle(parts);
+        int random4dig = 1000 + random.nextInt(9000); //1000～9999
+        parts.add(String.valueOf(random4dig));
+
+        return new TokenText(String.join(DELIMITER, parts));
     }
     
     public static boolean isValid(String applicant){

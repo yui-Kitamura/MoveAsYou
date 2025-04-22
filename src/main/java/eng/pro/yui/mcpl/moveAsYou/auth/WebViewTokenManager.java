@@ -40,13 +40,13 @@ public class WebViewTokenManager {
     
     public TokenInfo generateToken(Player player, TokenType requestType) throws RateLimitedException {
         rateLimiter.check(player); // case NG: throws Exception
-        TokenInfo generated = new TokenInfo(TokenText.generate(), player, requestType);
+        TokenInfo generated = new TokenInfo(TokenText.generate(requestType), player, requestType);
         tokenStore.put(generated.token.value(), generated);
         return tokenStore.get(generated.token.value()); 
     }
     public TokenInfo generateToken(ConsoleCommandSender admin) throws RateLimitedException {
         rateLimiter.check(admin);
-        TokenInfo generated = new TokenInfo(TokenText.generate(), admin);
+        TokenInfo generated = new TokenInfo(TokenText.generate(TokenType.ADMIN), admin);
         tokenStore.put(generated.token.value(), generated);
         return tokenStore.get(generated.token.value());
     }
