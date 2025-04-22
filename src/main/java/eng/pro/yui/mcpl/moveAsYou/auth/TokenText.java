@@ -45,13 +45,15 @@ public final class TokenText {
         List<String> parts = new ArrayList<>();
         parts.add(SPECIAL_ITEMS.get(random.nextInt(SPECIAL_ITEMS.size())));
         parts.add(MODIFIERS.get(random.nextInt(MODIFIERS.size())));
+        
         for(int i = 2; i < wordCount; i++){
             parts.add(all().get(random.nextInt(all().size())));
         }
-
         Collections.shuffle(parts);
-        int random4dig = 1000 + random.nextInt(9000); //1000～9999
-        parts.add(String.valueOf(random4dig));
+        if(wordCount > 3) {
+            int random4dig = 1000 + random.nextInt(9000); //1000～9999
+            parts.add(String.valueOf(random4dig));
+        }
 
         return new TokenText(String.join(DELIMITER, parts));
     }
