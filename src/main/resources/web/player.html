@@ -3,13 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <title th:text="${playerName}">｜MoveAsYou</title>
+  <style>
+      .token-form {
+          margin: 20px;
+          padding: 20px;
+      }
+
+      .hidden {
+          display: none;
+      }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </head>
 <body>
   <header>
     <h1 th:text="${playerName}"></h1>
   </header>
   <main>
-    <p>UUID: <span th:text="${playerUuid}"></span></p>
+    <div class="token-form" id="tokenForm">
+      <h2>トークンを入力してください</h2>
+      <label>サーバーで発行されたトークン：<input type="text" id="tokenInput" placeholder="apple-gold-ingot"></label>
+      <button onclick="connectToServer()">接続</button>
+    </div>
+    <div id="gameArea" class="hidden">
+      <p>接続済み</p>
+    </div>
+
+    <script>
+        let stompClient = null;
+
+        function connectToServer() {
+            const token = document.getElementById('tokenInput').value;
+            if (!token) {
+                alert('トークンを入力してください');
+                return;
+            }
+
+            const socket = new SockJS('/g/auth');
+            stompClient = Stomp.over(socket);
+
+            stompClient.connect({'token': token}, function (frame) {
+                document.getElementById('tokenForm').classList.add('hidden');
+                document.getElementById('gameArea').classList.remove('hidden');
+
+                stompClient.subscribe('/d/stream', function (message) {
+                    console.log('Received: ' + message.body);
+                });
+            }, function (error) {
+                alert('接続エラー: ' + error);
+            });
+        }
+    </script>
   </main>
 </body>
 </html>
