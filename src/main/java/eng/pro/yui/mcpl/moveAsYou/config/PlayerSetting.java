@@ -55,7 +55,7 @@ public class PlayerSetting {
     public PlayerSetting(UUID playerUUID, YamlConfiguration config){
         setPlayerUUID(playerUUID);
         setPlayerName(config.getString("playerName"));
-        setBackGroundColor(BgColor.get(config.getInt("backGroundColor")));
+        setBackGroundColor(BgColor.get(config.getString("backGroundColor")));
         setDoSneak(config.getBoolean("doSneak"));
 
         MoveAsYou.log().info("Player Setting has loaded for player " + getPlayerName());
