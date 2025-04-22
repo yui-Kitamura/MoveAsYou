@@ -29,16 +29,15 @@ public class TokenCommand implements ICommand{
             throw new RuntimeMAYException(new IllegalAccessException("wrong command body class has selected"));
         }
         
-        String tokenCommandSubOrder = "issue";
+        String tokenCommandSubOrder = TokenType.ONE_TIME.name();
         if(args.length >= 2) {
-            tokenCommandSubOrder = args[1].toLowerCase();
+            tokenCommandSubOrder = args[1];
         }
         
-        switch(tokenCommandSubOrder) {
-            case "issue":
-            case "admin":
-            case "stream":
-            case "onetime":
+        switch(tokenCommandSubOrder.toLowerCase()) {
+            case "admin": //case "admin":
+            case "stream": case "streaming":
+            case "onetime": case "one_time":
                 runIssue(commandSender, args);
                 break;
             case "list":
