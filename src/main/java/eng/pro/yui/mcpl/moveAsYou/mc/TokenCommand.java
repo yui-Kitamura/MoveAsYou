@@ -15,10 +15,13 @@ import org.jetbrains.annotations.NotNull;
 public class TokenCommand {
     
     public static final String sub_TOKEN = "token";
-    private final WebViewTokenManager manager;
+    private static final WebViewTokenManager manager = new WebViewTokenManager();
+    public static String getStats(){
+        return manager.getStats();
+    }
     
     public TokenCommand(){
-        manager = new WebViewTokenManager();
+        // nothing to do
     }
 
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
