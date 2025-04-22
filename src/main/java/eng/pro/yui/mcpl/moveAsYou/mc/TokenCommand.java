@@ -31,7 +31,7 @@ public class TokenCommand implements ICommand{
         
         String tokenCommandSubOrder = "issue";
         if(args.length >= 2) {
-            tokenCommandSubOrder = args[1];
+            tokenCommandSubOrder = args[1].toLowerCase();
         }
         
         switch(tokenCommandSubOrder) {
