@@ -6,6 +6,7 @@ import eng.pro.yui.mcpl.moveAsYou.auth.WebViewTokenManager;
 import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
 import eng.pro.yui.mcpl.moveAsYou.config.PlayerSettingManager;
 import eng.pro.yui.mcpl.moveAsYou.mc.EventHandlers;
+import eng.pro.yui.mcpl.moveAsYou.mc.MAYCommandHandler;
 import eng.pro.yui.mcpl.moveAsYou.web.WebServer;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -91,7 +92,7 @@ public final class MoveAsYou extends JavaPlugin {
         startUpWebServer();
     }
     private void addCommandHandler(){
-//        super.getCommand(cmdName).setExecutor(new CommandHandler());
+        super.getCommand(MAYCommandHandler.COMMAND).setExecutor(new MAYCommandHandler());
 //        super.getCommand(cmdName).setTabCompleter(new CmdMngTabCompleter());
     }
     private void addEventHandler(){
