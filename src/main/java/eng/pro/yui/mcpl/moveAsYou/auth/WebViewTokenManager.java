@@ -105,7 +105,7 @@ public class WebViewTokenManager {
         }
         sb.append("Token for ").append(TokenType.ONE_TIME).append(": ").append(onetime).append(System.lineSeparator());
         sb.append("Token for ").append(TokenType.STREAMING).append(": ").append(stream).append(System.lineSeparator());
-        sb.append("Token for ").append(TokenType.ADMIN).append(": ").append(admin).append(System.lineSeparator());
+        sb.append("Token for ").append(TokenType.ADMIN).append(": ").append(admin);
         return sb.toString();
     }
     
