@@ -12,6 +12,9 @@ permissions:
   moveAsYou.token.admin:
     description: 管理者向けトークンを有効にする拡張権限
     default: op
+  moveAsYou.stats.admin:
+    description: 管理者向け トークンの全体状況把握
+    default: op
 
 commands:
   MoveAsYou:
@@ -21,3 +24,6 @@ commands:
       token:
         description: トークン発行
         usage: /MoveAsYou token [type]
+      stats:
+        description: トークンの発行状況
+        usage: /MoveAsYou stats

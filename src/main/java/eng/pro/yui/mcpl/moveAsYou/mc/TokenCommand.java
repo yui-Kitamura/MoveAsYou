@@ -12,7 +12,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class TokenCommand {
+public class TokenCommand implements ICommand{
     
     public static final String sub_TOKEN = "token";
     private static final WebViewTokenManager manager = new WebViewTokenManager();
@@ -24,7 +24,7 @@ public class TokenCommand {
         // nothing to do
     }
 
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull String[] args) {
+    public void run(@NotNull CommandSender commandSender, @NotNull String[] args) {
         if(args.length < 1 || sub_TOKEN.equals(args[0]) == false) {
             throw new RuntimeMAYException(new IllegalAccessException("wrong command body class has selected"));
         }
@@ -51,8 +51,6 @@ public class TokenCommand {
             default:
                 MAYCommandHandler.sendHelp(commandSender);
         }
-        
-        return true;
     }
     
     private void runIssue(@NotNull CommandSender commandSender, @NotNull String[] args){

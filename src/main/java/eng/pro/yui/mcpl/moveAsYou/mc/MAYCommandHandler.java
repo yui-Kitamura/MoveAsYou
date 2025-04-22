@@ -21,7 +21,13 @@ public class MAYCommandHandler implements CommandExecutor {
         String subCommand = args[0].toLowerCase();
         if(TokenCommand.sub_TOKEN.equals(subCommand)) {
             TokenCommand tokenCommand = new TokenCommand();
-            return tokenCommand.onCommand(commandSender, args);
+            tokenCommand.run(commandSender, args);
+            return true;
+        }
+        if(StatsCommand.sub_STATS.equals(subCommand)) {
+            StatsCommand statsCommand = new StatsCommand();
+            statsCommand.run(commandSender, args);
+            return true;
         }
         // /ma stats
         
