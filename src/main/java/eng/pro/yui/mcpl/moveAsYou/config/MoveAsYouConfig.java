@@ -9,6 +9,7 @@ public final class MoveAsYouConfig {
     
     /** WebServerの実行port */
     public static int webPort;
+    public static int socketPort;
     
     
     // methods
@@ -26,9 +27,14 @@ public final class MoveAsYouConfig {
         if(configFile.contains("webPort")){
             webPort = configFile.getInt("webPort");
         }
+        socketPort = 38081;
+        if(configFile.contains("socketPort")){
+            socketPort = configFile.getInt("socketPort");
+        }
         
         MoveAsYou.log().info("Config file loaded. Values are below: -->");
         MoveAsYou.log().info("webPort: " + webPort);
+        MoveAsYou.log().info("socketPort: " + socketPort);
         MoveAsYou.log().info("<-- config.");
     }
 }
