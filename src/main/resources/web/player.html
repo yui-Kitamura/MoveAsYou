@@ -32,6 +32,7 @@
 
     <script>
         let stompClient = null;
+        const DOMAIN = window.location.hostname;
 
         function connectToServer() {
             const token = document.getElementById('tokenInput').value;
