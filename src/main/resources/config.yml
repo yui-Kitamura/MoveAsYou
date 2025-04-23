@@ -1,4 +1,5 @@
 # MoveAsYou Config file
 
-## webPort web server port uses
-webport: 38080
+## ports for server uses
+webPort: 38080
+socketPort: 38081
