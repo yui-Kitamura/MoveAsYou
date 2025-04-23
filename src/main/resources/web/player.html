@@ -24,16 +24,18 @@
     <section th:hidden="${isOnline}">
       <p>現在サーバに居ないので表示できません</p>
     </section>
-    <div class="token-form" id="tokenForm">
-      <h2>トークンを入力してください</h2>
-      <label>サーバーで発行されたトークン：<input type="text" id="tokenInput" placeholder="apple-gold-ingot"></label>
-      <input type="hidden" th:value="${socketPort}">
-      <button onclick="connectToServer()">接続</button>
-    </div>
-    <div id="gameArea" class="hidden">
-      <p>接続済み</p>
-      <button onclick="disconnect()">切断</button>
-    </div>
+    <section th:hidden="${!isOnline}">
+      <div class="token-form" id="tokenForm">
+        <h2>トークンを入力してください</h2>
+        <label>サーバーで発行されたトークン：<input type="text" id="tokenInput" placeholder="apple-gold-ingot"></label>
+        <input type="hidden" th:value="${socketPort}">
+        <button onclick="connectToServer()">接続</button>
+      </div>
+      <div id="gameArea" class="hidden">
+        <p>接続済み</p>
+        <button onclick="disconnect()">切断</button>
+      </div>
+    </section>
 
     <script>
         let stompClient = null;
@@ -46,14 +48,14 @@
                 return;
             }
 
-            const socket = new SockJS('/g/auth');
+            const socket = new SockJS('/socket/g/auth');
             stompClient = Stomp.over(socket);
 
             stompClient.connect({'token': token}, function (frame) {
                 document.getElementById('tokenForm').classList.add('hidden');
                 document.getElementById('gameArea').classList.remove('hidden');
 
-                stompClient.subscribe('/d/stream', function (message) {
+                stompClient.subscribe('/socket/d/stream').then(function (message) {
                     console.log('Received: ' + message.body);
                 });
             }, function (error) {
