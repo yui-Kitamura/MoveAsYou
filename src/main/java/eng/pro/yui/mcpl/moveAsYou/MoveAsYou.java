@@ -99,7 +99,7 @@ public final class MoveAsYou extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EventHandlers(), this);
     }
     private void startUpWebServer(){
-        WebServer.create(MoveAsYouConfig.webPort);
+        WebServer.create(MoveAsYouConfig.webPort, MoveAsYouConfig.socketPort);
         WebServer.start();
     }
 
