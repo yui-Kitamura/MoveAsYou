@@ -21,9 +21,13 @@
     <h1 th:text="${playerName}"></h1>
   </header>
   <main>
+    <section th:hidden="${isOnline}">
+      <p>現在サーバに居ないので表示できません</p>
+    </section>
     <div class="token-form" id="tokenForm">
       <h2>トークンを入力してください</h2>
       <label>サーバーで発行されたトークン：<input type="text" id="tokenInput" placeholder="apple-gold-ingot"></label>
+      <input type="hidden" th:value="${socketPort}">
       <button onclick="connectToServer()">接続</button>
     </div>
     <div id="gameArea" class="hidden">

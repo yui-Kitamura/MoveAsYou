@@ -3,6 +3,7 @@ package eng.pro.yui.mcpl.moveAsYou.web;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -54,6 +55,7 @@ public class PlayerNameHandler implements HttpHandler {
         variables.put("playerName", player.getName());
         variables.put("playerUuid", player.getUniqueId().toString());
         variables.put("isOnline", player.isOnline());
+        variables.put("socketPort", MoveAsYouConfig.socketPort);
 
         String html = WebServer.getRenderer().render(playerTemplate, variables);
         WebServer.send(200, html, exchange);
