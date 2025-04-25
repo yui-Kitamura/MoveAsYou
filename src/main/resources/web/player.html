@@ -28,7 +28,6 @@
       <div class="token-form" id="tokenForm">
         <h2>トークンを入力してください</h2>
         <label>サーバーで発行されたトークン：<input type="text" id="tokenInput" placeholder="apple-gold-ingot"></label>
-        <input type="hidden" th:value="${socketPort}">
         <button onclick="connectToServer()">接続</button>
       </div>
       <div id="gameArea" class="hidden">
@@ -37,9 +36,12 @@
       </div>
     </section>
 
-    <script>
-        let stompClient = null;
+    <script th:inline="javascript">
         const DOMAIN = window.location.hostname;
+        const SOCKET_PORT = /*[[${socketPort}]]*/ '';
+        const PLAYER_NAME = /*[[${playerName}]]*/ '';
+        
+        let socket;
 
         function connectToServer() {
             const token = document.getElementById('tokenInput').value;
@@ -48,23 +50,80 @@
                 return;
             }
 
-            const socket = new SockJS('/socket/g/auth');
-            stompClient = Stomp.over(socket);
+            fetch('/auth/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token: token,
+                    playerName: PLAYER_NAME
+                })
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        connectWebSocket(token);
+                    } else if (response.status === 429) {
+                        alert('接続数が制限を超えています。しばらく待ってから再度お試しください。');
+                        connectWebSocket = undefined;
+                        sendSocketMessage = undefined;
+                    } else {
+                        console.error('Authentication failed with status:', response.status);
+                    }
+                })
+                .catch(error => {
+                    console.error('Authentication error:', error);
+                });
+        }
 
-            stompClient.connect({'token': token}, function (frame) {
+        function connectWebSocket(token) {
+            socket = new WebSocket('ws://' + DOMAIN + ':' + SOCKET_PORT + '/socket/player');
+
+            // 接続時にトークンをヘッダーに設定
+            socket.onopen = function() {
+                socket.send('token:' + token);
                 document.getElementById('tokenForm').classList.add('hidden');
                 document.getElementById('gameArea').classList.remove('hidden');
+                console.info('Socket通信を開始しました');
+            };
 
-                stompClient.subscribe('/socket/d/stream').then(function (message) {
-                    console.log('Received: ' + message.body);
-                });
-            }, function (error) {
-                alert('接続エラー: ' + error);
-            });
+            socket.onmessage = function(event) {
+                console.dir(event.data);
+            };
+
+            socket.onclose = function(event) {
+                if(event.code === 4029){
+                    alert('レート制限に抵触しています');
+                    sendSocketMessage = undefined;
+                    socket = null;
+                    connectWebSocket = undefined;
+                }
+                console.warn('Socket通信が切断されました');
+                document.getElementById('gameArea').classList.add('hidden');
+                document.getElementById('tokenForm').classList.remove('hidden');
+                document.getElementById('getTokenBtn').disabled = false;
+            };
+
+            socket.onerror = function(error) {
+                console.error('Socketエラー: ' + error);
+            };
         }
-        
+
+        function sendSocketMessage(message) {
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.send(message);
+                console.log('送信: ' + message);
+                document.getElementById('messageInput').value = '';
+            } else {
+                alert('サーバーに接続されていません');
+            }
+        }
+
         function disconnect(){
-            //TODO implement
+            if (socket){
+                socket.close(1000); //1000:NormalClose
+            }
+            socket = null;
         }
     </script>
   </main>
