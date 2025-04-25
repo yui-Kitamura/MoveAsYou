@@ -40,6 +40,7 @@ public class WebServer {
         // pathへのバインド
         server.createContext(MAYHttpHandler.PATH, new MAYHttpHandler()); // contains 404
         server.createContext(PlayerNameHandler.PATH, new PlayerNameHandler());
+        server.createContext(AuthHandler.PATH, new AuthHandler());
 
         renderer = new ThymeleafRenderer();
     } 
