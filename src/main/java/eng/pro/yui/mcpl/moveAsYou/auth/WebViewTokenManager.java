@@ -51,6 +51,7 @@ public class WebViewTokenManager {
         return tokenStore.get(generated.token.value());
     }
     
+    /** 有効期限内であることの検証と、期限の延長 */
     public boolean validate(TokenText token){
         TokenInfo stored = tokenStore.get(token.value());
         if(stored == null || stored.isValid() == false){
