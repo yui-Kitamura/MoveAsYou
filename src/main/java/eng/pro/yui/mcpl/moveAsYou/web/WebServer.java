@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Executors;
 
 public class WebServer {
     /** webServer */
@@ -32,7 +33,7 @@ public class WebServer {
         }
         try {
             stopWeb();
-            server = HttpServer.create(new InetSocketAddress(InetAddress.getLoopbackAddress(), port), 0); //localhost
+            server = HttpServer.create(new InetSocketAddress(InetAddress.getLoopbackAddress(), port), 10); //localhost
         }catch(IOException e) {
             throw new RuntimeMAYException("failed to create web server");
         }
@@ -43,6 +44,8 @@ public class WebServer {
         server.createContext(AuthHandler.PATH, new AuthHandler());
 
         renderer = new ThymeleafRenderer();
+        
+        server.setExecutor(Executors.newFixedThreadPool(10));
     } 
     private static void createSocket(int port){
         if(socketServer != null && socketServer.getAddress().getPort() == port){
