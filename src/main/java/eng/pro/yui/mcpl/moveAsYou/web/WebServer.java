@@ -118,8 +118,14 @@ public class WebServer {
         }
     }
     
-    public static void send(int code, String html, HttpExchange exchange){
-        byte[] byteBased = html.getBytes(StandardCharsets.UTF_8);
+    public static void send(int code, String title, String body, HttpExchange exchange){
+        send(code, HtmlText.get(title, body), exchange);
+    }
+    public static void send(int code, String body, HttpExchange exchange){
+        send(code, HtmlText.getWithBody(body), exchange);
+    }
+    private static void send(int code, HtmlText html, HttpExchange exchange){
+        byte[] byteBased = html.getRawHtml().getBytes(StandardCharsets.UTF_8);
         
         try {
             exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
@@ -141,8 +147,7 @@ public class WebServer {
     }
     
     public static void send(Exception ex, HttpExchange exchange){
-        String errMsg = "<!DOCTYPE html><html><body>500 error</body></html>";
-        send(500, errMsg, exchange);
+        send(500, "error!","500 error", exchange);
         MoveAsYou.log().throwing(
                 ex.getStackTrace()[0].getClassName(),
                 ex.getStackTrace()[0].getMethodName(),
