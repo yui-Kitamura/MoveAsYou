@@ -1,5 +1,6 @@
 package eng.pro.yui.mcpl.moveAsYou.mc;
 
+import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -15,6 +16,6 @@ public class StatsCommand implements ICommand {
         if(sender.hasPermission("moveAsYou.stats.admin") == false) {
             sender.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
         }
-        sender.sendMessage(TokenCommand.getStats());
+        sender.sendMessage(MoveAsYou.tokenManager().getStats());
     }
 }
