@@ -15,6 +15,7 @@ public class TokenInfo {
     /* pkg-prv */ final long getGeneratedTimeStamp;
     /* pkg-prv */ long lastActivityTimeStamp;
     /* pkg-prv */ long expireAt;
+    int limitCnt;
     
     public TokenInfo(TokenText token, Player player, TokenType type) {
         this(token, player.getName(), type);
@@ -39,6 +40,19 @@ public class TokenInfo {
                 break;
             default:
                 expireAt = lastActivityTimeStamp;
+                break;
+        }
+        switch(type){
+            case ONE_TIME:
+                limitCnt = 1;
+                break;
+            case STREAMING:
+                //fall-through
+            case ADMIN:
+                limitCnt = Integer.MAX_VALUE;
+                break;
+            default:    
+                limitCnt = 0;
                 break;
         }
     }
@@ -71,22 +85,39 @@ public class TokenInfo {
 
         return String.format("TokenInfo{" +
                         "playerName='%s', tokenType=%s, token=%s, " +
-                        "generated=%s, lastActivity=%s, expireAt=%s" +
+                        "generated=%s, lastActivity=%s, expireAt=%s, limitCnt=%s" +
                         "}",
                 playerName, tokenType, token,
                 formatter.format(Instant.ofEpochMilli(getGeneratedTimeStamp)),
                 formatter.format(Instant.ofEpochMilli(lastActivityTimeStamp)),
-                formatter.format(Instant.ofEpochMilli(expireAt))
+                formatter.format(Instant.ofEpochMilli(expireAt)), limitCnt
         );
     }
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        TokenInfo tokenInfo = (TokenInfo) obj;
+        return getGeneratedTimeStamp == tokenInfo.getGeneratedTimeStamp &&
+                lastActivityTimeStamp == tokenInfo.lastActivityTimeStamp &&
+                expireAt == tokenInfo.expireAt &&
+                limitCnt == tokenInfo.limitCnt &&
+                playerName.equals(tokenInfo.playerName) &&
+                tokenType == tokenInfo.tokenType &&
+                token.equals(tokenInfo.token);
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        int result = 17;
+        result = 31 * result + playerName.hashCode();
+        result = 31 * result + tokenType.hashCode();
+        result = 31 * result + token.hashCode();
+        result = 31 * result + Long.hashCode(getGeneratedTimeStamp);
+        result = 31 * result + Long.hashCode(lastActivityTimeStamp);
+        result = 31 * result + Long.hashCode(expireAt);
+        result = 31 * result + limitCnt;
+        return result;
     }
 }
