@@ -57,7 +57,7 @@ public class PlayerNameHandler implements HttpHandler {
         variables.put("isOnline", player.isOnline());
         variables.put("socketPort", MoveAsYouConfig.socketPort);
 
-        String html = WebServer.getRenderer().render(playerTemplate, variables);
-        WebServer.send(200, html, exchange);
+        HtmlText fullHtml = HtmlText.getFull(WebServer.getRenderer().render(playerTemplate, variables));
+        WebServer.send(200, fullHtml, exchange);
     }
 }
