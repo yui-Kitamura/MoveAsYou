@@ -1,13 +1,20 @@
 package eng.pro.yui.mcpl.moveAsYou.auth;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@JsonAdapter(TokenText.TokenTextAdapter.class)
 public final class TokenText {
     
     private static final String DELIMITER = "-";
@@ -123,4 +130,25 @@ public final class TokenText {
     public String toString() {
         return value;
     }
+
+    public static class TokenTextAdapter extends TypeAdapter<TokenText> {
+        @Override
+        public void write(JsonWriter out, TokenText tokenText) throws IOException {
+            if (tokenText == null) {
+                out.nullValue();
+                return;
+            }
+            out.value(tokenText.value());
+        }
+
+        @Override
+        public TokenText read(JsonReader in) throws IOException {
+            if (in.peek() == JsonToken.NULL) {
+                in.nextNull();
+                return null;
+            }
+            return new TokenText(in.nextString());
+        }
+    }
+
 }
