@@ -11,6 +11,8 @@ public final class MoveAsYouConfig {
     public static int webPort;
     public static int socketPort;
     
+    public static String webTitle;
+    
     
     // methods
     
@@ -31,10 +33,16 @@ public final class MoveAsYouConfig {
         if(configFile.contains("socketPort")){
             socketPort = configFile.getInt("socketPort");
         }
+
+        webTitle = "MinecraftServer";
+        if(configFile.contains("webTitle")){
+            webTitle = configFile.getString("webTitle");
+        }
         
         MoveAsYou.log().info("Config file loaded. Values are below: -->");
         MoveAsYou.log().info("webPort: " + webPort);
         MoveAsYou.log().info("socketPort: " + socketPort);
+        MoveAsYou.log().info("webTitle: " + webTitle);
         MoveAsYou.log().info("<-- config.");
     }
 }

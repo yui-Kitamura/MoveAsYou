@@ -3,3 +3,6 @@
 ## ports for server uses
 webPort: 38080
 socketPort: 38081
+
+## WebSiteTitle
+webTitle: MyServerName
