@@ -25,9 +25,11 @@ public class AuthHandler implements HttpHandler {
         }
 
         AuthRequestInfo requestInfo = MoveAsYou.gson().fromJson(
-                new InputStreamReader(exchange.getRequestBody()),
+                new String(exchange.getRequestBody().readAllBytes()),
                 AuthRequestInfo.class
         );
+        
+        MoveAsYou.log().info("Auth request: " + requestInfo);
 
         if (requestInfo == null || requestInfo.token == null || requestInfo.playerName == null) {
             WebServer.send(400, "Invalid request body", exchange);
