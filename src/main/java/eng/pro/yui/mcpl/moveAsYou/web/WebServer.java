@@ -128,6 +128,8 @@ public class WebServer {
         send(code, HtmlText.getWithBody(body), exchange);
     }
     public static void send(int code, HtmlText html, HttpExchange exchange){
+        MoveAsYou.log().info("Sending " + code + " " + html.toShortString());
+        
         byte[] byteBased = html.getRawHtml().getBytes(StandardCharsets.UTF_8);
         
         try {
