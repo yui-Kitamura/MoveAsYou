@@ -15,10 +15,6 @@ import org.jetbrains.annotations.NotNull;
 public class TokenCommand implements ICommand{
     
     public static final String sub_TOKEN = "token";
-    private static final WebViewTokenManager manager = new WebViewTokenManager();
-    public static String getStats(){
-        return manager.getStats();
-    }
     
     public TokenCommand(){
         // nothing to do
@@ -73,17 +69,17 @@ public class TokenCommand implements ICommand{
             TokenInfo generated;
             switch(requestType) {
                 case ONE_TIME:
-                    generated = manager.generateToken(sender, TokenType.ONE_TIME);
+                    generated = MoveAsYou.tokenManager().generateToken(sender, TokenType.ONE_TIME);
                     break;
                 case STREAMING:
-                    generated = manager.generateToken(sender, TokenType.STREAMING);
+                    generated = MoveAsYou.tokenManager().generateToken(sender, TokenType.STREAMING);
                     break;
                 case ADMIN:
                     if (sender.hasPermission("moveAsYou.token.admin") == false) {
                         sender.sendMessage(ChatColor.RED + "You don't have permission to issue admin token.");
                         return;
                     }
-                    generated = manager.generateToken(sender, TokenType.ADMIN);
+                    generated = MoveAsYou.tokenManager().generateToken(sender, TokenType.ADMIN);
                     break;
                 default:
                     throw new RuntimeMAYException("wrong token type");
@@ -94,12 +90,12 @@ public class TokenCommand implements ICommand{
 
         }else if(commandSender instanceof ConsoleCommandSender sender) {
             try {
-                TokenInfo generated = manager.generateToken(sender);
+                TokenInfo generated = MoveAsYou.tokenManager().generateToken(sender);
                 sender.sendMessage(ChatColor.AQUA + generated.token.value());
             }catch(RateLimitedException rateEx) {
                 sender.sendMessage(ChatColor.RED + "Too many request");
             }
-            sender.sendMessage(manager.getStats());
+            sender.sendMessage(MoveAsYou.tokenManager().getStats());
         }
     }
     
