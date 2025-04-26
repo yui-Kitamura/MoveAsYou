@@ -70,6 +70,7 @@
                     } else if (response.status === 400) {
                         alert('入力したトークンが有効か確認してください')
                     } else {
+                        alert('不明なエラー')
                         console.error('Authentication failed with status:', response.status);
                     }
                 })
