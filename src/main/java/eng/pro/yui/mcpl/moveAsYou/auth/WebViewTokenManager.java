@@ -57,6 +57,7 @@ public class WebViewTokenManager {
     public boolean validate(TokenText token, String playerName){
         TokenInfo stored = tokenStore.get(token.value());
         if(stored == null || stored.isValid() == false){
+            MoveAsYou.log().warning("Token " + token.value() + ": not exist or already expired");
             return false;
         }
         switch(stored.tokenType) {
@@ -67,12 +68,14 @@ public class WebViewTokenManager {
                 break;
             case ONE_TIME:
                 if (stored.playerName.equals(playerName) == false) {
+                    MoveAsYou.log().warning("Token " + token.value() + ": player " + playerName + " does not match expected player name");
                     return false;
                 }
                 break;
         }
         //Tokenの残利用回数も確認する
         if(stored.isAllowedToGenerateNewConnect() == false) {
+            MoveAsYou.log().warning("Token " + token.value() + ": player " + playerName + " is not allowed to generate new connect");
             return false;
         }
        
