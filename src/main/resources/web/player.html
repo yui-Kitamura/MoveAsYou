@@ -67,6 +67,8 @@
                         alert('接続数が制限を超えています。しばらく待ってから再度お試しください。');
                         connectWebSocket = undefined;
                         sendSocketMessage = undefined;
+                    } else if (response.status === 400) {
+                        alert('入力したトークンが有効か確認してください')
                     } else {
                         console.error('Authentication failed with status:', response.status);
                     }
