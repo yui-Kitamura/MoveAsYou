@@ -17,7 +17,7 @@ public class PlayerNameHandler implements HttpHandler {
     private static final String playerTemplate = "player";
 
     @Override
-    public void handle(HttpExchange exchange) throws IOException {
+    public void handle(HttpExchange exchange) {
         String calledPath = exchange.getRequestURI().getPath();
         if(!calledPath.startsWith(PATH) || calledPath.length() == PATH.length() ) {
             WebServer.send(400, "PlayerName is missed", exchange);
