@@ -118,24 +118,27 @@ public class WebServer {
         }
     }
     
-    public static void send(int code, String html, HttpExchange exchange) throws IOException{
+    public static void send(int code, String html, HttpExchange exchange){
         byte[] byteBased = html.getBytes(StandardCharsets.UTF_8);
         
-        exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
-        exchange.sendResponseHeaders(code, byteBased.length);
+        try {
+            exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
+            exchange.sendResponseHeaders(code, byteBased.length);
+        }catch(IOException unexpected) {
+            MoveAsYou.log().warning("FAILED to send header: " + unexpected.getMessage());
+            throw new RuntimeMAYException(unexpected);
+        }
         try(OutputStream out = exchange.getResponseBody()){
             out.write(byteBased);
+        }catch(IOException unexpected) {
+            MoveAsYou.log().warning("FAILED to send response to web server: " + unexpected.getMessage());
+            throw new RuntimeMAYException(unexpected);
         }
     }
     
     public static void send(Exception ex, HttpExchange exchange){
         String errMsg = "<!DOCTYPE html><html><body>500 error</body></html>";
-        try {
-            send(500, errMsg, exchange);
-        }catch(IOException ioe) {
-            MoveAsYou.log().severe("FAILED to send 500 error: " + ioe.getMessage());
-            ioe.printStackTrace();
-        }
+        send(500, errMsg, exchange);
         MoveAsYou.log().throwing(
                 ex.getStackTrace()[0].getClassName(),
                 ex.getStackTrace()[0].getMethodName(),
