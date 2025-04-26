@@ -22,11 +22,11 @@ public class HtmlText {
     }
     public static HtmlText get(String title, String body){
         return new HtmlText(
-                "<!DOCTYPE html><html><title>"+title+"|"+ MoveAsYouConfig.webTitle +"</title>" +
+                "<!DOCTYPE html><html lang=\"ja\"><title>"+title+"|"+ MoveAsYouConfig.webTitle +"</title>" +
                 "<body>"+body+"</body></html>");
     }
     public static HtmlText getWithBody(String body){
-        return new HtmlText("<!DOCTYPE html><html><title>"+ MoveAsYouConfig.webTitle +"</title>" +
+        return new HtmlText("<!DOCTYPE html><html lang=\"ja\"><title>"+ MoveAsYouConfig.webTitle +"</title>" +
                 "<body>"+body+"</body></html>");
     }
 
