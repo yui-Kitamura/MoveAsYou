@@ -69,7 +69,14 @@ public class TokenInfo {
     public boolean isValid(){
         return expireAt > System.currentTimeMillis();
     }
-
+    /** このトークンを用いた新規接続の認容可否 */
+    public boolean isAllowedToGenerateNewConnect(){
+        if(limitCnt <= 0) {
+            return false;
+        }
+        limitCnt--;
+        return true;
+    }
 
     public String toJsonStr(){
         return MoveAsYou.compactGson().toJson(this);

@@ -51,12 +51,31 @@ public class WebViewTokenManager {
         return tokenStore.get(generated.token.value());
     }
     
-    /** 有効期限内であることの検証と、期限の延長 */
-    public boolean validate(TokenText token){
+    /** 
+     * 有効期限内であることの検証と、期限の延長
+     * ONE_TIMEは個人用途に限定 */
+    public boolean validate(TokenText token, String playerName){
         TokenInfo stored = tokenStore.get(token.value());
         if(stored == null || stored.isValid() == false){
             return false;
         }
+        switch(stored.tokenType) {
+            case ADMIN:
+                // fall through
+            case STREAMING:
+                // nothing to do. anybody can access 
+                break;
+            case ONE_TIME:
+                if (stored.playerName.equals(playerName) == false) {
+                    return false;
+                }
+                break;
+        }
+        //Tokenの残利用回数も確認する
+        if(stored.isAllowedToGenerateNewConnect()) {
+            return false;
+        }
+       
         stored.refreshTokenActivity();
         return true;
     }
