@@ -56,6 +56,7 @@ public final class MoveAsYou extends JavaPlugin {
         playerSettingManager = new PlayerSettingManager();
         gson = new GsonBuilder().serializeNulls().setPrettyPrinting().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         compactGson = new GsonBuilder().serializeNulls().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        webViewTokenManager = new WebViewTokenManager();
         createDataFolder();
         generateDefaultConfig();
         loadConfig();
