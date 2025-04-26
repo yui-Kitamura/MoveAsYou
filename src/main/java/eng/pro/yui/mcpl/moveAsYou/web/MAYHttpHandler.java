@@ -17,8 +17,8 @@ public class MAYHttpHandler implements HttpHandler {
         String requestPath = exchange.getRequestURI().getPath();
         String resStr;
         if(PATH.equals(requestPath)){
-            String html = WebServer.getRenderer().render(rootIndex, null);
-            WebServer.send(200, html, exchange);
+            HtmlText fullHtml = HtmlText.getFull(WebServer.getRenderer().render(rootIndex, null));
+            WebServer.send(200, fullHtml, exchange);
         }else{
             resStr = "404 not found";
             WebServer.send(404, resStr, exchange);

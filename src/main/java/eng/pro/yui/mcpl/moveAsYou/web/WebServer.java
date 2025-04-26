@@ -127,7 +127,7 @@ public class WebServer {
     public static void send(int code, String body, HttpExchange exchange){
         send(code, HtmlText.getWithBody(body), exchange);
     }
-    private static void send(int code, HtmlText html, HttpExchange exchange){
+    public static void send(int code, HtmlText html, HttpExchange exchange){
         byte[] byteBased = html.getRawHtml().getBytes(StandardCharsets.UTF_8);
         
         try {
