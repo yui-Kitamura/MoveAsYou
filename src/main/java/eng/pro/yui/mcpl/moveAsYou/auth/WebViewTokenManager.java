@@ -56,8 +56,12 @@ public class WebViewTokenManager {
      * ONE_TIMEは個人用途に限定 */
     public boolean validate(TokenText token, String playerName){
         TokenInfo stored = tokenStore.get(token.value());
-        if(stored == null || stored.isValid() == false){
-            MoveAsYou.log().warning("Token " + token.value() + ": not exist or already expired");
+        if(stored == null) {
+            MoveAsYou.log().warning("Token " + token.value() + ": not exist");
+            return false;
+        }
+        if(stored.isValid() == false){
+            MoveAsYou.log().warning("Token " + token.value() + ": already expired");
             return false;
         }
         switch(stored.tokenType) {
