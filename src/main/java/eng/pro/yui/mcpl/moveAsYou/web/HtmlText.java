@@ -34,6 +34,10 @@ public class HtmlText {
     public String toString() {
         return rawHtml;
     }
+    
+    public String toShortString(){
+        return rawHtml.substring(0, Math.min(rawHtml.length(), 100));
+    }
 
     @Override
     public int hashCode() {
