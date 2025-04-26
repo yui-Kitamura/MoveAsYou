@@ -28,7 +28,9 @@ class AuthRequestInfoTest {
     }
     @Test
     void testNotEquals(){
-        assertFalse(new AuthRequestInfo(t1, p2).equals(new AuthRequestInfo(t2, p2)));
+        assertFalse(new AuthRequestInfo(t1, p1).equals(new AuthRequestInfo(t2, p2)));
+        assertFalse(new AuthRequestInfo(t1, p1).equals(new AuthRequestInfo(t2, p1)));
+        assertFalse(new AuthRequestInfo(t1, p1).equals(new AuthRequestInfo(t1, p2)));
     }
     
     @Test
