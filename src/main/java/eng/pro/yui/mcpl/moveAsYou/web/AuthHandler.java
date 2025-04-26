@@ -6,7 +6,7 @@ import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.web.data.AuthRequestInfo;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 
 public class AuthHandler implements HttpHandler {
 
@@ -24,10 +24,12 @@ public class AuthHandler implements HttpHandler {
             return;
         }
 
-        AuthRequestInfo requestInfo = MoveAsYou.gson().fromJson(
-                new String(exchange.getRequestBody().readAllBytes()),
-                AuthRequestInfo.class
-        );
+        AuthRequestInfo requestInfo;
+        try(InputStream in = exchange.getRequestBody()) {
+            requestInfo = MoveAsYou.gson().fromJson(
+                    new String(in.readAllBytes()), AuthRequestInfo.class
+            );
+        }
         
         MoveAsYou.log().info("Auth request: " + requestInfo);
 
