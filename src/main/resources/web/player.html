@@ -104,7 +104,6 @@
                 console.warn('Socket通信が切断されました');
                 document.getElementById('gameArea').classList.add('hidden');
                 document.getElementById('tokenForm').classList.remove('hidden');
-                document.getElementById('getTokenBtn').disabled = false;
             };
 
             socket.onerror = function(error) {
