@@ -101,7 +101,7 @@ public final class TokenText {
 
     private final static List<String> MODIFIERS = List.of(
             "broken", "dark", "enchanted", "flaming", "frozen",
-            "glowing", "golden", "lucky", "mystic", "royal", "shiny"
+            "glowing", "golden", "lucky", "shiny", "slow", "weakness"
     );
 
     private static List<String> all(){
