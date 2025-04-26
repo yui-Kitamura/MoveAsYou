@@ -130,9 +130,13 @@ public class WebServer {
         }
         try(OutputStream out = exchange.getResponseBody()){
             out.write(byteBased);
+            out.flush();
         }catch(IOException unexpected) {
             MoveAsYou.log().warning("FAILED to send response to web server: " + unexpected.getMessage());
             throw new RuntimeMAYException(unexpected);
+        }finally {
+            MoveAsYou.log().info("Web server sent " + code +" for request path "+ exchange.getRequestURI());
+            exchange.close(); //明示的なclose
         }
     }
     
