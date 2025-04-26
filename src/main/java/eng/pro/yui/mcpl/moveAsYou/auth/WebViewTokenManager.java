@@ -72,7 +72,7 @@ public class WebViewTokenManager {
                 break;
         }
         //Tokenの残利用回数も確認する
-        if(stored.isAllowedToGenerateNewConnect()) {
+        if(stored.isAllowedToGenerateNewConnect() == false) {
             return false;
         }
        
