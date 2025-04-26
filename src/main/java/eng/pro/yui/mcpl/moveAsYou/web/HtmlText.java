@@ -1,6 +1,5 @@
 package eng.pro.yui.mcpl.moveAsYou.web;
 
-import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
 
 public class HtmlText {
@@ -36,7 +35,9 @@ public class HtmlText {
     }
     
     public String toShortString(){
-        return rawHtml.substring(0, Math.min(rawHtml.length(), 100));
+        String whiteRemoved = rawHtml.replaceAll("\\v", "");
+        whiteRemoved = whiteRemoved.replaceAll("\\h\\h", " ");
+        return  whiteRemoved.substring(0, Math.min(whiteRemoved.length(), 100));
     }
 
     @Override

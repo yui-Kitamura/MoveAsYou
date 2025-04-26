@@ -19,5 +19,18 @@ class HtmlTextTest {
         String expected = "<!DOCTYPE html><html lang=\"ja\"><title>short|null</title><body>short</body></html>";
         assertEquals(expected.length(), out.length());
     }
+    
+    @Test
+    void testShortRemoveWhite(){
+        HtmlText htmlText = HtmlText.get("sh  ort", "sho  rt");
+        String out = htmlText.toShortString();
+        String expected = "<!DOCTYPE html><html lang=\"ja\"><title>sh ort|null</title><body>sho rt</body></html>";
+        assertEquals(expected.length(), out.length());
+    }
+    @Test
+    void testShortRemoveVert(){
+        HtmlText htmlText = HtmlText.getFull("<TEST>\r</TEST>");
+        assertEquals("<TEST></TEST>", htmlText.toShortString());
+    }
 
 }
