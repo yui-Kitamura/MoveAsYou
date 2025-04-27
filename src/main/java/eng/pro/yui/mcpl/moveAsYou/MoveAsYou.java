@@ -7,6 +7,7 @@ import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
 import eng.pro.yui.mcpl.moveAsYou.config.PlayerSettingManager;
 import eng.pro.yui.mcpl.moveAsYou.mc.EventHandlers;
 import eng.pro.yui.mcpl.moveAsYou.mc.MAYCommandHandler;
+import eng.pro.yui.mcpl.moveAsYou.mc.PlayerMoveMonitor;
 import eng.pro.yui.mcpl.moveAsYou.web.WebServer;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,6 +35,11 @@ public final class MoveAsYou extends JavaPlugin {
         return webViewTokenManager;
     }
     
+    private static PlayerMoveMonitor playerMoveMonitor;
+    public static PlayerMoveMonitor playerMonitor(){
+        return playerMoveMonitor;
+    }
+    
     private static Gson gson;
     public static Gson gson(){
         return gson;
@@ -57,6 +63,7 @@ public final class MoveAsYou extends JavaPlugin {
         gson = new GsonBuilder().serializeNulls().setPrettyPrinting().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         compactGson = new GsonBuilder().serializeNulls().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         webViewTokenManager = new WebViewTokenManager();
+        playerMoveMonitor = new PlayerMoveMonitor();
         createDataFolder();
         generateDefaultConfig();
         loadConfig();
