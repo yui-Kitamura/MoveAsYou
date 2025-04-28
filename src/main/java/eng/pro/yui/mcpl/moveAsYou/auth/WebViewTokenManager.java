@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class WebViewTokenManager {
     
     /** tokenからtokenInfoを取得 */
-    private final Map<String, TokenInfo> tokenStore;
+    private final Map<TokenText, TokenInfo> tokenStore;
     
     private final ScheduledExecutorService scheduledCleaner;
     
@@ -24,7 +24,7 @@ public class WebViewTokenManager {
 
     // constructor
     public WebViewTokenManager() {
-        this.tokenStore = new HashMap<String, TokenInfo>();
+        this.tokenStore = new HashMap<>();
         this.scheduledCleaner = Executors.newSingleThreadScheduledExecutor();
         this.scheduledCleaner.scheduleAtFixedRate(
                 this::cleanupExpiredTokens,
@@ -41,27 +41,27 @@ public class WebViewTokenManager {
     public TokenInfo generateToken(Player player, TokenType requestType) throws RateLimitedException {
         rateLimiter.check(player); // case NG: throws Exception
         TokenInfo generated = new TokenInfo(TokenText.generate(requestType), player, requestType);
-        tokenStore.put(generated.token.value(), generated);
-        return tokenStore.get(generated.token.value()); 
+        tokenStore.put(generated.token, generated);
+        return tokenStore.get(generated.token); 
     }
     public TokenInfo generateToken(ConsoleCommandSender admin) throws RateLimitedException {
         rateLimiter.check(admin);
         TokenInfo generated = new TokenInfo(TokenText.generate(TokenType.ADMIN), admin);
-        tokenStore.put(generated.token.value(), generated);
-        return tokenStore.get(generated.token.value());
+        tokenStore.put(generated.token, generated);
+        return tokenStore.get(generated.token);
     }
     
     /** 
      * 有効期限内であることの検証と、期限の延長
      * ONE_TIMEは個人用途に限定 */
     public boolean validate(TokenText token, String playerName){
-        TokenInfo stored = tokenStore.get(token.value());
+        TokenInfo stored = tokenStore.get(token);
         if(stored == null) {
-            MoveAsYou.log().warning("Token " + token.value() + ": not exist");
+            MoveAsYou.log().warning("Token " + token + ": not exist");
             return false;
         }
         if(stored.isValid() == false){
-            MoveAsYou.log().warning("Token " + token.value() + ": already expired");
+            MoveAsYou.log().warning("Token " + token + ": already expired");
             return false;
         }
         switch(stored.tokenType) {
@@ -72,7 +72,7 @@ public class WebViewTokenManager {
                 break;
             case ONE_TIME:
                 if (stored.playerName.equals(playerName) == false) {
-                    MoveAsYou.log().warning("Token " + token.value() + ": player " + playerName + " does not match expected player name");
+                    MoveAsYou.log().warning("Token " + token + ": player " + playerName + " does not match expected player name");
                     return false;
                 }
                 break;
@@ -88,7 +88,7 @@ public class WebViewTokenManager {
     }
     
     public void extendTokenValidity(TokenText token){
-        TokenInfo stored = tokenStore.get(token.value());
+        TokenInfo stored = tokenStore.get(token);
         if(stored == null || stored.isValid() == false){
             return;
         }
@@ -96,7 +96,7 @@ public class WebViewTokenManager {
     }
     
     public boolean forgetToken(TokenText token){
-        TokenInfo removed = tokenStore.remove(token.value());
+        TokenInfo removed = tokenStore.remove(token);
         if(removed == null) {
             return false;
         }
