@@ -21,7 +21,15 @@ public class SimpleWebSocketServer extends WebSocketServer {
     
     private static final String playerListenerPath = "/socket/player/";
     
-    private final Map<SocketID, PlayerName> connectionAndPlayer;
+    private final Map<SocketID, NetworkInfo> connectionAndPlayer;
+    private static class NetworkInfo {
+        public long startTimestamp;
+        public PlayerName playerName;
+        public NetworkInfo(PlayerName name){
+            startTimestamp = System.currentTimeMillis();
+            playerName = name;
+        }
+    }
 
     public SimpleWebSocketServer(int port) {
         super(new InetSocketAddress(InetAddress.getLoopbackAddress(), port));
@@ -46,7 +54,7 @@ public class SimpleWebSocketServer extends WebSocketServer {
             return;
         }
         PlayerName playerName = new PlayerName(endPoint.substring(playerListenerPath.length()));
-        connectionAndPlayer.put(new SocketID(con), playerName);
+        connectionAndPlayer.put(new SocketID(con), new NetworkInfo(playerName));
 
         MoveAsYou.log().info("WebSocket connected! ("+ playerName + ")");
     }
@@ -74,7 +82,7 @@ public class SimpleWebSocketServer extends WebSocketServer {
     private void onMessageToken(WebSocket con, String message){
         String token = message.substring("Token:".length());
         TokenText t = new TokenText(token);
-        PlayerName pn = connectionAndPlayer.get(new SocketID(con));
+        PlayerName pn = connectionAndPlayer.get(new SocketID(con)).playerName;
         if(MoveAsYou.tokenManager().validate(t, pn)){
             Player online = MoveAsYou.plugin().getServer().getPlayer(pn.value());
             if(online == null){ 
@@ -91,8 +99,9 @@ public class SimpleWebSocketServer extends WebSocketServer {
     public void sendPlayerInfo(){
         for(WebSocket con : getConnections()){
             SocketID key = new SocketID(con);
-            PlayerInfo pi = MoveAsYou.playerMonitor().get(connectionAndPlayer.get(key));
-            if(key.onlineMillSec() > 1_000L) {
+            NetworkInfo info = connectionAndPlayer.get(key);
+            PlayerInfo pi = MoveAsYou.playerMonitor().get(info.playerName);
+            if(System.currentTimeMillis()-info.startTimestamp > 1_000L) {
                 if (pi == null) {
                     con.close(4001, "player disconnected");
                     return;
