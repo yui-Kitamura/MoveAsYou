@@ -32,6 +32,7 @@ public class PlayerInfo {
     
     /** constructor */
     public PlayerInfo(Player player){
+        MoveAsYou.log().info("Creating player info for " + player.getName());
         this.playerUuid = player.getUniqueId();
         this.playerName = new PlayerName(player);
         String tmpSkinUrl = "";

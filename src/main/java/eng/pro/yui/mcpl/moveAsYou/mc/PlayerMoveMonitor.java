@@ -28,7 +28,10 @@ public class PlayerMoveMonitor {
     }
     public PlayerInfo get(PlayerName name){
         Player online = MoveAsYou.plugin().getServer().getPlayer(name.value());
-        if(online == null) { return null; }
+        if(online == null) { 
+            MoveAsYou.log().warning("Player " + name.value() + " not found");
+            return null; 
+        }
         return players.get(online.getUniqueId());
     }
     

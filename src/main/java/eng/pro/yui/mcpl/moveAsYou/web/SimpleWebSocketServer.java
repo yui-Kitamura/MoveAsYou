@@ -89,6 +89,7 @@ public class SimpleWebSocketServer extends WebSocketServer {
                 con.close(4001, "player not found");
                 return; 
             }
+            MoveAsYou.log().info("Received token: " + t + " is good for player " + pn.value());
             MoveAsYou.playerMonitor().addPlayer(online);
         }else {
             con.close(4000, "invalid token");

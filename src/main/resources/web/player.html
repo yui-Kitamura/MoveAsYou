@@ -84,7 +84,7 @@
 
             // 接続時にトークンをヘッダーに設定
             socket.onopen = function() {
-                socket.send('token:' + token);
+                socket.send('Token:' + token);
                 document.getElementById('tokenForm').classList.add('hidden');
                 document.getElementById('gameArea').classList.remove('hidden');
                 console.info('Socket通信を開始しました');
