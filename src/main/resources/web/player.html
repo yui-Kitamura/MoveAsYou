@@ -80,7 +80,7 @@
         }
 
         function connectWebSocket(token) {
-            socket = new WebSocket('ws://' + DOMAIN + ':' + SOCKET_PORT + '/socket/player');
+            socket = new WebSocket('ws://' + DOMAIN + ':' + SOCKET_PORT + '/socket/player/'+ PLAYER_NAME);
 
             // 接続時にトークンをヘッダーに設定
             socket.onopen = function() {
@@ -95,6 +95,9 @@
             };
 
             socket.onclose = function(event) {
+                if (event.code === 4001) {
+                    alert('プレイヤーがオフラインになった可能性があります');
+                }
                 if(event.code === 4029){
                     alert('レート制限に抵触しています');
                     sendSocketMessage = undefined;
