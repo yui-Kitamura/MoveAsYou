@@ -72,6 +72,7 @@ public class TokenInfo {
     }
     /** このトークンを用いた新規接続の認容可否 */
     public boolean isAllowedToGenerateNewConnect(){
+        MoveAsYou.log().info("Checking for connection limit: " + limitCnt +",Type:"+ tokenType);
         if(limitCnt <= 0) {
             return false;
         }
