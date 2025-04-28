@@ -91,8 +91,10 @@ public class WebViewTokenManager {
                 MoveAsYou.log().warning("Token " + token.value() + ": player " + playerName + " is not allowed to generate new connect");
                 return false;
             }
+            return true;
+        }else {
+            return false;
         }
-            
     }
     
     public void extendTokenValidity(TokenText token){
