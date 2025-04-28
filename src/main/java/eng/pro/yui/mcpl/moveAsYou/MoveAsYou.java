@@ -8,9 +8,14 @@ import eng.pro.yui.mcpl.moveAsYou.config.PlayerSettingManager;
 import eng.pro.yui.mcpl.moveAsYou.mc.EventHandlers;
 import eng.pro.yui.mcpl.moveAsYou.mc.MAYCommandHandler;
 import eng.pro.yui.mcpl.moveAsYou.mc.PlayerMoveMonitor;
+import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.WebServer;
+import eng.pro.yui.mcpl.moveAsYou.web.data.PlayerInfo;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 public final class MoveAsYou extends JavaPlugin {
@@ -48,6 +53,8 @@ public final class MoveAsYou extends JavaPlugin {
     public static Gson compactGson(){
         return compactGson;
     }
+    
+    private static BukkitTask monitorTask;
     
     // constructor
     public MoveAsYou(){
@@ -98,6 +105,7 @@ public final class MoveAsYou extends JavaPlugin {
         addCommandHandler();
         addEventHandler();
         startUpWebServer();
+        runMonitor();
     }
     private void addCommandHandler(){
         super.getCommand(MAYCommandHandler.COMMAND).setExecutor(new MAYCommandHandler());
@@ -110,10 +118,19 @@ public final class MoveAsYou extends JavaPlugin {
         WebServer.create(MoveAsYouConfig.webPort, MoveAsYouConfig.socketPort);
         WebServer.start();
     }
+    private void runMonitor(){
+        monitorTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                Map<PlayerName, PlayerInfo> latestInfo = playerMoveMonitor.monitorAll();
+            }
+        }.runTaskTimer(this, 0L, 1L);
+    }
 
     @Override
     public void onDisable() {
         super.onDisable();
+        monitorTask.cancel();
         WebServer.stop();
         this.getLogger().info("MoveAsYou is disabled!");
     }
