@@ -32,8 +32,8 @@ public class PlayerMoveMonitor {
         return players.get(online.getUniqueId());
     }
     
-    public Map<String, PlayerInfo> monitorAll(){
-        Map<String, PlayerInfo> res = new HashMap<>();
+    public Map<PlayerName, PlayerInfo> monitorAll(){
+        Map<PlayerName, PlayerInfo> res = new HashMap<>();
         for(PlayerInfo pInfo : players.values()) {
             pInfo.update();
             res.put(pInfo.getName(), pInfo);
