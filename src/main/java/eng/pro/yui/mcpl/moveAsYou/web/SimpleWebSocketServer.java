@@ -6,6 +6,7 @@ import eng.pro.yui.mcpl.moveAsYou.auth.TokenText;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.data.PlayerInfo;
 import eng.pro.yui.mcpl.moveAsYou.web.data.SocketID;
+import org.bukkit.entity.Player;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -74,7 +75,17 @@ public class SimpleWebSocketServer extends WebSocketServer {
         String token = message.substring("Token:".length());
         TokenText t = new TokenText(token);
         PlayerName pn = connectionAndPlayer.get(new SocketID(con));
-        MoveAsYou.tokenManager().validate(t, pn);
+        if(MoveAsYou.tokenManager().validate(t, pn)){
+            Player online = MoveAsYou.plugin().getServer().getPlayer(pn.value());
+            if(online == null){ 
+                con.close(4001, "player not found");
+                return; 
+            }
+            MoveAsYou.playerMonitor().addPlayer(online);
+        }else {
+            con.close(4000, "invalid token");
+            return;
+        }
     }
     
     public void sendPlayerInfo(){
