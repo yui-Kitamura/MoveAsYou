@@ -12,7 +12,7 @@ public class SocketID {
         this.id = id;
     }
     public SocketID(WebSocket socket){
-        this.id = socket.getSSLSession().getId();
+        this.id = socket.getRemoteSocketAddress().getAddress().getAddress();
     }
     
     // methods
