@@ -10,10 +10,10 @@ import java.util.UUID;
 
 public class PlayerMoveMonitor {
     
-    private Map<UUID, PlayerInfo> players; 
+    private final Map<UUID, PlayerInfo> players; 
     
     public PlayerMoveMonitor() {
-        players = new HashMap<UUID, PlayerInfo>();
+        players = new HashMap<>();
     }
     
     public void addPlayer(Player player) {
