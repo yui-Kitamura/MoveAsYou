@@ -1,9 +1,16 @@
 package eng.pro.yui.mcpl.moveAsYou.web.data;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+
 import org.bukkit.entity.Player;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.UUID;
 
 public class PlayerInfo {
@@ -18,10 +25,36 @@ public class PlayerInfo {
         return playerName;
     }
     
+    private final String skinUrl;
+    public String getSkinUrl(){
+        return skinUrl;
+    }
+    
     /** constructor */
     public PlayerInfo(Player player){
         this.playerUuid = player.getUniqueId();
         this.playerName = new PlayerName(player);
+        String tmpSkinUrl = "";
+        try {
+            Object handle = player.getClass().getMethod("getHandle").invoke(player);
+            GameProfile profile = (GameProfile) handle.getClass().getMethod("getProfile").invoke(handle);
+            for(Property property : profile.getProperties().get("textures")) {
+                String value = new String(Base64.getDecoder().decode(property.getValue()), StandardCharsets.UTF_8);
+                // JSONに変換
+                JsonObject jsonObj = JsonParser.parseString(value).getAsJsonObject();
+                if (jsonObj.has("textures")) {
+                    JsonObject textures = jsonObj.getAsJsonObject("textures");
+                    if (textures.has("SKIN")) {
+                        tmpSkinUrl = textures.getAsJsonObject("SKIN").get("url").getAsString();
+                    }
+                }
+
+            }
+        }catch(Exception e) {
+            MoveAsYou.log().throwing(PlayerInfo.class.getName(),"constructor", e);
+            tmpSkinUrl = "";
+        }
+        this.skinUrl = tmpSkinUrl;
         update();
     }
     
@@ -68,6 +101,7 @@ public class PlayerInfo {
         int hash = 17;
         hash = 31 * hash + playerUuid.hashCode();
         hash = 31 * hash + worldName.hashCode();
+        hash = 31 * hash + skinUrl.hashCode();
         hash = 31 * hash + Double.valueOf(x).hashCode();
         hash = 31 * hash + Double.valueOf(y).hashCode();
         hash = 31 * hash + Double.valueOf(z).hashCode();
@@ -86,6 +120,7 @@ public class PlayerInfo {
         PlayerInfo other = (PlayerInfo) obj;
         if(!playerUuid.equals(other.playerUuid)) { return false; }
         if(!worldName.equals(other.worldName)) { return false; }
+        if(!skinUrl.equals(other.skinUrl)) { return false; }
         if(x != other.x) { return false; }
         if(y != other.y) { return false; }
         if(z != other.z) { return false; }
@@ -99,10 +134,11 @@ public class PlayerInfo {
     @Override
     public String toString() {
         return String.format("PlayerInfo{" +
-                        "playerUuid: %s, playerName: %s, world: %s," +
-                        " x: %.4f, y: %.4f, z: %.4f, yaw: %.4f, pitch: %.4f," +
+                        "playerUuid: %s, playerName: %s, skinUrl: %s," +
+                        " world: %s, x: %.4f, y: %.4f, z: %.4f, yaw: %.4f, pitch: %.4f," +
                         " isSneaking: %b, itemInHand: %s}",
-                playerUuid, playerName, worldName, x, y, z, yaw, pitch, isSneaking, itemInHand);
+                playerUuid, playerName, skinUrl, worldName, x, y, z, yaw, pitch, isSneaking, itemInHand
+        );
     }
     
     public String toJsonString(){
