@@ -122,7 +122,8 @@ public final class MoveAsYou extends JavaPlugin {
         monitorTask = new BukkitRunnable() {
             @Override
             public void run() {
-                Map<PlayerName, PlayerInfo> latestInfo = playerMoveMonitor.monitorAll();
+                playerMoveMonitor.monitorAll();
+                WebServer.socketSendMonitor();
             }
         }.runTaskTimer(this, 0L, 1L);
     }

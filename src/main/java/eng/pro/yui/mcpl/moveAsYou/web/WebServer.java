@@ -4,7 +4,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
+import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.data.HtmlText;
+import eng.pro.yui.mcpl.moveAsYou.web.data.PlayerInfo;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -161,4 +163,7 @@ public class WebServer {
         ex.printStackTrace();
     }
     
+    public static void socketSendMonitor(){
+        socketServer.sendPlayerInfo();
+    }
 }
