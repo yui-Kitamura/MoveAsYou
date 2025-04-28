@@ -126,8 +126,7 @@ public class WebViewTokenManager {
                 case ONE_TIME -> onetime++;
                 case STREAMING -> stream++;
                 case ADMIN -> admin++;
-                default -> {
-                }
+                default -> {}
             }
         }
         sb.append("Token for ").append(TokenType.ONE_TIME).append(": ").append(onetime).append(System.lineSeparator());
