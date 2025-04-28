@@ -83,7 +83,7 @@ public class SimpleWebSocketServer extends WebSocketServer {
         String token = message.substring("Token:".length());
         TokenText t = new TokenText(token);
         PlayerName pn = connectionAndPlayer.get(new SocketID(con)).playerName;
-        if(MoveAsYou.tokenManager().validate(t, pn)){
+        if(MoveAsYou.tokenManager().validateForNew(t, pn)){
             Player online = MoveAsYou.plugin().getServer().getPlayer(pn.value());
             if(online == null){ 
                 con.close(4001, "player not found");

@@ -78,14 +78,21 @@ public class WebViewTokenManager {
                 }
                 break;
         }
-        //Tokenの残利用回数も確認する
-        if(stored.isAllowedToGenerateNewConnect() == false) {
-            MoveAsYou.log().warning("Token " + token.value() + ": player " + playerName + " is not allowed to generate new connect");
-            return false;
-        }
        
         stored.refreshTokenActivity();
         return true;
+    }
+    public boolean validateForNew(TokenText token, PlayerName playerName){
+        boolean valid = validate(token, playerName);
+        if(valid) {
+            //Tokenの残利用回数も確認する
+            TokenInfo stored = tokenStore.get(token);
+            if (stored.isAllowedToGenerateNewConnect() == false) {
+                MoveAsYou.log().warning("Token " + token.value() + ": player " + playerName + " is not allowed to generate new connect");
+                return false;
+            }
+        }
+            
     }
     
     public void extendTokenValidity(TokenText token){
