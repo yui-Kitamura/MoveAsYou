@@ -2,6 +2,7 @@ package eng.pro.yui.mcpl.moveAsYou.auth;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.exception.RateLimitedException;
+import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -54,7 +55,7 @@ public class WebViewTokenManager {
     /** 
      * 有効期限内であることの検証と、期限の延長
      * ONE_TIMEは個人用途に限定 */
-    public boolean validate(TokenText token, String playerName){
+    public boolean validate(TokenText token, PlayerName playerName){
         TokenInfo stored = tokenStore.get(token);
         if(stored == null) {
             MoveAsYou.log().warning("Token " + token + ": not exist");
@@ -106,7 +107,7 @@ public class WebViewTokenManager {
         return true;
     }
     
-    public List<TokenText> getTokensByPlayerName(String playerName){
+    public List<TokenText> getTokensByPlayerName(PlayerName playerName){
          List<TokenText> tokens = new ArrayList<TokenText>();
          for(TokenInfo token : tokenStore.values()){
              if(token.playerName.equals(playerName)){
