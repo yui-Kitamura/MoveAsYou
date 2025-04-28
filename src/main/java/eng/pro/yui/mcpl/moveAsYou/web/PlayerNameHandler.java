@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
+import eng.pro.yui.mcpl.moveAsYou.web.data.HtmlText;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 

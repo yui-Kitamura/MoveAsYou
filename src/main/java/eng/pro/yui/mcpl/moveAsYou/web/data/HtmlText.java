@@ -1,4 +1,4 @@
-package eng.pro.yui.mcpl.moveAsYou.web;
+package eng.pro.yui.mcpl.moveAsYou.web.data;
 
 import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
 

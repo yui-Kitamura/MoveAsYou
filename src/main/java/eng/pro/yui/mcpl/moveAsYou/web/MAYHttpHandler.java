@@ -2,6 +2,7 @@ package eng.pro.yui.mcpl.moveAsYou.web;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import eng.pro.yui.mcpl.moveAsYou.web.data.HtmlText;
 
 public class MAYHttpHandler implements HttpHandler {
     
