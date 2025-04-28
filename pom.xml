@@ -61,6 +61,10 @@
           <id>sonatype</id>
           <url>https://oss.sonatype.org/content/groups/public/</url>
       </repository>
+      <repository>
+          <id>mojang</id>
+          <url>https://repo2.acrylicstyle.xyz/</url>
+      </repository>
   </repositories>
 
   <dependencies>
@@ -68,6 +72,13 @@
           <groupId>org.spigotmc</groupId>
           <artifactId>spigot-api</artifactId>
           <version>1.20.4-R0.1-SNAPSHOT</version>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <!-- https://mvnrepository.com/artifact/com.mojang/authlib -->
+          <groupId>com.mojang</groupId>
+          <artifactId>authlib</artifactId>
+          <version>3.13.56</version>
           <scope>provided</scope>
       </dependency>
       <dependency>
