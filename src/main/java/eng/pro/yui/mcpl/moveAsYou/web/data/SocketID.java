@@ -6,6 +6,7 @@ import java.util.Arrays;
 public class SocketID {
     
     private byte[] id;
+    private long startTimestamp;
 
     // constructor
     public SocketID(byte[] id) {
@@ -13,6 +14,7 @@ public class SocketID {
     }
     public SocketID(WebSocket socket){
         this.id = socket.getRemoteSocketAddress().getAddress().getAddress();
+        this.startTimestamp = System.currentTimeMillis();
     }
     
     // methods
@@ -21,6 +23,10 @@ public class SocketID {
     }
     public String getIdValue(){
         return new String(id);
+    }
+    
+    public long onlineMillSec(){
+        return System.currentTimeMillis() - startTimestamp;
     }
 
     @Override

@@ -92,7 +92,7 @@ public class SimpleWebSocketServer extends WebSocketServer {
         for(WebSocket con : getConnections()){
             SocketID key = new SocketID(con);
             PlayerInfo pi = MoveAsYou.playerMonitor().get(connectionAndPlayer.get(key));
-            if(pi == null) {
+            if(pi == null && key.onlineMillSec() > 1_000L) {
                 con.close(4001, "player disconnected");
                 return;
             }
