@@ -3,6 +3,7 @@ package eng.pro.yui.mcpl.moveAsYou.web;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.data.AuthRequestInfo;
 
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class AuthHandler implements HttpHandler {
             return;
         }
         
-        boolean valid = MoveAsYou.tokenManager().validate(requestInfo.token, requestInfo.playerName);
+        boolean valid = MoveAsYou.tokenManager().validate(requestInfo.token, new PlayerName(requestInfo.playerName));
         MoveAsYou.log().info("is token Valid: " + valid);
         if(valid) {
             WebServer.send(200, "OK", exchange);
