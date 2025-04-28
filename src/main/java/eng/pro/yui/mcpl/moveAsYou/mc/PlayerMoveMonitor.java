@@ -1,6 +1,7 @@
 package eng.pro.yui.mcpl.moveAsYou.mc;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.data.PlayerInfo;
 import org.bukkit.entity.Player;
 
@@ -24,6 +25,11 @@ public class PlayerMoveMonitor {
     }
     public void removePlayer(Player player) {
         players.remove(player.getUniqueId());
+    }
+    public PlayerInfo get(PlayerName name){
+        Player online = MoveAsYou.plugin().getServer().getPlayer(name.value());
+        if(online == null) { return null; }
+        return players.get(online.getUniqueId());
     }
     
     public Map<String, PlayerInfo> monitorAll(){
