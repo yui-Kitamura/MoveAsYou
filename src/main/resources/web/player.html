@@ -95,6 +95,9 @@
             };
 
             socket.onclose = function(event) {
+                if (event.code === 4000) {
+                    alert('Tokenが正しくない可能性があります');
+                }
                 if (event.code === 4001) {
                     alert('プレイヤーがオフラインになった可能性があります');
                 }
