@@ -1,6 +1,7 @@
 package eng.pro.yui.mcpl.moveAsYou.auth;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -9,7 +10,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 public class TokenInfo {
-    /* pkg-prv */ final String playerName;
+    /* pkg-prv */ final PlayerName playerName;
     /* pkg-prv */ final TokenType tokenType;
     public final TokenText token;
     /* pkg-prv */ final long getGeneratedTimeStamp;
@@ -18,12 +19,12 @@ public class TokenInfo {
     int limitCnt;
     
     public TokenInfo(TokenText token, Player player, TokenType type) {
-        this(token, player.getName(), type);
+        this(token, new PlayerName(player), type);
     }
     public TokenInfo(TokenText token, ConsoleCommandSender console) {
-        this(token, String.format("*%s*",console.getName()), TokenType.ADMIN);
+        this(token, new PlayerName(console), TokenType.ADMIN);
     }
-    private TokenInfo(TokenText token, String authName, TokenType type){
+    private TokenInfo(TokenText token, PlayerName authName, TokenType type){
         this.playerName = authName;
         this.tokenType = type;
         this.token = token;
