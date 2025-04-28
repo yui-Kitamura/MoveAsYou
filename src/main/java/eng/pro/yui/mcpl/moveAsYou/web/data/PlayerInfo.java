@@ -41,6 +41,8 @@ public class PlayerInfo {
         yaw = p.getLocation().getYaw();
         pitch = p.getLocation().getPitch();
         isSneaking = p.isSneaking();
+        boolean isUsingSomething = (p.getItemInUse() != null);
+        itemInHand = isUsingSomething ? p.getItemInUse().getData().getItemType().name() : "";
     }
     
     private String worldName;
@@ -50,6 +52,7 @@ public class PlayerInfo {
     private double yaw;
     private double pitch;
     private boolean isSneaking;
+    private String itemInHand;
     
     public String getWorldName(){ return worldName; }
     public double getX(){ return x; }
@@ -58,6 +61,7 @@ public class PlayerInfo {
     public double getYaw(){ return yaw; }
     public double getPitch(){ return pitch; }
     public boolean isSneaking(){ return isSneaking; }
+    public String getItemInHand(){ return itemInHand; }
 
     @Override
     public int hashCode() {
@@ -70,6 +74,7 @@ public class PlayerInfo {
         hash = 31 * hash + Double.valueOf(yaw).hashCode();
         hash = 31 * hash + Double.valueOf(pitch).hashCode();
         hash = 31 * hash + Boolean.valueOf(isSneaking).hashCode();
+        hash = 31 * hash + itemInHand.hashCode();
         return hash;
     }
 
@@ -87,6 +92,7 @@ public class PlayerInfo {
         if(yaw != other.yaw) { return false; }
         if(pitch != other.pitch) { return false; }
         if(isSneaking != other.isSneaking) { return false; }
+        if(!itemInHand.equals(other.itemInHand)) { return false; }
         return true;
     }
 
@@ -95,8 +101,8 @@ public class PlayerInfo {
         return String.format("PlayerInfo{" +
                         "playerUuid: %s, playerName: %s, world: %s," +
                         " x: %.4f, y: %.4f, z: %.4f, yaw: %.4f, pitch: %.4f," +
-                        " isSneaking: %b}",
-                playerUuid, playerName, worldName, x, y, z, yaw, pitch, isSneaking);
+                        " isSneaking: %b, itemInHand: %s}",
+                playerUuid, playerName, worldName, x, y, z, yaw, pitch, isSneaking, itemInHand);
     }
     
     public String toJsonString(){
