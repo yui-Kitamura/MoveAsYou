@@ -1,6 +1,7 @@
 package eng.pro.yui.mcpl.moveAsYou.web.data;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -12,15 +13,15 @@ public class PlayerInfo {
         return playerUuid;
     }
     
-    private final String playerName;
-    public String getName(){
+    private final PlayerName playerName;
+    public PlayerName getName(){
         return playerName;
     }
     
     /** constructor */
     public PlayerInfo(Player player){
         this.playerUuid = player.getUniqueId();
-        this.playerName = player.getName();
+        this.playerName = new PlayerName(player);
         update();
     }
     
