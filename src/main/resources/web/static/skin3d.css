@@ -11,7 +11,7 @@
 #minecraft-skin {
     width: 100px;
     height: 100px;
-    perspective: 0;
+    perspective: none;
     transform-style: preserve-3d;
     animation-name: kurukuru;
     /* 	animation-duration: 1s; */
