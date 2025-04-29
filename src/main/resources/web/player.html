@@ -25,7 +25,10 @@
 <body>
   <header>
     <h1 th:text="${playerName}"></h1>
-    <img th:src="${playerSkin}" id="skin-img" alt="">
+    <figure>
+      <img th:src="${playerSkin}" id="skin-img" alt="">
+      <figcaption>読み込んだプレイヤースキン</figcaption>
+    </figure>
   </header>
   <main>
     <section th:hidden="${isOnline}">
