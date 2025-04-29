@@ -7,6 +7,7 @@ import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
 import eng.pro.yui.mcpl.moveAsYou.web.data.HtmlText;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.profile.PlayerProfile;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -57,6 +58,12 @@ public class PlayerNameHandler implements HttpHandler {
         variables.put("playerUuid", player.getUniqueId().toString());
         variables.put("isOnline", player.isOnline());
         variables.put("socketPort", MoveAsYouConfig.socketPort);
+        PlayerProfile profile = player.getPlayerProfile();
+        if(profile.getTextures().getSkin() != null){
+            variables.put("playerSkin", profile.getTextures().getSkin().toString());
+        }else {
+            variables.put("playerSkin", "");
+        }
 
         HtmlText fullHtml = HtmlText.getFull(WebServer.getRenderer().render(playerTemplate, variables));
         WebServer.send(200, fullHtml, exchange);

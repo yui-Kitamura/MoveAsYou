@@ -20,22 +20,11 @@ public class PlayerInfo {
         return playerName;
     }
     
-    private final String skinUrl;
-    public String getSkinUrl(){
-        return skinUrl;
-    }
-    
     /** constructor */
     public PlayerInfo(Player player){
         MoveAsYou.log().info("Creating player info for " + player.getName());
         this.playerUuid = player.getUniqueId();
         this.playerName = new PlayerName(player);
-        PlayerProfile profile = player.getPlayerProfile();
-        if(profile.getTextures().getSkin() != null){
-            this.skinUrl = profile.getTextures().getSkin().toString();
-        }else {
-            this.skinUrl = "";
-        }
 
         update();
     }
@@ -83,7 +72,6 @@ public class PlayerInfo {
         int hash = 17;
         hash = 31 * hash + playerUuid.hashCode();
         hash = 31 * hash + worldName.hashCode();
-        hash = 31 * hash + skinUrl.hashCode();
         hash = 31 * hash + Double.valueOf(x).hashCode();
         hash = 31 * hash + Double.valueOf(y).hashCode();
         hash = 31 * hash + Double.valueOf(z).hashCode();
@@ -102,7 +90,6 @@ public class PlayerInfo {
         PlayerInfo other = (PlayerInfo) obj;
         if(!playerUuid.equals(other.playerUuid)) { return false; }
         if(!worldName.equals(other.worldName)) { return false; }
-        if(!skinUrl.equals(other.skinUrl)) { return false; }
         if(x != other.x) { return false; }
         if(y != other.y) { return false; }
         if(z != other.z) { return false; }
@@ -116,10 +103,10 @@ public class PlayerInfo {
     @Override
     public String toString() {
         return String.format("PlayerInfo{" +
-                        "playerUuid: %s, playerName: %s, skinUrl: %s," +
+                        "playerUuid: %s, playerName: %s," +
                         " world: %s, x: %.4f, y: %.4f, z: %.4f, yaw: %.4f, pitch: %.4f," +
                         " isSneaking: %b, itemInHand: %s}",
-                playerUuid, playerName, skinUrl, worldName, x, y, z, yaw, pitch, isSneaking, itemInHand
+                playerUuid, playerName,  worldName, x, y, z, yaw, pitch, isSneaking, itemInHand
         );
     }
     
