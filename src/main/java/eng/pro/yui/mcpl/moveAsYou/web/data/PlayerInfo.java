@@ -1,16 +1,11 @@
 package eng.pro.yui.mcpl.moveAsYou.web.data;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 
 import org.bukkit.entity.Player;
+import org.bukkit.profile.PlayerProfile;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.UUID;
 
 public class PlayerInfo {
@@ -35,27 +30,13 @@ public class PlayerInfo {
         MoveAsYou.log().info("Creating player info for " + player.getName());
         this.playerUuid = player.getUniqueId();
         this.playerName = new PlayerName(player);
-        String tmpSkinUrl = "";
-        try {
-            Object handle = player.getClass().getMethod("getHandle").invoke(player);
-            GameProfile profile = (GameProfile) handle.getClass().getMethod("getProfile").invoke(handle);
-            for(Property property : profile.getProperties().get("textures")) {
-                String value = new String(Base64.getDecoder().decode(property.getValue()), StandardCharsets.UTF_8);
-                // JSONに変換
-                JsonObject jsonObj = JsonParser.parseString(value).getAsJsonObject();
-                if (jsonObj.has("textures")) {
-                    JsonObject textures = jsonObj.getAsJsonObject("textures");
-                    if (textures.has("SKIN")) {
-                        tmpSkinUrl = textures.getAsJsonObject("SKIN").get("url").getAsString();
-                    }
-                }
-
-            }
-        }catch(Exception e) {
-            MoveAsYou.log().throwing(PlayerInfo.class.getName(),"constructor", e);
-            tmpSkinUrl = "";
+        PlayerProfile profile = player.getPlayerProfile();
+        if(profile.getTextures().getSkin() != null){
+            this.skinUrl = profile.getTextures().getSkin().toString();
+        }else {
+            this.skinUrl = "";
         }
-        this.skinUrl = tmpSkinUrl;
+
         update();
     }
     
