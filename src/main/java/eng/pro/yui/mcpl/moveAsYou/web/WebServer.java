@@ -45,6 +45,7 @@ public class WebServer {
         server.createContext(MAYHttpHandler.PATH, new MAYHttpHandler()); // contains 404
         server.createContext(PlayerNameHandler.PATH, new PlayerNameHandler());
         server.createContext(AuthHandler.PATH, new AuthHandler());
+        server.createContext(StaticHandler.PATH, new StaticHandler());
 
         renderer = new ThymeleafRenderer();
         

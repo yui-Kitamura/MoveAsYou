@@ -1,0 +1,52 @@
+/*
+ * origin code by tsutoringo
+ * * https://tsutori.ngo/ or https://github.com/tsutoringo
+ * Usage rights are granted by the author.
+ */
+div#minecraft-skin {
+    transform-style: preserve-3d;
+    --size: 10;
+    --width: 8px;
+    --height: 8px;
+    --pos: 0;
+}
+
+div#minecraft-skin .cube {
+    position: relative;
+    background-color: #000000;
+}
+div#minecraft-skin .cube > * {
+    background-image: var(--skin-image);
+}
+div#minecraft-skin .cube > .top {
+    width: var(--width);
+    height: var(--width);
+    transform: rotateX(90deg) translateZ(calc(var(--pos) / 2));
+}
+
+div#minecraft-skin .cube > .bottom {
+    width: var(--width);
+    height: var(--height);
+    transform: rotateX(-90deg) translateZ(calc(var(--pos) / 2));
+}
+
+div#minecraft-skin .cube > .left {
+    height: var(--pos);
+    width: var(--height);
+    transform: rotateY(-90deg) translateZ(calc(var(--width) / 2));
+}
+div#minecraft-skin .cube > .right {
+    height: var(--pos);
+    width: var(--height);
+    transform: rotateY( 90deg) translateZ(calc(var(--width) / 2));
+}
+div#minecraft-skin .cube > .back {
+    height: var(--pos);
+    width: var(--width);
+    transform: rotateY(180deg) translateZ(calc(var(--height) / 2));
+}
+div#minecraft-skin .cube > .front {
+    height: var(--pos);
+    width: var(--width);
+    transform: rotateY(  0deg) translateZ(calc(var(--height) / 2));
+}
