@@ -3,50 +3,319 @@
  * * https://tsutori.ngo/ or https://github.com/tsutoringo
  * Usage rights are granted by the author.
  */
-div#minecraft-skin {
+@keyframes kurukuru {
+    0% {transform:rotateX(0turn) rotateY(0turn) rotateZ(0turn);}
+    100% {transform:rotateX(1turn) rotateY(2turn) rotateZ(1turn)}
+}
+
+#minecraft-skin {
+    width: 100px;
+    height: 100px;
+    perspective: 0;
     transform-style: preserve-3d;
-    --size: 10;
-    --width: 8px;
-    --height: 8px;
-    --pos: 0;
+    animation-name: kurukuru;
+    /* 	animation-duration: 1s; */
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    transform: rotateY(30deg) rotateX(30deg) rotateZ(0deg);
 }
 
-div#minecraft-skin .cube {
+#minecraft-skin .accessories {
+    width: 0;
+    height: 0;
+    transform: scaleX(1.1) scaleY(1.1) scaleZ(1.1);
+    transform-style: preserve-3d;
+}
+
+#minecraft-skin .cube {
     position: relative;
-    background-color: #000000;
+    transform-style: preserve-3d;
+    background-color: #00000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    --size: 50;
 }
-div#minecraft-skin .cube > * {
+
+#minecraft-skin .cube > * {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
     background-image: var(--skin-image);
-}
-div#minecraft-skin .cube > .top {
-    width: var(--width);
-    height: var(--width);
-    transform: rotateX(90deg) translateZ(calc(var(--pos) / 2));
+    background-color: pink;
+    background-size: calc(8px * var(--size));
 }
 
-div#minecraft-skin .cube > .bottom {
-    width: var(--width);
-    height: var(--height);
-    transform: rotateX(-90deg) translateZ(calc(var(--pos) / 2));
+#minecraft-skin .head {
+    --size-x: calc(1px * var(--size));
+    --size-y: calc(1px * var(--size));
+    --size-z: calc(1px * var(--size));
 }
 
-div#minecraft-skin .cube > .left {
-    height: var(--pos);
-    width: var(--height);
-    transform: rotateY(-90deg) translateZ(calc(var(--width) / 2));
+#minecraft-skin .body {
+    transform: translateY(calc(1.25px * var(--size)));
+    --size-x: calc(1px * var(--size));
+    --size-y: calc(1.5px * var(--size));
+    --size-z: calc(0.5px * var(--size));
 }
-div#minecraft-skin .cube > .right {
-    height: var(--pos);
-    width: var(--height);
-    transform: rotateY( 90deg) translateZ(calc(var(--width) / 2));
+#minecraft-skin .arm.right,
+#minecraft-skin .arm.left,
+#minecraft-skin .legs.left,
+#minecraft-skin .legs.right {
+    --size-x: calc(0.5px * var(--size));
+    --size-y: calc(1.5px * var(--size));
+    --size-z: calc(0.5px * var(--size));
 }
-div#minecraft-skin .cube > .back {
-    height: var(--pos);
-    width: var(--width);
-    transform: rotateY(180deg) translateZ(calc(var(--height) / 2));
+#minecraft-skin .arm.right {
+    transform:
+            translateY(calc(1.25px * var(--size)))
+            translateX(calc(-0.75px * var(--size)));
 }
-div#minecraft-skin .cube > .front {
-    height: var(--pos);
-    width: var(--width);
-    transform: rotateY(  0deg) translateZ(calc(var(--height) / 2));
+#minecraft-skin .arm.left {
+    transform:
+            translateY(calc(1.25px * var(--size)))
+            translateX(calc(0.75px * var(--size)));
+}
+#minecraft-skin .legs.left {
+    transform:
+            translateY(calc(2.75px * var(--size)))
+            translateX(calc(0.25px * var(--size)));
+}
+#minecraft-skin .legs.right {
+    transform:
+            translateY(calc(2.75px * var(--size)))
+            translateX(calc(-0.25px * var(--size)));
+}
+
+#minecraft-skin .cube.head .front {
+    background-position:
+            calc(calc(1px * var(--size)) * -1)
+            calc(calc(1px * var(--size)) * -1);
+}
+#minecraft-skin .cube.head .right {
+    background-position:
+            calc(calc(1px * var(--size)) * -2)
+            calc(calc(1px * var(--size)) * -1);
+}
+#minecraft-skin .cube.head .left {
+    background-position:
+            calc(calc(1px * var(--size)) * 0)
+            calc(calc(1px * var(--size)) * -1);
+}
+#minecraft-skin .cube.head .back {
+    background-position:
+            calc(calc(1px * var(--size)) * -3)
+            calc(calc(1px * var(--size)) * -1);
+}
+#minecraft-skin .cube.head .top {
+    background-position:
+            calc(calc(1px * var(--size)) * -1)
+            calc(calc(1px * var(--size)) * 0);
+}
+#minecraft-skin .cube.head .bottom {
+    background-position:
+            calc(calc(1px * var(--size)) * -2)
+            calc(calc(1px * var(--size)) * 0);
+}
+#minecraft-skin .cube.head .accessories .front {
+    background-position:
+            calc(calc(1px * var(--size)) * -1)
+            calc(calc(1px * var(--size)) * -1); /* FIXME */
+}
+
+#minecraft-skin .cube.body .front {
+    background-position:
+            calc(calc(1px * var(--size)) * -2.5)
+            calc(calc(1px * var(--size)) * -2.5);
+}
+#minecraft-skin .cube.body .right {
+    background-position:
+            calc(calc(1px * var(--size)) * -3.5)
+            calc(calc(1px * var(--size)) * -2.5)
+}
+#minecraft-skin .cube.body .left {
+    background-position:
+            calc(calc(1px * var(--size)) * -2)
+            calc(calc(1px * var(--size)) * -2.5);
+}
+#minecraft-skin .cube.body .back {
+    background-position:
+            calc(calc(1px * var(--size)) * -4)
+            calc(calc(1px * var(--size)) * -2.5);
+}
+#minecraft-skin .cube.body .top {
+    background-position:
+            calc(calc(1px * var(--size)) * -2.5)
+            calc(calc(1px * var(--size)) * -2);
+}
+#minecraft-skin .cube.body .bottom {
+    background-position:
+            calc(calc(1px * var(--size)) * -3.5)
+            calc(calc(1px * var(--size)) * -2);
+}
+
+/* Arm-left */
+#minecraft-skin .cube.arm.left .front {
+    background-position:
+            calc(calc(1px * var(--size)) * -4.5)
+            calc(calc(1px * var(--size)) * -6.5);
+}
+#minecraft-skin .cube.arm.left .right {
+    background-position:
+            calc(calc(1px * var(--size)) * -5)
+            calc(calc(1px * var(--size)) * -6.5)
+}
+#minecraft-skin .cube.arm.left .left {
+    background-position:
+            calc(calc(1px * var(--size)) * -4)
+            calc(calc(1px * var(--size)) * -6.5);
+}
+#minecraft-skin .cube.arm.left .back {
+    background-position:
+            calc(calc(1px * var(--size)) * -5.5)
+            calc(calc(1px * var(--size)) * -6.5);
+}
+#minecraft-skin .cube.arm.left .top {
+    background-position:
+            calc(calc(1px * var(--size)) * -4.5)
+            calc(calc(1px * var(--size)) * -6);
+}
+#minecraft-skin .cube.arm.left .bottom {
+    background-position:
+            calc(calc(1px * var(--size)) * -5)
+            calc(calc(1px * var(--size)) * -6);
+}
+
+/* Arm-right */
+#minecraft-skin .cube.arm.right .front {
+    background-position:
+            calc(calc(1px * var(--size)) * -5.5)
+            calc(calc(1px * var(--size)) * -2.5);
+}
+#minecraft-skin .cube.arm.right .right {
+    background-position:
+            calc(calc(1px * var(--size)) * -6)
+            calc(calc(1px * var(--size)) * -2.5)
+}
+#minecraft-skin .cube.arm.right .left {
+    background-position:
+            calc(calc(1px * var(--size)) * -5)
+            calc(calc(1px * var(--size)) * -2.5);
+}
+#minecraft-skin .cube.arm.right .back {
+    background-position:
+            calc(calc(1px * var(--size)) * -6.5)
+            calc(calc(1px * var(--size)) * -2.5);
+}
+#minecraft-skin .cube.arm.right .top {
+    background-position:
+            calc(calc(1px * var(--size)) * -5.5)
+            calc(calc(1px * var(--size)) * -2);
+}
+#minecraft-skin .cube.arm.right .bottom {
+    background-position:
+            calc(calc(1px * var(--size)) * -6)
+            calc(calc(1px * var(--size)) * -2);
+}
+/* legs-right */
+#minecraft-skin .cube.legs.right .front {
+    background-position:
+            calc(calc(1px * var(--size)) * -0.5)
+            calc(calc(1px * var(--size)) * -2.5);
+}
+#minecraft-skin .cube.legs.right .right {
+    background-position:
+            calc(calc(1px * var(--size)) * -1)
+            calc(calc(1px * var(--size)) * -2.5)
+}
+#minecraft-skin .cube.legs.right .left {
+    background-position:
+            calc(calc(1px * var(--size)) * 0)
+            calc(calc(1px * var(--size)) * -2.5);
+}
+#minecraft-skin .cube.legs.right .back {
+    background-position:
+            calc(calc(1px * var(--size)) * -1.5)
+            calc(calc(1px * var(--size)) * -2.5);
+}
+#minecraft-skin .cube.legs.right .top {
+    background-position:
+            calc(calc(1px * var(--size)) * -0.5)
+            calc(calc(1px * var(--size)) * -2);
+}
+#minecraft-skin .cube.legs.right .bottom {
+    background-position:
+            calc(calc(1px * var(--size)) * -1)
+            calc(calc(1px * var(--size)) * -2);
+}
+/* legs-left */
+#minecraft-skin .cube.legs.left .front {
+    background-position:
+            calc(calc(1px * var(--size)) * -2.5)
+            calc(calc(1px * var(--size)) * -6.5);
+}
+#minecraft-skin .cube.legs.left .right {
+    background-position:
+            calc(calc(1px * var(--size)) * -3)
+            calc(calc(1px * var(--size)) * -6.5)
+}
+#minecraft-skin .cube.legs.left .left {
+    background-position:
+            calc(calc(1px * var(--size)) * -2)
+            calc(calc(1px * var(--size)) * -6.5);
+}
+#minecraft-skin .cube.legs.left .back {
+    background-position:
+            calc(calc(1px * var(--size)) * -3.5)
+            calc(calc(1px * var(--size)) * -6.5);
+}
+#minecraft-skin .cube.legs.left .top {
+    background-position:
+            calc(calc(1px * var(--size)) * -2.5)
+            calc(calc(1px * var(--size)) * -6);
+}
+#minecraft-skin .cube.legs.left .bottom {
+    background-position:
+            calc(calc(1px * var(--size)) * -3)
+            calc(calc(1px * var(--size)) * -6);
+}
+
+/* Cubes */
+#minecraft-skin .cube .top {
+    width: var(--size-x);
+    height: var(--size-z);
+    transform: rotateX( 90deg) translateZ(calc(var(--size-y) / 2));
+}
+
+#minecraft-skin .cube .bottom {
+    width: var(--size-x);
+    height: var(--size-z);
+    transform: rotateX(-90deg) translateZ(calc(var(--size-y) / 2));
+}
+
+#minecraft-skin .cube.body .bottom,
+#minecraft-skin .cube.head .bottom {
+    transform: rotateX(-90deg) rotateZ(180deg) translateZ(calc(var(--size-y) / 2));
+}
+
+#minecraft-skin .cube .left {
+    height: var(--size-y);
+    width: var(--size-z);
+    transform: rotateY(-90deg) translateZ(calc(var(--size-x) / 2));
+}
+#minecraft-skin .cube .right {
+    height: var(--size-y);
+    width: var(--size-z);
+    transform: rotateY( 90deg) translateZ(calc(var(--size-x) / 2));
+}
+#minecraft-skin .cube .back {
+    height: var(--size-y);
+    width: var(--size-x);
+    transform: rotateY(180deg) translateZ(calc(var(--size-z) / 2));
+}
+#minecraft-skin .cube .front {
+    height: var(--size-y);
+    width: var(--size-x);
+    transform: rotateY(  0deg) translateZ(calc(var(--size-z) / 2));
 }

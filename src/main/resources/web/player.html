@@ -15,7 +15,7 @@
   </style>
   <link rel="stylesheet" href="/static/skin3d.css">
   <style th:inline="css">
-      :root {
+      #minecraft-skin {
           --skin-image: url([[${playerSkin}]]);
       }
   </style>
@@ -25,6 +25,7 @@
 <body>
   <header>
     <h1 th:text="${playerName}"></h1>
+    <img th:src="${playerSkin}" id="skin-img" alt="">
   </header>
   <main>
     <section th:hidden="${isOnline}">
@@ -38,71 +39,70 @@
       </div>
       <div id="gameArea" class="hidden">
         <p>接続済み</p>
-        <button onclick="disconnect()">切断</button>
-      </div>
-      <figure>
-        <img th:src="${playerSkin}" id="skin-img" alt="">
-        <div id="minecraft-skin">
-          <div class="head cube">
-            <div class="top"></div>
-            <div class="bottom"></div>
-            <div class="left"></div>
-            <div class="right"></div>
-            <div class="front"></div>
-            <div class="back"></div>
-            <div class="accessories">
-              <div class="cube">
-                <div class="top"></div>
-                <div class="bottom"></div>
-                <div class="left"></div>
-                <div class="right"></div>
-                <div class="front"></div>
-                <div class="back"></div>
+        <figure>
+          <div id="minecraft-skin">
+            <div class="head cube">
+              <div class="top"></div>
+              <div class="bottom"></div>
+              <div class="left"></div>
+              <div class="right"></div>
+              <div class="front"></div>
+              <div class="back"></div>
+              <div class="accessories">
+                <div class="cube">
+                  <div class="top"></div>
+                  <div class="bottom"></div>
+                  <div class="left"></div>
+                  <div class="right"></div>
+                  <div class="front"></div>
+                  <div class="back"></div>
+                </div>
               </div>
             </div>
+            <div class="body cube">
+              <div class="top"></div>
+              <div class="bottom"></div>
+              <div class="left"></div>
+              <div class="right"></div>
+              <div class="front"></div>
+              <div class="back"></div>
+            </div>
+            <div class="arm right cube">
+              <div class="top"></div>
+              <div class="bottom"></div>
+              <div class="left"></div>
+              <div class="right"></div>
+              <div class="front"></div>
+              <div class="back"></div>
+            </div>
+            <div class="arm left cube">
+              <div class="top"></div>
+              <div class="bottom"></div>
+              <div class="left"></div>
+              <div class="right"></div>
+              <div class="front"></div>
+              <div class="back"></div>
+            </div>
+            <div class="legs left cube">
+              <div class="top"></div>
+              <div class="bottom"></div>
+              <div class="left"></div>
+              <div class="right"></div>
+              <div class="front"></div>
+              <div class="back"></div>
+            </div>
+            <div class="legs right cube">
+              <div class="top"></div>
+              <div class="bottom"></div>
+              <div class="left"></div>
+              <div class="right"></div>
+              <div class="front"></div>
+              <div class="back"></div>
+            </div>
           </div>
-          <div class="body cube">
-            <div class="top"></div>
-            <div class="bottom"></div>
-            <div class="left"></div>
-            <div class="right"></div>
-            <div class="front"></div>
-            <div class="back"></div>
-          </div>
-          <div class="arm right cube">
-            <div class="top"></div>
-            <div class="bottom"></div>
-            <div class="left"></div>
-            <div class="right"></div>
-            <div class="front"></div>
-            <div class="back"></div>
-          </div>
-          <div class="arm left cube">
-            <div class="top"></div>
-            <div class="bottom"></div>
-            <div class="left"></div>
-            <div class="right"></div>
-            <div class="front"></div>
-            <div class="back"></div>
-          </div>
-          <div class="legs left cube">
-            <div class="top"></div>
-            <div class="bottom"></div>
-            <div class="left"></div>
-            <div class="right"></div>
-            <div class="front"></div>
-            <div class="back"></div>
-          </div>
-          <div class="legs right cube">
-            <div class="top"></div>
-            <div class="bottom"></div>
-            <div class="left"></div>
-            <div class="right"></div>
-            <div class="front"></div>
-            <div class="back"></div>
-          </div>
-        </div>
-      </figure>
+        </figure>
+        <button onclick="disconnect()">切断</button>
+      </div>
     </section>
 
     <script th:inline="javascript">
