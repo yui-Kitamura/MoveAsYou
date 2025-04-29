@@ -6,7 +6,7 @@
 
   <groupId>eng.pro.yui.mcpl</groupId>
   <artifactId>MoveAsYou</artifactId>
-  <version>0.1.4d</version>
+  <version>0.1.5</version>
   <packaging>jar</packaging>
 
   <name>MoveAsYou</name>
