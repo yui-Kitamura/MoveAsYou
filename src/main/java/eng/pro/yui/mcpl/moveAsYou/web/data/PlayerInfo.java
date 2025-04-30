@@ -19,12 +19,18 @@ public class PlayerInfo {
     public PlayerName getName(){
         return playerName;
     }
+
+    private BgColor bgColor;
+    public BgColor getBgColor(){ 
+        return bgColor;
+    }
     
     /** constructor */
     public PlayerInfo(Player player){
         MoveAsYou.log().info("Creating player info for " + player.getName());
         this.playerUuid = player.getUniqueId();
         this.playerName = new PlayerName(player);
+        this.bgColor = MoveAsYou.playerSettings().get(player.getUniqueId()).getBackGroundColor();
 
         update();
     }
@@ -47,7 +53,6 @@ public class PlayerInfo {
         isSneaking = p.isSneaking();
         boolean isUsingSomething = (p.getItemInUse() != null);
         itemInHand = isUsingSomething ? p.getItemInUse().getData().getItemType().name() : "";
-        bgColor = MoveAsYou.playerSettings().get(p.getUniqueId()).getBackGroundColor();
     }
     
     private String worldName;
@@ -58,7 +63,6 @@ public class PlayerInfo {
     private double pitch;
     private boolean isSneaking;
     private String itemInHand;
-    private BgColor bgColor;
     
     public String getWorldName(){ return worldName; }
     public double getX(){ return x; }
@@ -68,7 +72,7 @@ public class PlayerInfo {
     public double getPitch(){ return pitch; }
     public boolean isSneaking(){ return isSneaking; }
     public String getItemInHand(){ return itemInHand; }
-    public BgColor getBgColor(){ return bgColor; }
+    
 
     @Override
     public int hashCode() {
