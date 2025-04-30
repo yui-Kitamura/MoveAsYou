@@ -3,21 +3,14 @@
  * * https://tsutori.ngo/ or https://github.com/tsutoringo
  * Usage rights are granted by tsutoringo.
  */
-@keyframes kurukuru {
-    0% {transform:rotateX(0turn) rotateY(0turn) rotateZ(0turn);}
-    100% {transform:rotateX(1turn) rotateY(2turn) rotateZ(1turn)}
-}
-
 #minecraft-skin {
-    width: 100px;
-    height: 100px;
+    display: block;
+    width: calc(var(--size) * 5px);
+    height: calc(var(--size) * 5px);
     perspective: none;
     transform-style: preserve-3d;
-    animation-name: kurukuru;
-    /* 	animation-duration: 1s; */
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    transform: rotateY(30deg) rotateX(30deg) rotateZ(0deg);
+    transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+    --size: 50;
 }
 
 .accessories {
@@ -34,7 +27,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    --size: 50;
 }
 
 .cube > * {
@@ -106,6 +98,11 @@
             calc(calc(1px * var(--size)) * -2)
             calc(calc(1px * var(--size)) * -1);
 }
+.cube.head .accessories .right {
+    background-position:
+            calc(calc(1px * var(--size)) * -2)
+            calc(calc(1px * var(--size)) * -1);
+}
 .cube.head .left {
     background-position:
             calc(calc(1px * var(--size)) * 0)
@@ -126,11 +123,7 @@
             calc(calc(1px * var(--size)) * -2)
             calc(calc(1px * var(--size)) * 0);
 }
-.cube.head .accessories .front {
-    background-position:
-            calc(calc(1px * var(--size)) * -1)
-            calc(calc(1px * var(--size)) * -1); /* FIXME */
-}
+
 
 .cube.body .front {
     background-position:
