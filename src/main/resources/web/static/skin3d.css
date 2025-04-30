@@ -46,6 +46,9 @@
     background-color: pink;
     background-size: calc(8px * var(--size));
 }
+.accessories .cube > * {
+    background-color: transparent;
+}
 
 .head {
     --size-x: calc(1px * var(--size));
@@ -91,6 +94,11 @@
 .cube.head .front {
     background-position:
             calc(calc(1px * var(--size)) * -1)
+            calc(calc(1px * var(--size)) * -1);
+}
+.cube.head .accessories .front {
+    background-position:
+            calc(calc(5px * var(--size)) * -1)
             calc(calc(1px * var(--size)) * -1);
 }
 .cube.head .right {
