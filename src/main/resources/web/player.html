@@ -170,7 +170,6 @@
             socket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
                 console.dir(data);
-                document.getElementById('bgFig').classList.add(data.bgColor.toLowerCase());
             };
 
             socket.onclose = function(event) {
