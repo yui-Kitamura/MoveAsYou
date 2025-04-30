@@ -212,6 +212,28 @@
             }
             socket = null;
         }
+        
+        const skinView = document.getElementById('minecraft-skin');
+        let isDragging = false;
+        let startX, startY;
+        let currentRotationX = 0, currentRotationY = 0;
+        const ROTATION_SCALE = 0.75;
+        skinView.addEventListener('mousedown', (e)=>{
+           isDragging = true;
+           startX = e.clientX; startY = e.clientY;
+        });
+        window.addEventListener('mousemove', (e)=>{
+            if (isDragging == false){ return; }
+            const dX = e.clientX - startX;
+            const dY = e.clientY - startY;
+            const rotateX = currentRotationX + dY * ROTATION_SCALE;
+            const rotateY = currentRotationY - dX * ROTATION_SCALE;
+            console.log(rotateX + "," + rotateY);
+            skinView.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            currentRotationX = rotateX; currentRotationY = rotateY;
+            startX = e.clientX; startY = e.clientY;
+        })
+        window.addEventListener('mouseup', ()=>{ isDragging = false; });
     </script>
   </main>
 </body>
