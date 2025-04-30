@@ -66,6 +66,9 @@ public class PlayerNameHandler implements HttpHandler {
             variables.put("playerSkin", "");
             variables.put("skinModel", "");
         }
+        variables.put("bgColor", 
+                MoveAsYou.playerSettings().get(player.getUniqueId()).getBackGroundColor().name().toLowerCase()
+        );
 
         HtmlText fullHtml = HtmlText.getFull(WebServer.getRenderer().render(playerTemplate, variables));
         WebServer.send(200, fullHtml, exchange);
