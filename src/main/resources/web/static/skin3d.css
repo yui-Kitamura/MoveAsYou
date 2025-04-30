@@ -7,10 +7,11 @@
     display: block;
     width: calc(var(--size) * 5px);
     height: calc(var(--size) * 5px);
+    padding-top: calc(var(--size) * 1px);
     perspective: none;
     transform-style: preserve-3d;
     transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
-    --size: 50;
+    --size: 75;
 }
 
 .accessories {
