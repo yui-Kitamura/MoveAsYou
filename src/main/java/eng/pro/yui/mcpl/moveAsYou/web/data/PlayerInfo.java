@@ -1,10 +1,10 @@
 package eng.pro.yui.mcpl.moveAsYou.web.data;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.consts.BgColor;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 
 import org.bukkit.entity.Player;
-import org.bukkit.profile.PlayerProfile;
 
 import java.util.UUID;
 
@@ -47,6 +47,7 @@ public class PlayerInfo {
         isSneaking = p.isSneaking();
         boolean isUsingSomething = (p.getItemInUse() != null);
         itemInHand = isUsingSomething ? p.getItemInUse().getData().getItemType().name() : "";
+        bgColor = MoveAsYou.playerSettings().get(p.getUniqueId()).getBackGroundColor();
     }
     
     private String worldName;
@@ -57,6 +58,7 @@ public class PlayerInfo {
     private double pitch;
     private boolean isSneaking;
     private String itemInHand;
+    private BgColor bgColor;
     
     public String getWorldName(){ return worldName; }
     public double getX(){ return x; }
@@ -66,6 +68,7 @@ public class PlayerInfo {
     public double getPitch(){ return pitch; }
     public boolean isSneaking(){ return isSneaking; }
     public String getItemInHand(){ return itemInHand; }
+    public BgColor getBgColor(){ return bgColor; }
 
     @Override
     public int hashCode() {
@@ -79,6 +82,7 @@ public class PlayerInfo {
         hash = 31 * hash + Double.valueOf(pitch).hashCode();
         hash = 31 * hash + Boolean.valueOf(isSneaking).hashCode();
         hash = 31 * hash + itemInHand.hashCode();
+        hash = 31 * hash + bgColor.hashCode();
         return hash;
     }
 
@@ -97,6 +101,7 @@ public class PlayerInfo {
         if(pitch != other.pitch) { return false; }
         if(isSneaking != other.isSneaking) { return false; }
         if(!itemInHand.equals(other.itemInHand)) { return false; }
+        if(bgColor != other.bgColor) { return false; }
         return true;
     }
 
@@ -105,8 +110,9 @@ public class PlayerInfo {
         return String.format("PlayerInfo{" +
                         "playerUuid: %s, playerName: %s," +
                         " world: %s, x: %.4f, y: %.4f, z: %.4f, yaw: %.4f, pitch: %.4f," +
-                        " isSneaking: %b, itemInHand: %s}",
-                playerUuid, playerName,  worldName, x, y, z, yaw, pitch, isSneaking, itemInHand
+                        " isSneaking: %b, itemInHand: %s, bgColor: %s}",
+                playerUuid, playerName,  worldName, x, y, z, yaw, pitch, 
+                isSneaking, itemInHand, bgColor.name()
         );
     }
     

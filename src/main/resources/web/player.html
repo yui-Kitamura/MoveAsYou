@@ -12,6 +12,13 @@
       .hidden {
           display: none;
       }
+      
+      .green #minecraft-skin {
+          background-color: limegreen;
+      }
+      .blue #minecraft-skin {
+          background-color: darkblue;
+      }
   </style>
   <link rel="stylesheet" href="/static/skin3d.css">
   <style th:inline="css">
@@ -40,7 +47,8 @@
       </div>
       <div id="gameArea" class="hidden">
         <p>接続済み</p>
-        <figure>
+        <button onclick="disconnect()">切断</button>
+        <figure id="bgFig">
           <div id="minecraft-skin">
             <div class="head cube">
               <div class="top"></div>
@@ -102,7 +110,6 @@
             </div>
           </div>
         </figure>
-        <button onclick="disconnect()">切断</button>
       </div>
     </section>
 
