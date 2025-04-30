@@ -61,8 +61,10 @@ public class PlayerNameHandler implements HttpHandler {
         PlayerProfile profile = player.getPlayerProfile();
         if(profile.getTextures().getSkin() != null){
             variables.put("playerSkin", profile.getTextures().getSkin().toString());
+            variables.put("skinModel", profile.getTextures().getSkinModel().name().toLowerCase());
         }else {
             variables.put("playerSkin", "");
+            variables.put("skinModel", "");
         }
 
         HtmlText fullHtml = HtmlText.getFull(WebServer.getRenderer().render(playerTemplate, variables));

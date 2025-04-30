@@ -30,7 +30,7 @@
 <body>
   <header>
     <h1 th:text="${playerName}"></h1>
-    <figure th:if="${playerSkin != null and playerSkin != ''}">
+    <figure th:if="${playerSkin != null and playerSkin != ''}" >
       <img th:src="${playerSkin}" id="skin-img" alt="">
       <figcaption>読み込んだプレイヤースキン</figcaption>
     </figure>
@@ -48,8 +48,8 @@
       <div id="gameArea" class="hidden">
         <p>接続済み</p>
         <button onclick="disconnect()">切断</button>
-        <figure id="bgFig">
-          <div id="minecraft-skin">
+        <figure id="bgFig" th:class="${bgColor}">
+          <div id="minecraft-skin" th:class="${skinModel}">
             <div class="head cube">
               <div class="top"></div>
               <div class="bottom"></div>
