@@ -30,7 +30,7 @@
 <body>
   <header>
     <h1 th:text="${playerName}"></h1>
-    <figure>
+    <figure th:if="${playerSkin != null and playerSkin != ''}">
       <img th:src="${playerSkin}" id="skin-img" alt="">
       <figcaption>読み込んだプレイヤースキン</figcaption>
     </figure>
