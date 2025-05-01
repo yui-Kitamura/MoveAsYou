@@ -207,10 +207,20 @@
             translateY(calc(1px * var(--size) * 1.25))
             translateX(calc(1px * var(--size) * -0.75));
 }
+.slim .arm.right {
+    transform:
+            translateY(calc(1px * var(--size) * 1.25))
+            translateX(calc(1px * var(--size) * -0.72));
+}
 .arm.left {
     transform:
             translateY(calc(1px * var(--size) * 1.25))
             translateX(calc(1px * var(--size) * 0.75));
+}
+.slim .arm.left {
+    transform:
+            translateY(calc(1px * var(--size) * 1.25))
+            translateX(calc(1px * var(--size) * 0.72));
 }
 .legs.left {
     transform:
