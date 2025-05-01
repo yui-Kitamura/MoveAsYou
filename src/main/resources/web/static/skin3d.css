@@ -91,7 +91,7 @@
 }
 .cube.head .accessories .front {
     background-position:
-            calc(calc(5px * var(--size)) * -1)
+            calc(calc(1px * var(--size)) * -5)
             calc(calc(1px * var(--size)) * -1);
 }
 .cube.head .right {
@@ -101,7 +101,7 @@
 }
 .cube.head .accessories .right {
     background-position:
-            calc(calc(1px * var(--size)) * -2)
+            calc(calc(1px * var(--size)) * 2)
             calc(calc(1px * var(--size)) * -1);
 }
 .cube.head .left {
@@ -109,9 +109,19 @@
             calc(calc(1px * var(--size)) * 0)
             calc(calc(1px * var(--size)) * -1);
 }
+.cube.head .accessories .left {
+    background-position:
+            calc(calc(1px * var(--size)) * -4)
+            calc(calc(1px * var(--size)) * -1);
+}
 .cube.head .back {
     background-position:
             calc(calc(1px * var(--size)) * -3)
+            calc(calc(1px * var(--size)) * -1);
+}
+.cube.head .accessories .back {
+    background-position:
+            calc(calc(1px * var(--size)) * -7)
             calc(calc(1px * var(--size)) * -1);
 }
 .cube.head .top {
@@ -119,12 +129,21 @@
             calc(calc(1px * var(--size)) * -1)
             calc(calc(1px * var(--size)) * 0);
 }
+.cube.head .accessories .top {
+    background-position:
+            calc(calc(1px * var(--size)) * 3)
+            calc(calc(1px * var(--size)) * 0);
+}
 .cube.head .bottom {
     background-position:
             calc(calc(1px * var(--size)) * -2)
             calc(calc(1px * var(--size)) * 0);
 }
-
+.cube.head .accessories .bottom {
+    background-position:
+            calc(calc(1px * var(--size)) * 5)
+            calc(calc(1px * var(--size)) * 0);
+}
 
 .cube.body .front {
     background-position:
@@ -298,7 +317,7 @@
 
 .cube.body .bottom,
 .cube.head .bottom {
-    transform: rotateX(-90deg) rotateZ(180deg) translateZ(calc(var(--size-y) / 2));
+    transform: rotateX(90deg) rotateZ(0deg) translateZ(calc(var(--size-y) * -1 / 2));
 }
 
 .cube .left {
