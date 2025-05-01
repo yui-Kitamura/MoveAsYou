@@ -88,41 +88,6 @@
     --size-z: calc(1px * var(--size));
 }
 
-.body {
-    transform: translateY(calc(1px * var(--size) * 1.25));
-    --size-x: calc(1px * var(--size));
-    --size-y: calc(1px * var(--size) * 1.5);
-    --size-z: calc(1px * var(--size) * 0.5);
-}
-.arm.right,
-.arm.left,
-.legs.left,
-.legs.right {
-    --size-x: calc(1px * var(--size) * 0.5);
-    --size-y: calc(1px * var(--size) * 1.5);
-    --size-z: calc(1px * var(--size) * 0.5);
-}
-.arm.right {
-    transform:
-            translateY(calc(1px * var(--size) * 1.25))
-            translateX(calc(1px * var(--size) * -0.75));
-}
-.arm.left {
-    transform:
-            translateY(calc(1px * var(--size) * 1.25))
-            translateX(calc(1px * var(--size) * 0.75));
-}
-.legs.left {
-    transform:
-            translateY(calc(1px * var(--size) * 2.75))
-            translateX(calc(1px * var(--size) * 0.25));
-}
-.legs.right {
-    transform:
-            translateY(calc(1px * var(--size) * 2.75))
-            translateX(calc(1px * var(--size) * -0.25 ));
-}
-
 .cube.head .front {
     background-position:
             calc(calc(1px * var(--size)) * -1)
@@ -215,6 +180,48 @@
             calc(calc(1px * var(--size)) * -2);
 }
 
+.body {
+    transform: translateY(calc(1px * var(--size) * 1.25));
+    --size-x: calc(1px * var(--size));
+    --size-y: calc(1px * var(--size) * 1.5);
+    --size-z: calc(1px * var(--size) * 0.5);
+}
+
+
+.arm.right,
+.arm.left,
+.legs.left,
+.legs.right {
+    --size-x: calc(1px * var(--size) * 0.5);
+    --size-y: calc(1px * var(--size) * 1.5);
+    --size-z: calc(1px * var(--size) * 0.5);
+}
+.slim .arm.right,
+.slim .arm.left {
+    --size-x: calc(1px * var(--size) * 0.5 * 3 / 4); /* slim 3px width */
+    --size-y: calc(1px * var(--size) * 1.5);
+    --size-z: calc(1px * var(--size) * 0.5);
+}
+.arm.right {
+    transform:
+            translateY(calc(1px * var(--size) * 1.25))
+            translateX(calc(1px * var(--size) * -0.75));
+}
+.arm.left {
+    transform:
+            translateY(calc(1px * var(--size) * 1.25))
+            translateX(calc(1px * var(--size) * 0.75));
+}
+.legs.left {
+    transform:
+            translateY(calc(1px * var(--size) * 2.75))
+            translateX(calc(1px * var(--size) * 0.25));
+}
+.legs.right {
+    transform:
+            translateY(calc(1px * var(--size) * 2.75))
+            translateX(calc(1px * var(--size) * -0.25 ));
+}
 /* Arm-left */
 .cube.arm.left .front {
     background-position:
@@ -236,6 +243,11 @@
             calc(calc(1px * var(--size)) * -5.5)
             calc(calc(1px * var(--size)) * -6.5);
 }
+.slim .cube.arm.left .back {
+    background-position:
+            calc(calc(1px * var(--size)) * -5.38)
+            calc(calc(1px * var(--size)) * -6.5);
+}
 .cube.arm.left .top {
     background-position:
             calc(calc(1px * var(--size)) * -4.5)
@@ -244,6 +256,11 @@
 .cube.arm.left .bottom {
     background-position:
             calc(calc(1px * var(--size)) * -5)
+            calc(calc(1px * var(--size)) * -6);
+}
+.slim .cube.arm.left .bottom {
+    background-position:
+            calc(calc(1px * var(--size)) * -4.88) 
             calc(calc(1px * var(--size)) * -6);
 }
 
@@ -268,6 +285,11 @@
             calc(calc(1px * var(--size)) * -6.5)
             calc(calc(1px * var(--size)) * -2.5);
 }
+.slim .cube.arm.right .back {
+    background-position:
+            calc(calc(1px * var(--size)) * -6.36)
+            calc(calc(1px * var(--size)) * -2.5);
+}
 .cube.arm.right .top {
     background-position:
             calc(calc(1px * var(--size)) * -5.5)
@@ -276,6 +298,11 @@
 .cube.arm.right .bottom {
     background-position:
             calc(calc(1px * var(--size)) * -6)
+            calc(calc(1px * var(--size)) * -2);
+}
+.slim .cube.arm.right .bottom {
+    background-position:
+            calc(calc(1px * var(--size)) * -5.87)
             calc(calc(1px * var(--size)) * -2);
 }
 /* legs-right */
