@@ -50,38 +50,38 @@
 }
 
 .body {
-    transform: translateY(calc(1.25px * var(--size)));
+    transform: translateY(calc(1px * var(--size) * 1.25));
     --size-x: calc(1px * var(--size));
-    --size-y: calc(1.5px * var(--size));
-    --size-z: calc(0.5px * var(--size));
+    --size-y: calc(1px * var(--size) * 1.5);
+    --size-z: calc(1px * var(--size) * 0.5);
 }
 .arm.right,
 .arm.left,
 .legs.left,
 .legs.right {
-    --size-x: calc(0.5px * var(--size));
-    --size-y: calc(1.5px * var(--size));
-    --size-z: calc(0.5px * var(--size));
+    --size-x: calc(1px * var(--size) * 0.5);
+    --size-y: calc(1px * var(--size) * 1.5);
+    --size-z: calc(1px * var(--size) * 0.5);
 }
 .arm.right {
     transform:
-            translateY(calc(1.25px * var(--size)))
-            translateX(calc(-0.75px * var(--size)));
+            translateY(calc(1px * var(--size) * 1.25))
+            translateX(calc(1px * var(--size) * -0.75));
 }
 .arm.left {
     transform:
-            translateY(calc(1.25px * var(--size)))
-            translateX(calc(0.75px * var(--size)));
+            translateY(calc(1px * var(--size) * 1.25))
+            translateX(calc(1px * var(--size) * 0.75));
 }
 .legs.left {
     transform:
-            translateY(calc(2.75px * var(--size)))
-            translateX(calc(0.25px * var(--size)));
+            translateY(calc(1px * var(--size) * 2.75))
+            translateX(calc(1px * var(--size) * 0.25));
 }
 .legs.right {
     transform:
-            translateY(calc(2.75px * var(--size)))
-            translateX(calc(-0.25px * var(--size)));
+            translateY(calc(1px * var(--size) * 2.75))
+            translateX(calc(1px * var(--size) * -0.25 ));
 }
 
 .cube.head .front {
