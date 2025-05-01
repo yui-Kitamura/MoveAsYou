@@ -36,7 +36,7 @@
     height: 100%;
     image-rendering: pixelated;
     background-image: var(--skin-image);
-    background-color: pink;
+    background-color: whitesmoke;
     background-size: calc(8px * var(--size));
 }
 .accessories .cube > * {
