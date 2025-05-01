@@ -43,6 +43,45 @@
     background-color: transparent;
 }
 
+/* Cubes */
+.cube .top {
+    width: var(--size-x);
+    height: var(--size-z);
+    transform: rotateX( 90deg) translateZ(calc(var(--size-y) / 2));
+}
+
+.cube .bottom {
+    width: var(--size-x);
+    height: var(--size-z);
+    transform: rotateX(-90deg) translateZ(calc(var(--size-y) / 2));
+}
+
+.cube.body .bottom,
+.cube.head .bottom {
+    transform: rotateX(90deg) rotateZ(0deg) translateZ(calc(var(--size-y) * -1 / 2));
+}
+
+.cube .left {
+    height: var(--size-y);
+    width: var(--size-z);
+    transform: rotateY(-90deg) translateZ(calc(var(--size-x) / 2));
+}
+.cube .right {
+    height: var(--size-y);
+    width: var(--size-z);
+    transform: rotateY( 90deg) translateZ(calc(var(--size-x) / 2));
+}
+.cube .back {
+    height: var(--size-y);
+    width: var(--size-x);
+    transform: rotateY(180deg) translateZ(calc(var(--size-z) / 2));
+}
+.cube .front {
+    height: var(--size-y);
+    width: var(--size-x);
+    transform: rotateY(  0deg) translateZ(calc(var(--size-z) / 2));
+}
+
 .head {
     --size-x: calc(1px * var(--size));
     --size-y: calc(1px * var(--size));
@@ -300,43 +339,4 @@
     background-position:
             calc(calc(1px * var(--size)) * -3)
             calc(calc(1px * var(--size)) * -6);
-}
-
-/* Cubes */
-.cube .top {
-    width: var(--size-x);
-    height: var(--size-z);
-    transform: rotateX( 90deg) translateZ(calc(var(--size-y) / 2));
-}
-
-.cube .bottom {
-    width: var(--size-x);
-    height: var(--size-z);
-    transform: rotateX(-90deg) translateZ(calc(var(--size-y) / 2));
-}
-
-.cube.body .bottom,
-.cube.head .bottom {
-    transform: rotateX(90deg) rotateZ(0deg) translateZ(calc(var(--size-y) * -1 / 2));
-}
-
-.cube .left {
-    height: var(--size-y);
-    width: var(--size-z);
-    transform: rotateY(-90deg) translateZ(calc(var(--size-x) / 2));
-}
-.cube .right {
-    height: var(--size-y);
-    width: var(--size-z);
-    transform: rotateY( 90deg) translateZ(calc(var(--size-x) / 2));
-}
-.cube .back {
-    height: var(--size-y);
-    width: var(--size-x);
-    transform: rotateY(180deg) translateZ(calc(var(--size-z) / 2));
-}
-.cube .front {
-    height: var(--size-y);
-    width: var(--size-x);
-    transform: rotateY(  0deg) translateZ(calc(var(--size-z) / 2));
 }
