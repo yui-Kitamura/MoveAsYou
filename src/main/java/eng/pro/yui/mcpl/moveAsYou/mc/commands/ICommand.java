@@ -1,4 +1,4 @@
-package eng.pro.yui.mcpl.moveAsYou.mc;
+package eng.pro.yui.mcpl.moveAsYou.mc.commands;
 
 import org.bukkit.command.CommandSender;
 

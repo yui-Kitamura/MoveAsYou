@@ -6,16 +6,13 @@ import eng.pro.yui.mcpl.moveAsYou.auth.WebViewTokenManager;
 import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
 import eng.pro.yui.mcpl.moveAsYou.config.PlayerSettingManager;
 import eng.pro.yui.mcpl.moveAsYou.mc.EventHandlers;
-import eng.pro.yui.mcpl.moveAsYou.mc.MAYCommandHandler;
-import eng.pro.yui.mcpl.moveAsYou.mc.PlayerMoveMonitor;
-import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
+import eng.pro.yui.mcpl.moveAsYou.mc.commands.MAYCommandHandler;
+import eng.pro.yui.mcpl.moveAsYou.mc.commands.PlayerMoveMonitor;
 import eng.pro.yui.mcpl.moveAsYou.web.WebServer;
-import eng.pro.yui.mcpl.moveAsYou.web.data.PlayerInfo;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.Map;
 import java.util.logging.Logger;
 
 public final class MoveAsYou extends JavaPlugin {

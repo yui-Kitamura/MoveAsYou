@@ -1,9 +1,8 @@
-package eng.pro.yui.mcpl.moveAsYou.mc;
+package eng.pro.yui.mcpl.moveAsYou.mc.commands;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenInfo;
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenType;
-import eng.pro.yui.mcpl.moveAsYou.auth.WebViewTokenManager;
 import eng.pro.yui.mcpl.moveAsYou.exception.RateLimitedException;
 import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
 import org.bukkit.ChatColor;
