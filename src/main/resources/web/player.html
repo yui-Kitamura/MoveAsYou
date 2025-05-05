@@ -13,11 +13,13 @@
           display: none;
       }
       
-      #bgFig.green {
+      .green {
           background-color: limegreen;
+          color: darkred;
       }
-      #bgFig.blue {
+      .blue {
           background-color: darkblue;
+          color: gold;
       }
   </style>
   <link rel="stylesheet" href="/static/skin3d.css">
@@ -27,80 +29,58 @@
       }
   </style>
 </head>
-<body>
+<body th:class="${bgColor}">
   <header>
     <h1 th:text="${playerName}"></h1>
-    <figure th:if="${playerSkin != null and playerSkin != ''}" >
-      <img th:src="${playerSkin}" id="skin-img" alt="">
-      <figcaption>読み込んだプレイヤースキン</figcaption>
-    </figure>
   </header>
   <main>
     <section th:hidden="${isOnline}">
       <p>現在サーバに居ないので表示できません</p>
     </section>
     <section th:hidden="${!isOnline}">
+      <p>トークン発行コマンド（クリックでコピー）</p>
+      <dl>
+        <dt>使い捨てトークン</dt><dd><code>/moveasyou token</code></dd>
+        <dt>配信向けトークン</dt><dd><code>/moveasyou token stream</code></dd>
+        <dt>管理者用トークン</dt><dd><code>/moveasyou token admin</code></dd>
+        <script>
+            const checkedEle = document.createElement('span');
+            checkedEle.innerText = '✓copy✓';
+            document.querySelectorAll('code').forEach((ele)=>{
+                ele.addEventListener('click',(e)=>{
+                    const bodyVal = e.target.innerHTML;
+                    navigator.clipboard.writeText(bodyVal).then(() => {
+                        e.target.appendChild(checkedEle);
+                        setTimeout(() => {
+                            e.target.removeChild(checkedEle);
+                        }, 3000);
+                    }).catch(err => {
+                        console.error('Failed to copy command:', err);
+                    });
+                });
+            });
+        </script>
+      </dl>
       <div class="token-form" id="tokenForm">
-        <h2>トークンを入力してください</h2>
         <label>サーバーで発行されたトークン：<input type="text" id="tokenInput" placeholder="apple-gold-ingot"></label>
         <button onclick="connectToServer()">接続</button>
       </div>
       <div id="gameArea" class="hidden">
         <p>接続済み</p>
         <button onclick="disconnect()">切断</button>
-        <figure id="bgFig" th:class="${bgColor}">
-          <div id="minecraft-skin" th:class="${skinModel}">
-            <div class="head cube">
-              <div class="top"></div>
-              <div class="bottom"></div>
-              <div class="left"></div>
-              <div class="right"></div>
-              <div class="front"></div>
-              <div class="back"></div>
-              <div class="accessories">
-                <div class="cube">
-                  <div class="top"></div>
-                  <div class="bottom"></div>
-                  <div class="left"></div>
-                  <div class="right"></div>
-                  <div class="front"></div>
-                  <div class="back"></div>
-                </div>
-              </div>
-            </div>
-            <div class="body cube">
-              <div class="top"></div>
-              <div class="bottom"></div>
-              <div class="left"></div>
-              <div class="right"></div>
-              <div class="front"></div>
-              <div class="back"></div>
-            </div>
-            <div class="arm right cube">
-              <div class="top"></div>
-              <div class="bottom"></div>
-              <div class="left"></div>
-              <div class="right"></div>
-              <div class="front"></div>
-              <div class="back"></div>
-            </div>
-            <div class="arm left cube">
-              <div class="top"></div>
-              <div class="bottom"></div>
-              <div class="left"></div>
-              <div class="right"></div>
-              <div class="front"></div>
-              <div class="back"></div>
-            </div>
-            <div class="legs left cube">
-              <div class="top"></div>
-              <div class="bottom"></div>
-              <div class="left"></div>
-              <div class="right"></div>
-              <div class="front"></div>
-              <div class="back"></div>
-            </div>
-            <div class="legs right cube">
+      </div>
+    </section>
+    <figure id="bgFig" th:class="${bgColor}">
+      <div id="minecraft-skin" th:class="${skinModel}">
+        <div class="head cube">
+          <div class="top"></div>
+          <div class="bottom"></div>
+          <div class="left"></div>
+          <div class="right"></div>
+          <div class="front"></div>
+          <div class="back"></div>
+          <div class="accessories">
+            <div class="cube">
               <div class="top"></div>
               <div class="bottom"></div>
               <div class="left"></div>
@@ -109,9 +89,49 @@
               <div class="back"></div>
             </div>
           </div>
-        </figure>
+        </div>
+        <div class="body cube">
+          <div class="top"></div>
+          <div class="bottom"></div>
+          <div class="left"></div>
+          <div class="right"></div>
+          <div class="front"></div>
+          <div class="back"></div>
+        </div>
+        <div class="arm right cube">
+          <div class="top"></div>
+          <div class="bottom"></div>
+          <div class="left"></div>
+          <div class="right"></div>
+          <div class="front"></div>
+          <div class="back"></div>
+        </div>
+        <div class="arm left cube">
+          <div class="top"></div>
+          <div class="bottom"></div>
+          <div class="left"></div>
+          <div class="right"></div>
+          <div class="front"></div>
+          <div class="back"></div>
+        </div>
+        <div class="legs left cube">
+          <div class="top"></div>
+          <div class="bottom"></div>
+          <div class="left"></div>
+          <div class="right"></div>
+          <div class="front"></div>
+          <div class="back"></div>
+        </div>
+        <div class="legs right cube">
+          <div class="top"></div>
+          <div class="bottom"></div>
+          <div class="left"></div>
+          <div class="right"></div>
+          <div class="front"></div>
+          <div class="back"></div>
+        </div>
       </div>
-    </section>
+    </figure>
 
     <script th:inline="javascript">
         const DOMAIN = window.location.hostname;
