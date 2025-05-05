@@ -51,8 +51,7 @@ public class PlayerInfo {
         yaw = p.getLocation().getYaw();
         pitch = p.getLocation().getPitch();
         isSneaking = p.isSneaking();
-        boolean isUsingSomething = (p.getItemInUse() != null);
-        itemInHand = isUsingSomething ? p.getItemInUse().getData().getItemType().name() : "";
+        itemInHand = p.getItemOnCursor().getType().name();
     }
     
     private String worldName;
