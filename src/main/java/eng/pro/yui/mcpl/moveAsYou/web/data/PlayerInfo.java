@@ -5,7 +5,10 @@ import eng.pro.yui.mcpl.moveAsYou.consts.BgColor;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerAnimationType;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerInfo {
@@ -53,6 +56,17 @@ public class PlayerInfo {
         isSneaking = p.isSneaking();
         itemInHand = p.getInventory().getItemInMainHand().getType().name();
     }
+    public void notifyAnimation(PlayerAnimationType animation){
+        if(animationType == null) {
+            animationType = animation;
+        }
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                animationType = null;
+            }
+        }.runTaskLater(MoveAsYou.plugin(), 1L); //0.25s
+    }
     
     private String worldName;
     private double x;
@@ -62,6 +76,7 @@ public class PlayerInfo {
     private double pitch;
     private boolean isSneaking;
     private String itemInHand;
+    private PlayerAnimationType animationType;
     
     public String getWorldName(){ return worldName; }
     public double getX(){ return x; }
@@ -71,6 +86,7 @@ public class PlayerInfo {
     public double getPitch(){ return pitch; }
     public boolean isSneaking(){ return isSneaking; }
     public String getItemInHand(){ return itemInHand; }
+    public String getAnimationType(){ return animationType.name(); }
     
 
     @Override
@@ -78,6 +94,7 @@ public class PlayerInfo {
         int hash = 17;
         hash = 31 * hash + playerUuid.hashCode();
         hash = 31 * hash + worldName.hashCode();
+        hash = 31 * hash + bgColor.hashCode();
         hash = 31 * hash + Double.valueOf(x).hashCode();
         hash = 31 * hash + Double.valueOf(y).hashCode();
         hash = 31 * hash + Double.valueOf(z).hashCode();
@@ -85,7 +102,7 @@ public class PlayerInfo {
         hash = 31 * hash + Double.valueOf(pitch).hashCode();
         hash = 31 * hash + Boolean.valueOf(isSneaking).hashCode();
         hash = 31 * hash + itemInHand.hashCode();
-        hash = 31 * hash + bgColor.hashCode();
+        hash = 31 * hash + animationType.hashCode();
         return hash;
     }
 
@@ -97,6 +114,7 @@ public class PlayerInfo {
         PlayerInfo other = (PlayerInfo) obj;
         if(!playerUuid.equals(other.playerUuid)) { return false; }
         if(!worldName.equals(other.worldName)) { return false; }
+        if(bgColor != other.bgColor) { return false; }
         if(x != other.x) { return false; }
         if(y != other.y) { return false; }
         if(z != other.z) { return false; }
@@ -104,18 +122,18 @@ public class PlayerInfo {
         if(pitch != other.pitch) { return false; }
         if(isSneaking != other.isSneaking) { return false; }
         if(!itemInHand.equals(other.itemInHand)) { return false; }
-        if(bgColor != other.bgColor) { return false; }
+        if(animationType != other.animationType) { return false; }
         return true;
     }
 
     @Override
     public String toString() {
         return String.format("PlayerInfo{" +
-                        "playerUuid: %s, playerName: %s," +
+                        "playerUuid: %s, playerName: %s, bgColor: %s," +
                         " world: %s, x: %.4f, y: %.4f, z: %.4f, yaw: %.4f, pitch: %.4f," +
-                        " isSneaking: %b, itemInHand: %s, bgColor: %s}",
-                playerUuid, playerName,  worldName, x, y, z, yaw, pitch, 
-                isSneaking, itemInHand, bgColor.name()
+                        " isSneaking: %b, itemInHand: %s, animationType: %s }",
+                playerUuid, playerName, bgColor.name(), worldName, x, y, z, yaw, pitch, 
+                isSneaking, itemInHand, animationType.name()
         );
     }
     

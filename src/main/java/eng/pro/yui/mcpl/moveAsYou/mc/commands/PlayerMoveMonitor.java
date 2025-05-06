@@ -4,6 +4,7 @@ import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.data.PlayerInfo;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerAnimationType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,6 +58,12 @@ public class PlayerMoveMonitor {
         PlayerInfo info = players.get(playerUid);
         info.update();
         return info;
+    }
+    
+    public void listenAnimation(UUID playerUid, PlayerAnimationType animation){
+        PlayerInfo pInfo = players.get(playerUid);
+        if(pInfo == null) { return; }
+        pInfo.notifyAnimation(animation);
     }
     
 }

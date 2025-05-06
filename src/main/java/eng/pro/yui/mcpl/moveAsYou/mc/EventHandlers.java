@@ -21,7 +21,7 @@ public class EventHandlers implements Listener {
     
     @EventHandler
     public void onPlayerAnimation(PlayerAnimationEvent event) {
-        MoveAsYou.log().info(event.getAnimationType().name());
+        MoveAsYou.playerMonitor().listenAnimation(event.getPlayer().getUniqueId(), event.getAnimationType());
     }
 
 }
