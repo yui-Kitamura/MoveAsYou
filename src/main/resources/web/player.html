@@ -189,7 +189,7 @@
 
             socket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
-                console.log(data.yaw + "," + data.itemInHand + "," + data.animationType);
+                console.log(data.pitch + "," + data.itemInHand + "," + data.animationType);
             };
 
             socket.onclose = function(event) {
