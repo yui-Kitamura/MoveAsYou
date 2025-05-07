@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerAnimationType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.List;
 import java.util.UUID;
 
 public class PlayerInfo {
