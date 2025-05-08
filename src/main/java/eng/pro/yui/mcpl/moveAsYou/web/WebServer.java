@@ -7,6 +7,7 @@ import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.data.HtmlText;
 import eng.pro.yui.mcpl.moveAsYou.web.data.PlayerInfo;
+import org.bukkit.event.player.PlayerAnimationEvent;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -166,5 +167,9 @@ public class WebServer {
     
     public static void socketSendMonitor(){
         socketServer.sendPlayerInfo();
+    }
+    
+    public static void socketSendEvent(PlayerAnimationEvent event){
+        socketServer.sendPlayerAnimationEvent(event);
     }
 }

@@ -1,6 +1,7 @@
 package eng.pro.yui.mcpl.moveAsYou.mc;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.web.WebServer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAnimationEvent;
@@ -21,7 +22,7 @@ public class EventHandlers implements Listener {
     
     @EventHandler
     public void onPlayerAnimation(PlayerAnimationEvent event) {
-        MoveAsYou.playerMonitor().listenAnimation(event.getPlayer().getUniqueId(), event.getAnimationType());
+        WebServer.socketSendEvent(event);
     }
 
 }

@@ -60,10 +60,4 @@ public class PlayerMoveMonitor {
         return info;
     }
     
-    public void listenAnimation(UUID playerUid, PlayerAnimationType animation){
-        PlayerInfo pInfo = players.get(playerUid);
-        if(pInfo == null) { return; }
-        pInfo.notifyAnimation(animation);
-    }
-    
 }

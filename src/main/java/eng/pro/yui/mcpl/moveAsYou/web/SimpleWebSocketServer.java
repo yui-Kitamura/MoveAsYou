@@ -4,9 +4,11 @@ import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenText;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
+import eng.pro.yui.mcpl.moveAsYou.web.data.AnimationInfo;
 import eng.pro.yui.mcpl.moveAsYou.web.data.PlayerInfo;
 import eng.pro.yui.mcpl.moveAsYou.web.data.SocketID;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerAnimationEvent;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -112,6 +114,18 @@ public class SimpleWebSocketServer extends WebSocketServer {
                 }
             }else{ /* 1s待機 */ }
         }
+    }
+    
+    public void sendPlayerAnimationEvent(PlayerAnimationEvent e){
+        AnimationInfo sendInfo = new AnimationInfo();
+        sendInfo.update(e);
+        PlayerName target = new PlayerName(e.getPlayer());
+        for(WebSocket con : getConnections()){
+            SocketID key = new SocketID(con);
+            if(target.equals(connectionAndPlayer.get(key).playerName)) {
+                con.send(sendInfo.toJsonString());
+            }
+        }        
     }
         
 }
