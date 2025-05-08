@@ -189,7 +189,12 @@
 
             socket.onmessage = function(event) {
                 const data = JSON.parse(event.data);
-                console.log(data.pitch + "," + data.itemInHand + "," + data.animationType);
+                if(data.playerName){
+                    motionEvent(data);
+                }
+                if(data.animationType){
+                    animationEvent(data);
+                }
             };
 
             socket.onclose = function(event) {
@@ -230,6 +235,15 @@
                 socket.close(1000); //1000:NormalClose
             }
             socket = null;
+        }
+        
+        /** 1tick毎の動作状況socket通信に対応 */
+        function motionEvent(data){
+            console.log(data.pitch + "," + data.itemInHand);
+        }
+        /** Animationの通知socket通信に対応 */
+        function animationEvent(data){
+            console.log(data.animationType);
         }
         
         const skinView = document.getElementById('minecraft-skin');
