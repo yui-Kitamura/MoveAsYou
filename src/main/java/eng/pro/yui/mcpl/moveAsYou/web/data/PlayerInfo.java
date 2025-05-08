@@ -5,6 +5,8 @@ import eng.pro.yui.mcpl.moveAsYou.consts.BgColor;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
@@ -56,7 +58,8 @@ public class PlayerInfo implements ISocketPushInfo{
         yaw = p.getLocation().getYaw();
         pitch = p.getLocation().getPitch();
         isSneaking = p.isSneaking();
-        itemInHand = p.getInventory().getItemInMainHand().getType().name();
+        ItemMeta inHand = p.getInventory().getItemInMainHand().getItemMeta();
+        itemInHand = inHand == null ? "" : inHand.getAsString();
     }
     
     private String worldName;
