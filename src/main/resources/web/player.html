@@ -72,7 +72,7 @@
     </section>
     <figure id="bgFig" th:class="${bgColor}">
       <div id="minecraft-skin" th:class="${skinModel}">
-        <div class="head cube">
+        <div class="head cube" id="mc-head">
           <div class="top"></div>
           <div class="bottom"></div>
           <div class="left"></div>
@@ -240,6 +240,11 @@
         /** 1tick毎の動作状況socket通信に対応 */
         function motionEvent(data){
             console.log(data.pitch + "," + data.itemInHand);
+            const viewPitch = data.pitch * 2 / 3;
+            const radPitch = viewPitch * Math.PI / 180;
+            const fixY = -40 * (1 - Math.cos(radPitch));
+            const fixZ = 40 * Math.sin(radPitch);
+            skinViewHead.style.transform = 'rotateX('+(-1 * viewPitch)+'deg) translateY('+ fixY +'px) translateZ('+ fixZ + 'px)';
         }
         /** Animationの通知socket通信に対応 */
         function animationEvent(data){
@@ -247,6 +252,7 @@
         }
         
         const skinView = document.getElementById('minecraft-skin');
+        const skinViewHead = document.getElementById('mc-head');
         let isDragging = false;
         let startX, startY;
         let currentRotationX = 0, currentRotationY = 0;
