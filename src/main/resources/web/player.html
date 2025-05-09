@@ -282,7 +282,7 @@
             const radPitch = viewPitch * Math.PI / 180;
             const fixY = -40 * (1 - Math.cos(radPitch));
             const fixZ = 40 * Math.sin(radPitch);
-            skinViewHead.style.transform = 'rotateX('+(-1 * viewPitch)+'deg) translateY('+ fixY +'px) translateZ('+ fixZ + 'px)';
+            skinViewHead.style.transform = `rotateX(${-1 * viewPitch}deg) translate3d(0px,${fixY}px,${fixZ}px)`;
         }
         /** Animationの通知socket通信に対応 */
         function animationEvent(data){
