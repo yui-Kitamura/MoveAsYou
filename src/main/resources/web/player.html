@@ -21,6 +21,10 @@
           background-color: darkblue;
           color: gold;
       }
+      
+      body>header p {
+          font-style: italic;
+      }
   </style>
   <link rel="stylesheet" href="/static/skin3d.css">
   <style th:inline="css">
@@ -28,10 +32,44 @@
           --skin-image: url([[${playerSkin}]]);
       }
   </style>
+  <script>
+    let FPS = 60; //temp-value. update with function
+    
+    function getCurrentFPS(){
+        let frameCount = 0;
+        let startTime = performance.now();
+        const fpsDisplay = document.getElementById('fpsDisplay');
+        
+        /** 1秒のフレーム更新回数(=FPS)を計測＆出力 */
+        function measureFrame(){
+            const now = performance.now();
+            frameCount++;
+            if (startTime < (now - 1000)){
+                //1秒経過していたら
+                FPS = frameCount;
+                //ログ&出力
+                console.log(`[${new Date().toISOString()}]FPS：${FPS}`);
+                fpsDisplay.innerText = `${FPS}`;
+                return; //FPS計測終了
+            }
+
+            //1フレーム後への実行リクエスト
+            requestAnimationFrame(measureFrame); 
+        }
+        
+        measureFrame(); //計測開始
+    }
+
+    setInterval(()=>{
+        try{ getCurrentFPS(); } catch(e){console.error('FPS計測エラー',e)}
+    }, 60 * 1000); //毎分計測
+    
+  </script>
 </head>
 <body th:class="${bgColor}">
   <header>
     <h1 th:text="${playerName}"></h1>
+    <p><span id="fpsDisplay">60</span>FPS</p><script>getCurrentFPS(); //初回計測指示</script>
   </header>
   <main>
     <section th:hidden="${isOnline}">
