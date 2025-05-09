@@ -100,7 +100,7 @@ public class WebServer {
         }
         try {
             MoveAsYou.log().info("Web server stopping at " + server.getAddress() + " --->");
-            server.stop(2);
+            server.stop(1);
             MoveAsYou.log().info("Web server stopped at " + server.getAddress());
         } catch (Exception unexpected) {
             MoveAsYou.log().severe("FAILED to stop web server: " + unexpected.getMessage());
