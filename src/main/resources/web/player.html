@@ -277,13 +277,17 @@
         
         /** 1tick毎の動作状況socket通信に対応 */
         function motionEvent(data){
+            if (lastPitch === data.pitch){ return; }
             console.log(data.pitch + "," + data.itemInHand);
+            lastPitch = data.pitch;
             const viewPitch = data.pitch * 2 / 3;
             const radPitch = viewPitch * Math.PI / 180;
             const fixY = -40 * (1 - Math.cos(radPitch));
             const fixZ = 40 * Math.sin(radPitch);
             skinViewHead.style.transform = `rotateX(${-1 * viewPitch}deg) translate3d(0px,${fixY}px,${fixZ}px)`;
         }
+        let lastPitch = 0;
+        
         /** Animationの通知socket通信に対応 */
         function animationEvent(data){
             console.log(data.animationType);
