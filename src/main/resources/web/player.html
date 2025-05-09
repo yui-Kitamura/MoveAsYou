@@ -136,7 +136,7 @@
           <div class="front"></div>
           <div class="back"></div>
         </div>
-        <div class="arm right cube">
+        <div class="arm right cube" id="mc-right-arm">
           <div class="top"></div>
           <div class="bottom"></div>
           <div class="left"></div>
@@ -144,7 +144,7 @@
           <div class="front"></div>
           <div class="back"></div>
         </div>
-        <div class="arm left cube">
+        <div class="arm left cube" id="mc-left-arm">
           <div class="top"></div>
           <div class="bottom"></div>
           <div class="left"></div>
@@ -287,14 +287,83 @@
             skinViewHead.style.transform = `rotateX(${-1 * viewPitch}deg) translate3d(0px,${fixY}px,${fixZ}px)`;
         }
         let lastPitch = 0;
-        
+
+        let swinging = false;
         /** Animationの通知socket通信に対応 */
         function animationEvent(data){
+            if (swinging){
+                console.warn('swing animation is running');
+                return;
+            }
             console.log(data.animationType);
+            const mainHand = 'right'; //FIXME サーバーから渡す
+            
+            const animateArm = (mainHand === 'right') ? skinViewRightHand : skinViewLeftHand;
+            
+            const originTransform = getComputedStyle(animateArm).transform;
+            console.log(originTransform);
+            const originTransformMatrix = originTransform.match(/matrix.*\((.+)\)/)[1].split(', ');
+            
+            const maxAngle = 90;
+            const maxInRotate = 20;
+            const maxInner = 5;
+            let initRotateX = 0;
+            let initRotateY = 0;
+            let initTransX = 0;
+            if (originTransformMatrix.length === 6){
+                initRotateX = Math.round(Math.atan2(
+                    parseFloat(originTransformMatrix[2]),parseFloat(originTransformMatrix[3])
+                ) * (180/Math.PI));
+                initRotateY = Math.round(Math.atan2(
+                    parseFloat(originTransformMatrix[0]),
+                    Math.sqrt(
+                        Math.pow(parseFloat(originTransformMatrix[1]),2) + Math.pow(parseFloat(originTransformMatrix[0]),2)
+                    )
+                ) * (180/Math.PI));
+                initTransX = parseFloat(originTransformMatrix[4]);
+            }
+            
+            let cycle = 0;
+            const animationTime = 500; //ms
+            const deltaTime = 1000 / FPS;
+            
+            const progressInFrame = animationTime / deltaTime;
+            console.log(`animation starts ${cycle} ${animationTime} ${deltaTime} ${progressInFrame}`);
+            
+            const swing = ()=>{
+                swinging = true;
+                cycle += progressInFrame;
+                if (cycle >= animationTime){
+                    //復元してアニメーション終了
+                    animateArm.style.transform = originTransform;
+                    swinging = false;
+                    return;
+                }
+                
+                const progress = cycle / animationTime;
+                const angleX = Math.sin(progress /* 0～1≒rad */ * Math.PI) * maxAngle;
+                const angleY = Math.sin(progress * Math.PI) * maxInRotate;
+                const transX = -1 * Math.sin(progress * Math.PI) * maxInner;
+                //translateX(${initTransX + transX}px)
+                animateArm.style.transform = `
+                    ${originTransform} 
+                    translateY(-50px)
+                    rotateX(${initRotateX + angleX}deg) rotateY(${initRotateY + angleY}deg)
+                    translateY(50px)
+                    `;
+                
+                //次フレームへ
+                requestAnimationFrame(swing);
+            }
+            
+            swing();
         }
+        
         
         const skinView = document.getElementById('minecraft-skin');
         const skinViewHead = document.getElementById('mc-head');
+        const skinViewRightHand = document.getElementById('mc-right-arm');
+        const skinViewLeftHand = document.getElementById('mc-left-arm');
         let isDragging = false;
         let startX, startY;
         let currentRotationX = 0, currentRotationY = 0;
