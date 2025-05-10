@@ -82,16 +82,19 @@
           <scope>provided</scope>
       </dependency>
       <dependency>
+          <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
           <groupId>org.thymeleaf</groupId>
           <artifactId>thymeleaf</artifactId>
           <version>3.1.3.RELEASE</version>
       </dependency>
       <dependency>
+          <!-- https://mvnrepository.com/artifact/pro.eng.yui/YuiFramework -->
           <groupId>pro.eng.yui</groupId>
           <artifactId>YuiFramework</artifactId>
           <version>1.1.2</version>
       </dependency>
       <dependency>
+          <!-- https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket -->
           <groupId>org.java-websocket</groupId>
           <artifactId>Java-WebSocket</artifactId>
           <version>1.6.0</version>
