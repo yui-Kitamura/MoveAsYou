@@ -15,6 +15,21 @@
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+    
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/yui-Kitamura/MoveAsYou/issues</url>
+  </issueManagement>
+  <developers>
+    <developer>
+      <name>yui-KITAMURA</name>
+      <organization>Yui-KitamuraLLC.</organization>
+      <organizationUrl>https://yui-kitamura.LLC/</organizationUrl>
+      <timezone>Asia/Tokyo</timezone>
+      <url>https://yui-kitamura.eng.pro/private/</url>
+      <email>yui@yui-kitamura.eng.pro</email>
+    </developer>
+  </developers>
 
   <build>
     <plugins>
