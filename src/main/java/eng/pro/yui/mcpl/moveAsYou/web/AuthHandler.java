@@ -29,8 +29,10 @@ public class AuthHandler implements HttpHandler {
             requestInfo = MoveAsYou.gson().fromJson(
                     new String(in.readAllBytes()), AuthRequestInfo.class
             );
+        }catch(IllegalArgumentException argEx) {
+            MoveAsYou.log().info("Invalid request: " + argEx.getMessage());
+            requestInfo = null;
         }
-        
         MoveAsYou.log().info("Auth request: " + requestInfo);
 
         if (requestInfo == null || requestInfo.token == null || requestInfo.playerName == null) {
