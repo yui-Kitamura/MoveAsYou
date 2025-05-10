@@ -46,6 +46,10 @@
             frameCount++;
             if (startTime < (now - 1000)){
                 //1秒経過していたら
+                if (frameCount < 10 || 300 < frameCount){
+                    console.warn(`[${new Date().toISOString()}]FPS：${FPS}`);
+                    return;
+                }
                 FPS = frameCount;
                 //ログ&出力
                 console.log(`[${new Date().toISOString()}]FPS：${FPS}`);
