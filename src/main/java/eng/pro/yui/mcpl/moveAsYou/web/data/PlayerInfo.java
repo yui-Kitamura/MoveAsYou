@@ -5,7 +5,6 @@ import eng.pro.yui.mcpl.moveAsYou.consts.BgColor;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
