@@ -1,8 +1,16 @@
 package eng.pro.yui.mcpl.moveAsYou.mc.data;
 
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
+
+@JsonAdapter(PlayerName.PlayerNameAdapter.class)
 public class PlayerName {
     
     private final String name;
@@ -47,4 +55,25 @@ public class PlayerName {
     public String toString() {
         return name;
     }
+
+    public static class PlayerNameAdapter extends TypeAdapter<PlayerName> {
+        @Override
+        public void write(JsonWriter out, PlayerName playerName) throws IOException {
+            if (playerName == null) {
+                out.nullValue();
+                return;
+            }
+            out.value(playerName.value());
+        }
+
+        @Override
+        public PlayerName read(JsonReader in) throws IOException {
+            if (in.peek() == JsonToken.NULL) {
+                in.nextNull();
+                return null;
+            }
+            return new PlayerName(in.nextString());
+        }
+    }
+    
 }
