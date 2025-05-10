@@ -38,7 +38,7 @@ public class AuthHandler implements HttpHandler {
             return;
         }
         
-        MoveAsYou.log().info("is token Valid: " + valid);
+        boolean valid = MoveAsYou.tokenManager().validate(requestInfo.token, requestInfo.playerName);
         if(valid) {
             WebServer.send(200, "OK", exchange);
         }else {
