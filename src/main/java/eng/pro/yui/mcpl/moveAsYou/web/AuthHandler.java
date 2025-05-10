@@ -3,7 +3,6 @@ package eng.pro.yui.mcpl.moveAsYou.web;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
-import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.data.AuthRequestInfo;
 
 import java.io.IOException;
@@ -30,8 +29,10 @@ public class AuthHandler implements HttpHandler {
             requestInfo = MoveAsYou.gson().fromJson(
                     new String(in.readAllBytes()), AuthRequestInfo.class
             );
+        }catch(IllegalArgumentException argEx) {
+            MoveAsYou.log().info("Invalid request: " + argEx.getMessage());
+            requestInfo = null;
         }
-        
         MoveAsYou.log().info("Auth request: " + requestInfo);
 
         if (requestInfo == null || requestInfo.token == null || requestInfo.playerName == null) {
@@ -39,8 +40,7 @@ public class AuthHandler implements HttpHandler {
             return;
         }
         
-        boolean valid = MoveAsYou.tokenManager().validate(requestInfo.token, new PlayerName(requestInfo.playerName));
-        MoveAsYou.log().info("is token Valid: " + valid);
+        boolean valid = MoveAsYou.tokenManager().validate(requestInfo.token, requestInfo.playerName);
         if(valid) {
             WebServer.send(200, "OK", exchange);
         }else {

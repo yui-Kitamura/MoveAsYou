@@ -2,8 +2,8 @@ package eng.pro.yui.mcpl.moveAsYou.web.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenText;
+import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,8 +14,8 @@ class AuthRequestInfoTest {
     
     TokenText t1 = new TokenText("token1-token1-token1");
     TokenText t2 = new TokenText("token2-token2-token2");
-    String p1 = "player1";
-    String p2 = "player2";
+    PlayerName p1 = new PlayerName("player1");
+    PlayerName p2 = new PlayerName("player2");
     
     @Test
     void testConstruct(){
