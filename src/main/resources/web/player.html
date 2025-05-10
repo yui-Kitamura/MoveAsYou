@@ -302,21 +302,17 @@
                 console.warn('swing animation is running');
                 return;
             }
-            console.log(data.animationType);
-            const mainHand = 'right'; //FIXME サーバーから渡す
-            
-            const animateArm = (mainHand === 'right') ? skinViewRightHand : skinViewLeftHand;
+            const mainIsRight = data.mainHand === 'RIGHT'; // vs 'LEFT';
+            const swingIsMain = data.animationType === 'ARM_SWING'; // vs 'OFF_ARM_SWING'
+            const animateArm = (mainIsRight&&swingIsMain || !mainIsRight&&!swingIsMain) ? skinViewRightHand : skinViewLeftHand;
             
             const originTransform = getComputedStyle(animateArm).transform;
-            console.log(originTransform);
             const originTransformMatrix = originTransform.match(/matrix.*\((.+)\)/)[1].split(', ');
             
             const maxAngle = 90;
-            const maxInRotate = 20;
-            const maxInner = 5;
+            const maxInRotate = (animateArm.dataset.right === 'true') ? 20 : -20;
             let initRotateX = 0;
             let initRotateY = 0;
-            let initTransX = 0;
             if (originTransformMatrix.length === 6){
                 initRotateX = Math.round(Math.atan2(
                     parseFloat(originTransformMatrix[2]),parseFloat(originTransformMatrix[3])
@@ -327,15 +323,13 @@
                         Math.pow(parseFloat(originTransformMatrix[1]),2) + Math.pow(parseFloat(originTransformMatrix[0]),2)
                     )
                 ) * (180/Math.PI));
-                initTransX = parseFloat(originTransformMatrix[4]);
+                //initTransX = parseFloat(originTransformMatrix[4]);
             }
             
             let cycle = 0;
             const animationTime = 500; //ms
             const deltaTime = 1000 / FPS;
-            
             const progressInFrame = animationTime / deltaTime;
-            console.log(`animation starts ${cycle} ${animationTime} ${deltaTime} ${progressInFrame}`);
             
             const swing = ()=>{
                 swinging = true;
@@ -350,8 +344,6 @@
                 const progress = cycle / animationTime;
                 const angleX = Math.sin(progress /* 0～1≒rad */ * Math.PI) * maxAngle;
                 const angleY = Math.sin(progress * Math.PI) * maxInRotate;
-                const transX = -1 * Math.sin(progress * Math.PI) * maxInner;
-                //translateX(${initTransX + transX}px)
                 animateArm.style.transform = `
                     ${originTransform} 
                     translateY(-50px)
@@ -370,7 +362,9 @@
         const skinView = document.getElementById('minecraft-skin');
         const skinViewHead = document.getElementById('mc-head');
         const skinViewRightHand = document.getElementById('mc-right-arm');
+        skinViewRightHand.dataset.right = 'true';
         const skinViewLeftHand = document.getElementById('mc-left-arm');
+        skinViewLeftHand.dataset.right = 'false';
         let isDragging = false;
         let startX, startY;
         let currentRotationX = 0, currentRotationY = 0;
