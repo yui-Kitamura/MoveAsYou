@@ -8,11 +8,17 @@ import java.util.List;
 public final class Permissions {
     private Permissions(){ /* インスタンス化禁止 */ }
 
+    /** トークンを発行する基本権限 */
     public static Permission TOKEN;
+    /** 管理者向けトークンを有効にする拡張権限 */
     public static Permission TOKEN_ADMIN;
+    /** 自身のトークン一覧を表示する権限 */
     public static Permission LIST;
+    /** 他人のトークン一覧を表示する権限 */
     public static Permission LIST_OTHERS;
+    /** 管理者向けトークンを含めて一覧表示する権限 */
     public static Permission LIST_ADMIN;
+    /** 管理者向け トークンの全体状況把握 */
     public static Permission STATS_ADMIN;
     
     static {
