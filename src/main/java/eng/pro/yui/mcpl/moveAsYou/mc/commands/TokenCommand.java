@@ -58,12 +58,11 @@ public class TokenCommand implements ICommand{
             requestType = TokenType.get(args[1]);
         }
         if(args.length > 2) {
-            commandSender.sendMessage(ChatColor.RED + "too many parameter");
-            return;
+            throw new IllegalArgumentException("too many parameter");
         }
+        
         if(requestType == null) {
-            commandSender.sendMessage(ChatColor.RED + "wrong token type");
-            return;
+            throw new IllegalArgumentException("wrong token type");
         }
 
         if(commandSender instanceof Player sender) {
