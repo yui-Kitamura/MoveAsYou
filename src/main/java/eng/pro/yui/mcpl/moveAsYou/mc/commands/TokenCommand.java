@@ -52,8 +52,12 @@ public class TokenCommand implements ICommand{
         if(args.length == 1) {
             requestType = TokenType.ONE_TIME;
         }
-        if(args.length >= 2) {
+        if(args.length == 2) {
             requestType = TokenType.get(args[1]);
+        }
+        if(args.length > 2) {
+            commandSender.sendMessage(ChatColor.RED + "too many parameter");
+            return;
         }
         if(requestType == null) {
             commandSender.sendMessage(ChatColor.RED + "wrong token type");
