@@ -5,6 +5,7 @@ import eng.pro.yui.mcpl.moveAsYou.consts.Permissions;
 import eng.pro.yui.mcpl.moveAsYou.exception.CommandPermissionException;
 import eng.pro.yui.mcpl.moveAsYou.exception.RateLimitedException;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -127,7 +128,7 @@ public class WebViewTokenManager {
                 while(itr.hasNext()){
                     TokenInfo info = itr.next();
                     if ((info.tokenType != TokenType.ADMIN) && info.playerName.equals(senderName)) {
-                        result.add(info.toShortString());
+                        result.add(info.toShortString(ChatColor.AQUA));
                         itr.remove();
                     }
                 }
@@ -137,7 +138,7 @@ public class WebViewTokenManager {
                 while(itr.hasNext()){
                     TokenInfo info = itr.next();
                     if ((info.tokenType != TokenType.ADMIN) && (info.playerName.equals(senderName) == false)) {
-                        result.add(info.toShortString());
+                        result.add(info.toShortString(ChatColor.AQUA));
                         itr.remove();
                     }
                 }
@@ -147,7 +148,7 @@ public class WebViewTokenManager {
                 while(itr.hasNext()){
                     TokenInfo info = itr.next();
                     if (info.tokenType == TokenType.ADMIN) {
-                        result.add(info.toShortString());
+                        result.add(info.toShortString(ChatColor.AQUA));
                         itr.remove();
                     }
                 }
@@ -185,7 +186,8 @@ public class WebViewTokenManager {
         List<String> result = new ArrayList<>();
         for(TokenInfo token : tokenStore.values()){
             if(token.playerName.equals(playerName)){
-                result.add(token.toShortString());
+                ChatColor cc = (sender instanceof ConsoleCommandSender) ? null : ChatColor.AQUA;
+                result.add(token.toShortString(cc));
             }
         }
         MoveAsYou.log().info("Found tokens count for player " + playerName + " is "+ result.size());

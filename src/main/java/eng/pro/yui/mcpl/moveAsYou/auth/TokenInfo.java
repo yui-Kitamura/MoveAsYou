@@ -2,6 +2,7 @@ package eng.pro.yui.mcpl.moveAsYou.auth;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
+import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -97,8 +98,14 @@ public class TokenInfo {
     }
     
     public String toShortString() {
+        return toShortString(null);
+    }
+    
+    public String toShortString(ChatColor tokenColor){
+        String ccStart = (tokenColor == null || (tokenColor == ChatColor.RESET)) ? "" : tokenColor.toString();
+        String ccEnd = ccStart.isEmpty() ? "" : ChatColor.RESET.toString();
         return String.format("Token: '%s', player: %s, type: %s, expireAt:%s, usageCount: %s",
-                token.value(), playerName, tokenType.name(), 
+                ccStart+token.value()+ccEnd, ccStart+playerName.value()+ccEnd, tokenType.name(),
                 formatter.format(Instant.ofEpochMilli(expireAt)),
                 getLimitCount()
         );
