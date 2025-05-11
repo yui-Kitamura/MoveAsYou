@@ -18,6 +18,8 @@ public class TokenInfo {
     /* pkg-prv */ long expireAt;
     int limitCnt;
     
+    static DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneId.systemDefault());
+    
     public TokenInfo(TokenText token, Player player, TokenType type) {
         this(token, new PlayerName(player), type);
     }
@@ -89,9 +91,6 @@ public class TokenInfo {
     
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
-                .withZone(ZoneId.systemDefault());
-
         return String.format("TokenInfo{" +
                         "playerName='%s', tokenType=%s, token=%s, " +
                         "generated=%s, lastActivity=%s, expireAt=%s, limitCnt=%s" +
