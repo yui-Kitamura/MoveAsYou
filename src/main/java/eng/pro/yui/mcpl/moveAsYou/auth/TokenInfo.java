@@ -96,6 +96,14 @@ public class TokenInfo {
         return MoveAsYou.compactGson().fromJson(json, TokenInfo.class);
     }
     
+    public String toShortString() {
+        return String.format("Token: '%s', player: %s, type: %s, expireAt:%s, usageCount: %s",
+                token.value(), playerName, tokenType.name(), 
+                formatter.format(Instant.ofEpochMilli(expireAt)),
+                getLimitCount()
+        );
+    }
+    
     @Override
     public String toString() {
         return String.format("TokenInfo{" +
