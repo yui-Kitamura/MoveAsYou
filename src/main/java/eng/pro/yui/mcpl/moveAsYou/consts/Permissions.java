@@ -10,6 +10,9 @@ public final class Permissions {
 
     public static Permission TOKEN;
     public static Permission TOKEN_ADMIN;
+    public static Permission LIST;
+    public static Permission LIST_OTHERS;
+    public static Permission LIST_ADMIN;
     public static Permission STATS_ADMIN;
     
     static {
@@ -20,6 +23,12 @@ public final class Permissions {
                     TOKEN = p; break;
                 case "moveAsYou.token.admin":
                     TOKEN_ADMIN = p; break;
+                case "moveAsYou.list":
+                    LIST = p; break;
+                case "moveAsYou.list.others":
+                    LIST_OTHERS = p; break;
+                case "moveAsYou.list.admin":
+                    LIST_ADMIN = p; break;
                 case "moveAsYou.stats.admin":
                     STATS_ADMIN = p; break;
                 default:
