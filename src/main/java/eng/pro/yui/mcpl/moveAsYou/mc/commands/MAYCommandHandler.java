@@ -1,5 +1,7 @@
 package eng.pro.yui.mcpl.moveAsYou.mc.commands;
 
+import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.exception.CommandPermissionException;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,25 +15,39 @@ public class MAYCommandHandler implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command,
                              @NotNull String label, @NotNull String[] args) {
-        if(args.length == 0) {
-            sendHelp(commandSender);
+        try{
+            if(args.length == 0) {
+                sendHelp(commandSender);
+                return true;
+            }
+            
+            String subCommand = args[0].toLowerCase();
+            if(TokenCommand.sub_TOKEN.equals(subCommand)) {
+                TokenCommand tokenCommand = new TokenCommand();
+                tokenCommand.run(commandSender, args);
+                return true;
+            }
+            if(StatsCommand.sub_STATS.equals(subCommand)) {
+                StatsCommand statsCommand = new StatsCommand();
+                statsCommand.run(commandSender, args);
+                return true;
+            }
+            commandSender.sendMessage(ChatColor.RED + "Unknown sub command: " + subCommand);
+
+        }catch(IllegalArgumentException e) {
+            if(e.getMessage().isBlank()) {
+                MoveAsYou.log().warning("unknown error while executing command (IllegalArgument)");
+                MoveAsYou.log().warning(e.toString());
+                commandSender.sendMessage(ChatColor.RED+ "error while executing command (wrong parameter)");
+            }else {
+                commandSender.sendMessage(ChatColor.RED + "error while executing command (" + e.getMessage() + ")");
+            }
+            return true;
+        }catch(CommandPermissionException e) {
+            commandSender.sendMessage(ChatColor.GOLD + e.getMessage());
             return true;
         }
-        
-        String subCommand = args[0].toLowerCase();
-        if(TokenCommand.sub_TOKEN.equals(subCommand)) {
-            TokenCommand tokenCommand = new TokenCommand();
-            tokenCommand.run(commandSender, args);
-            return true;
-        }
-        if(StatsCommand.sub_STATS.equals(subCommand)) {
-            StatsCommand statsCommand = new StatsCommand();
-            statsCommand.run(commandSender, args);
-            return true;
-        }
-        // /ma stats
-        
-        commandSender.sendMessage(ChatColor.RED + "Unknown sub command: " + subCommand);
+
         return true;
     }
     
