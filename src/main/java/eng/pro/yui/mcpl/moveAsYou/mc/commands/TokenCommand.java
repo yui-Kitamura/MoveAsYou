@@ -7,6 +7,7 @@ import eng.pro.yui.mcpl.moveAsYou.consts.Permissions;
 import eng.pro.yui.mcpl.moveAsYou.exception.CommandPermissionException;
 import eng.pro.yui.mcpl.moveAsYou.exception.RateLimitedException;
 import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
+import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -100,9 +101,38 @@ public class TokenCommand implements ICommand{
             sender.sendMessage(MoveAsYou.tokenManager().getStats());
         }
     }
-    
+
+    /** 
+     * <code>/may token list</code><br/>
+     * パミの範囲でTokenを表示。
+     * 自身のもの、他者のもの、ADMINのもの、の順<br/>
+     * <code>/may token list playerName</code><br/>
+     * othersパミがあれば表示。自身を指定した場合はothersパミに関わらずlistパミがあれば表示
+     */
     private void runList(@NotNull CommandSender commandSender, @NotNull String[] args) {
-        throw new RuntimeMAYException(new IllegalAccessException("not implemented")); //FIXME implement
+        if(args.length == 2) {
+            /* /may token list
+             * 自身の、もしくは権限が許す限り広い範囲のTokenを表示
+             *  */
+            StringBuilder sb = new StringBuilder();
+            for(String s : MoveAsYou.tokenManager().getTokenInfo(commandSender)) {
+                sb.append(s).append(System.lineSeparator());
+            }
+            commandSender.sendMessage(sb.toString());
+            return;
+        }
+        if(args.length == 3) {
+            /* /may token list <playerName>
+             * 自身の、もしくはothersのTokenを表示
+             * */
+            StringBuilder sb = new StringBuilder();
+            for (String s : MoveAsYou.tokenManager().getTokensByPlayerName(commandSender, new PlayerName(args[2]))) {
+                sb.append(s).append(System.lineSeparator());
+            }
+            commandSender.sendMessage(sb.toString());
+            return;
+        }
+        throw new IllegalArgumentException("too many params are given");
     }
     
     private void runRevoke(@NotNull CommandSender commandSender, @NotNull String[] args) {
