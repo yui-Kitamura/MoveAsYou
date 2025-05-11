@@ -1,15 +1,16 @@
 package eng.pro.yui.mcpl.moveAsYou.auth;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.consts.Permissions;
+import eng.pro.yui.mcpl.moveAsYou.exception.CommandPermissionException;
 import eng.pro.yui.mcpl.moveAsYou.exception.RateLimitedException;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -116,20 +117,97 @@ public class WebViewTokenManager {
         return true;
     }
     
-    public List<TokenText> getTokensByPlayerName(PlayerName playerName){
-         List<TokenText> tokens = new ArrayList<TokenText>();
-         for(TokenInfo token : tokenStore.values()){
-             if(token.playerName.equals(playerName)){
-                 tokens.add(token.token);
-             }
-         }
-         MoveAsYou.log().info("Found tokens count for player " + playerName + " is "+ tokens.size());
-         return tokens;
+    /** senderの権限に応じてTokenInfoのテキスト情報リストを返す */
+    public List<String> getTokenInfo(CommandSender sender){
+        List<TokenInfo> dataSet = new LinkedList<>(tokenStore.values()); 
+        List<String> result = new ArrayList<>();
+        if(sender instanceof Player p) {
+            PlayerName senderName = new PlayerName(p);
+            if (sender.hasPermission(Permissions.LIST)) {
+                Iterator<TokenInfo> itr = dataSet.iterator();
+                while(itr.hasNext()){
+                    TokenInfo info = itr.next();
+                    if ((info.tokenType != TokenType.ADMIN) && info.playerName.equals(senderName)) {
+                        result.add(info.toShortString(TokenText.COLOR));
+                        itr.remove();
+                    }
+                }
+            }
+            if(sender.hasPermission(Permissions.LIST_OTHERS)) {
+                Iterator<TokenInfo> itr = dataSet.iterator();
+                while(itr.hasNext()){
+                    TokenInfo info = itr.next();
+                    if ((info.tokenType != TokenType.ADMIN) && (info.playerName.equals(senderName) == false)) {
+                        result.add(info.toShortString(TokenText.COLOR));
+                        itr.remove();
+                    }
+                }
+            }
+            if(sender.hasPermission(Permissions.LIST_ADMIN)){
+                Iterator<TokenInfo> itr = dataSet.iterator();
+                while(itr.hasNext()){
+                    TokenInfo info = itr.next();
+                    if (info.tokenType == TokenType.ADMIN) {
+                        result.add(info.toShortString(TokenText.COLOR));
+                        itr.remove();
+                    }
+                }
+            }
+        }else if(sender instanceof ConsoleCommandSender) {
+            for (TokenInfo info : dataSet) {
+                result.add(info.toShortString());
+            }
+        }
+        if(result.isEmpty()) {
+            result.add("nothing to show");
+        }
+        return result;
     }
-    
+    /** senderの権限とrequestのplayerNameに応じてTokenInfoのテキスト情報リストを返す */
+    public List<String> getTokensByPlayerName(CommandSender sender, PlayerName playerName){
+        if(sender instanceof ConsoleCommandSender && playerName == null) {
+            throw new IllegalArgumentException("required parameter PlayerName is missed");
+        }
+        if(sender instanceof Player p) {
+            if (playerName == null) {
+                playerName = new PlayerName(p);
+            }
+            if (new PlayerName(p).equals(playerName)) {
+                if (p.hasPermission(Permissions.LIST) == false) {
+                    throw new CommandPermissionException();
+                }
+            } else {
+                if (p.hasPermission(Permissions.LIST_OTHERS) == false) {
+                    throw new CommandPermissionException();
+                }
+            }
+        }
+        //permission OK
+        List<String> result = new ArrayList<>();
+        for(TokenInfo token : tokenStore.values()){
+            if(token.playerName.equals(playerName)){
+                ChatColor cc = (sender instanceof ConsoleCommandSender) ? null : TokenText.COLOR;
+                result.add(token.toShortString(cc));
+            }
+        }
+        MoveAsYou.log().info("Found tokens count for player " + playerName + " is "+ result.size());
+        return result;
+    }
+
+    /**
+     * 現在保存されているトークンの統計情報を取得します。<br/>
+     * 以下の情報を含む文字列を返します：
+     * <ul>
+     * <li>全トークン数</li>
+     * <li>ONE_TIMEトークンの数</li>
+     * <li>STREAMINGトークンの数</li>
+     * <li>ADMINトークンの数</li>
+     * </ul>
+     * @return 各統計情報が改行で区切られた文字列
+     */
     public String getStats(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Tokens: ").append(tokenStore.size()).append(System.lineSeparator());
+        sb.append("Tokens: ").append(tokenStore.size()).append(MoveAsYou.br);
         int onetime = 0, stream = 0, admin = 0;
         for(TokenInfo token : tokenStore.values()){
             switch(token.tokenType) {
@@ -139,8 +217,8 @@ public class WebViewTokenManager {
                 default -> {}
             }
         }
-        sb.append("Token for ").append(TokenType.ONE_TIME).append(": ").append(onetime).append(System.lineSeparator());
-        sb.append("Token for ").append(TokenType.STREAMING).append(": ").append(stream).append(System.lineSeparator());
+        sb.append("Token for ").append(TokenType.ONE_TIME).append(": ").append(onetime).append(MoveAsYou.br);
+        sb.append("Token for ").append(TokenType.STREAMING).append(": ").append(stream).append(MoveAsYou.br);
         sb.append("Token for ").append(TokenType.ADMIN).append(": ").append(admin);
         return sb.toString();
     }

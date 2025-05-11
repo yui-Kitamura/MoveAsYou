@@ -2,6 +2,7 @@ package eng.pro.yui.mcpl.moveAsYou.auth;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
+import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -17,6 +18,23 @@ public class TokenInfo {
     /* pkg-prv */ long lastActivityTimeStamp;
     /* pkg-prv */ long expireAt;
     int limitCnt;
+    
+    public String getLimitCount(){
+        if(limitCnt > 100) {
+            return "over100";
+        }else {
+            return String.valueOf(limitCnt);
+        }
+    }
+    public String getExpireAt(){
+        if(expireAt == Long.MAX_VALUE) {
+            return "unlimited";
+        }else {
+            return TokenInfo.formatter.format(Instant.ofEpochMilli(expireAt));
+        }
+    }
+    
+    static DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneId.systemDefault());
     
     public TokenInfo(TokenText token, Player player, TokenType type) {
         this(token, new PlayerName(player), type);
@@ -87,11 +105,21 @@ public class TokenInfo {
         return MoveAsYou.compactGson().fromJson(json, TokenInfo.class);
     }
     
+    public String toShortString() {
+        return toShortString(null);
+    }
+    
+    public String toShortString(ChatColor tokenColor){
+        String ccStart = (tokenColor == null || (tokenColor == ChatColor.RESET)) ? "" : tokenColor.toString();
+        String ccEnd = ccStart.isEmpty() ? "" : ChatColor.RESET.toString();
+        return String.format("Token: '%s', player: %s, type: %s, expireAt:%s, usageCount: %s",
+                ccStart+token.value()+ccEnd, ccStart+playerName.value()+ccEnd, tokenType.name(),
+                getExpireAt(), getLimitCount()
+        );
+    }
+    
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
-                .withZone(ZoneId.systemDefault());
-
         return String.format("TokenInfo{" +
                         "playerName='%s', tokenType=%s, token=%s, " +
                         "generated=%s, lastActivity=%s, expireAt=%s, limitCnt=%s" +
@@ -99,7 +127,7 @@ public class TokenInfo {
                 playerName, tokenType, token,
                 formatter.format(Instant.ofEpochMilli(getGeneratedTimeStamp)),
                 formatter.format(Instant.ofEpochMilli(lastActivityTimeStamp)),
-                formatter.format(Instant.ofEpochMilli(expireAt)), limitCnt
+                getExpireAt(), getLimitCount()
         );
     }
 

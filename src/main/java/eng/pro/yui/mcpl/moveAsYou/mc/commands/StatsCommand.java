@@ -1,7 +1,8 @@
 package eng.pro.yui.mcpl.moveAsYou.mc.commands;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
-import org.bukkit.ChatColor;
+import eng.pro.yui.mcpl.moveAsYou.consts.Permissions;
+import eng.pro.yui.mcpl.moveAsYou.exception.CommandPermissionException;
 import org.bukkit.command.CommandSender;
 
 public class StatsCommand implements ICommand {
@@ -13,8 +14,8 @@ public class StatsCommand implements ICommand {
     
     @Override
     public void run(CommandSender sender, String[] args){
-        if(sender.hasPermission("moveAsYou.stats.admin") == false) {
-            sender.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
+        if(sender.hasPermission(Permissions.STATS_ADMIN) == false) {
+            throw new CommandPermissionException();
         }
         sender.sendMessage(MoveAsYou.tokenManager().getStats());
     }

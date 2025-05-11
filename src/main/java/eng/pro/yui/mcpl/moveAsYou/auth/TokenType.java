@@ -13,7 +13,8 @@ public enum TokenType {
     /** 管理者向け 無期限 */
     ADMIN(false, "admin");
     
-    public final static long defaultExpireTime = 60*60*1_000; //1h 
+    /** トークン有効期限の既定値（1h） */
+    public final static long defaultExpireTime = 60*60*1_000; //ms 
     
     public final boolean isExpireTimeUpdatable;
     public final String alias;
