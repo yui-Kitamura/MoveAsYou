@@ -7,6 +7,10 @@ import java.util.List;
 
 public final class Permissions {
     private Permissions(){ /* インスタンス化禁止 */ }
+
+    public static Permission TOKEN;
+    public static Permission TOKEN_ADMIN;
+    public static Permission STATS_ADMIN;
     
     static {
         List<Permission> list = MoveAsYou.plugin().getDescription().getPermissions();
@@ -19,12 +23,9 @@ public final class Permissions {
                 case "moveAsYou.stats.admin":
                     STATS_ADMIN = p; break;
                 default:
-                    throw new IllegalArgumentException("unexpected permission is declared:" + p.getName());
+                    throw new IllegalArgumentException("unexpected permission declared:" + p.getName());
             }
         }
     }
-    public static Permission TOKEN;
-    public static Permission TOKEN_ADMIN;
-    public static Permission STATS_ADMIN;
-    
+
 }
