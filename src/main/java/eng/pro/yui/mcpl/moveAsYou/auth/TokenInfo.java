@@ -17,6 +17,13 @@ public class TokenInfo {
     /* pkg-prv */ long lastActivityTimeStamp;
     /* pkg-prv */ long expireAt;
     int limitCnt;
+    public String getLimitCount(){
+        if(limitCnt > 100) {
+            return "over100";
+        }else {
+            return String.valueOf(limitCnt);
+        }
+    }
     
     static DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneId.systemDefault());
     
@@ -98,7 +105,7 @@ public class TokenInfo {
                 playerName, tokenType, token,
                 formatter.format(Instant.ofEpochMilli(getGeneratedTimeStamp)),
                 formatter.format(Instant.ofEpochMilli(lastActivityTimeStamp)),
-                formatter.format(Instant.ofEpochMilli(expireAt)), limitCnt
+                formatter.format(Instant.ofEpochMilli(expireAt)), getLimitCount()
         );
     }
 
