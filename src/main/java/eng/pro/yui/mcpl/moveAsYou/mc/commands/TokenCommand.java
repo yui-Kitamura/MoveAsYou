@@ -9,11 +9,13 @@ import eng.pro.yui.mcpl.moveAsYou.exception.CommandPermissionException;
 import eng.pro.yui.mcpl.moveAsYou.exception.RateLimitedException;
 import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import pro.eng.yui.yuiframe.YuiFrame;
+
+import java.util.List;
 
 public class TokenCommand implements ICommand{
     
@@ -136,9 +138,63 @@ public class TokenCommand implements ICommand{
         throw new IllegalArgumentException("too many params are given");
     }
     
+    /** Token発行と同じpermissionでrevokeする */
     private void runRevoke(@NotNull CommandSender commandSender, @NotNull String[] args) {
-        throw new RuntimeMAYException(new IllegalAccessException("not implemented")); //FIXME implement
+        /* /may token revoke <TO-KEN|admin|all <playerName>>
+         * 
+         */
+        if(args.length < 3) {
+            throw new IllegalArgumentException("less parameter");
+        }
+        String subCommand = null;
+        String subCommandParam = null;
+        if(3 <= args.length && args.length <= 4) {
+            subCommand = args[2];
+            if(args.length == 4) {
+                subCommandParam = args[3];
+            }
+        }
+        
+        try {
+            TokenText tokenText = new TokenText(subCommand); //throws
+            if(args.length > 3) {
+                throw new IllegalArgumentException("too many parameter");
+            }
+            if(commandSender.hasPermission(Permissions.TOKEN) == false) {
+                throw new CommandPermissionException();
+            }
+            MoveAsYou.tokenManager().revokeToken(tokenText);
+            return;
+        }catch(IllegalArgumentException ignore) { /* nothing to do */ }
+        switch (subCommand) {
+            case "admin":
+                if (commandSender.hasPermission(Permissions.TOKEN_ADMIN) == false) {
+                    throw new CommandPermissionException();
+                }
+                List<TokenText> revokeList = MoveAsYou.tokenManager().getToken(TokenType.ADMIN);
+                for (TokenText t : revokeList) {
+                    MoveAsYou.tokenManager().revokeToken(t);
+                }
+                break;
+            case "all":
+                if (commandSender.hasPermission(Permissions.TOKEN_ADMIN) == false) {
+                    throw new CommandPermissionException();
+                }
+                PlayerName playerName = null;
+                if (YuiFrame.StringUtil.isEmpty(subCommandParam) == false) {
+                    playerName = new PlayerName(subCommandParam);
+                }
+                List<TokenText> revokeListByName = MoveAsYou.tokenManager().getToken(playerName);
+                for (TokenText t : revokeListByName) {
+                    MoveAsYou.tokenManager().revokeToken(t);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("unknown sub command");
+        }
+        commandSender.sendMessage("Tokens has revoked");
     }
+        
 
     
 }
