@@ -25,8 +25,14 @@ public class SimpleWebSocketServer extends WebSocketServer {
     
     private final Map<SocketID, NetworkInfo> connectionAndPlayer;
     private static class NetworkInfo {
-        public long startTimestamp;
-        public PlayerName playerName;
+        public TokenText activatedToken = null;
+        public void setToken(TokenText token){
+            if(activatedToken == null) {
+                this.activatedToken = token;
+            }
+        }
+        public final long startTimestamp;
+        public final PlayerName playerName;
         public NetworkInfo(PlayerName name){
             startTimestamp = System.currentTimeMillis();
             playerName = name;
@@ -84,7 +90,8 @@ public class SimpleWebSocketServer extends WebSocketServer {
     private void onMessageToken(WebSocket con, String message){
         String token = message.substring("Token:".length());
         TokenText t = new TokenText(token);
-        PlayerName pn = connectionAndPlayer.get(new SocketID(con)).playerName;
+        SocketID socketID = new SocketID(con);
+        PlayerName pn = connectionAndPlayer.get(socketID).playerName;
         if(MoveAsYou.tokenManager().validateForNew(t, pn)){
             Player online = MoveAsYou.plugin().getServer().getPlayer(pn.value());
             if(online == null){ 
@@ -93,6 +100,7 @@ public class SimpleWebSocketServer extends WebSocketServer {
             }
             MoveAsYou.log().info("Received token: " + t + " is good for player " + pn.value());
             MoveAsYou.playerMonitor().addPlayer(online);
+            connectionAndPlayer.get(socketID).setToken(t);
         }else {
             con.close(4000, "invalid token");
             return;
@@ -126,6 +134,15 @@ public class SimpleWebSocketServer extends WebSocketServer {
                 con.send(sendInfo.toJsonString());
             }
         }        
+    }
+    
+    public void sendTokenRevoked(TokenText token){
+        for(WebSocket con : getConnections()) {
+            SocketID key = new SocketID(con);
+            if (connectionAndPlayer.get(key).activatedToken.equals(token)) {
+                con.close(4003, "token now disabled");
+            }
+        }
     }
         
 }
