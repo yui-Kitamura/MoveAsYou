@@ -97,6 +97,11 @@ public class TokenInfo {
         limitCnt--;
         return true;
     }
+    
+    public void makeDisabled(){
+        expireAt = System.currentTimeMillis();
+        limitCnt = 0;
+    }
 
     public String toJsonStr(){
         return MoveAsYou.compactGson().toJson(this);
