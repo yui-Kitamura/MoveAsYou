@@ -128,7 +128,7 @@ public class WebViewTokenManager {
                 while(itr.hasNext()){
                     TokenInfo info = itr.next();
                     if ((info.tokenType != TokenType.ADMIN) && info.playerName.equals(senderName)) {
-                        result.add(info.toShortString(ChatColor.AQUA));
+                        result.add(info.toShortString(TokenText.COLOR));
                         itr.remove();
                     }
                 }
@@ -138,7 +138,7 @@ public class WebViewTokenManager {
                 while(itr.hasNext()){
                     TokenInfo info = itr.next();
                     if ((info.tokenType != TokenType.ADMIN) && (info.playerName.equals(senderName) == false)) {
-                        result.add(info.toShortString(ChatColor.AQUA));
+                        result.add(info.toShortString(TokenText.COLOR));
                         itr.remove();
                     }
                 }
@@ -148,7 +148,7 @@ public class WebViewTokenManager {
                 while(itr.hasNext()){
                     TokenInfo info = itr.next();
                     if (info.tokenType == TokenType.ADMIN) {
-                        result.add(info.toShortString(ChatColor.AQUA));
+                        result.add(info.toShortString(TokenText.COLOR));
                         itr.remove();
                     }
                 }
@@ -186,7 +186,7 @@ public class WebViewTokenManager {
         List<String> result = new ArrayList<>();
         for(TokenInfo token : tokenStore.values()){
             if(token.playerName.equals(playerName)){
-                ChatColor cc = (sender instanceof ConsoleCommandSender) ? null : ChatColor.AQUA;
+                ChatColor cc = (sender instanceof ConsoleCommandSender) ? null : TokenText.COLOR;
                 result.add(token.toShortString(cc));
             }
         }

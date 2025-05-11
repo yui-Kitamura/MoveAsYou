@@ -2,6 +2,7 @@ package eng.pro.yui.mcpl.moveAsYou.mc.commands;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenInfo;
+import eng.pro.yui.mcpl.moveAsYou.auth.TokenText;
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenType;
 import eng.pro.yui.mcpl.moveAsYou.consts.Permissions;
 import eng.pro.yui.mcpl.moveAsYou.exception.CommandPermissionException;
@@ -89,14 +90,14 @@ public class TokenCommand implements ICommand{
             }
 
             MoveAsYou.log().info("access token has issued.:" + generated.toString());
-            sender.sendMessage(ChatColor.AQUA + generated.token.value());
+            sender.sendMessage(TokenText.COLOR + generated.token.value());
 
         }else if(commandSender instanceof ConsoleCommandSender sender) {
             try {
                 TokenInfo generated = MoveAsYou.tokenManager().generateToken(sender);
-                sender.sendMessage(ChatColor.AQUA + generated.token.value());
+                sender.sendMessage(generated.token.value());
             }catch(RateLimitedException rateEx) {
-                sender.sendMessage(ChatColor.RED + "Too many request");
+                sender.sendMessage("Too many request");
             }
             sender.sendMessage(MoveAsYou.tokenManager().getStats());
         }

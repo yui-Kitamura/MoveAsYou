@@ -5,6 +5,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import org.bukkit.ChatColor;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @JsonAdapter(TokenText.TokenTextAdapter.class)
 public final class TokenText {
     
+    public static final ChatColor COLOR = ChatColor.AQUA;
     private static final String DELIMITER = "-";
     private static final SecureRandom random = new SecureRandom();
     
