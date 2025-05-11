@@ -118,7 +118,7 @@ public class WebViewTokenManager {
     
     /** senderの権限に応じてTokenInfoのテキスト情報リストを返す */
     public List<String> getTokenInfo(CommandSender sender){
-        Collection<TokenInfo> dataSet = tokenStore.values(); 
+        List<TokenInfo> dataSet = new ArrayList<>(tokenStore.values()); 
         List<String> result = new ArrayList<>();
         if(sender instanceof Player p) {
             PlayerName senderName = new PlayerName(p);
