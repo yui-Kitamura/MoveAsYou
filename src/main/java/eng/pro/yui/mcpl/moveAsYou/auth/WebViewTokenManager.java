@@ -118,31 +118,37 @@ public class WebViewTokenManager {
     
     /** senderの権限に応じてTokenInfoのテキスト情報リストを返す */
     public List<String> getTokenInfo(CommandSender sender){
-        List<TokenInfo> dataSet = new ArrayList<>(tokenStore.values()); 
+        List<TokenInfo> dataSet = new LinkedList<>(tokenStore.values()); 
         List<String> result = new ArrayList<>();
         if(sender instanceof Player p) {
             PlayerName senderName = new PlayerName(p);
             if (sender.hasPermission(Permissions.LIST)) {
-                for (TokenInfo info : dataSet) {
+                Iterator<TokenInfo> itr = dataSet.iterator();
+                while(itr.hasNext()){
+                    TokenInfo info = itr.next();
                     if ((info.tokenType != TokenType.ADMIN) && info.playerName.equals(senderName)) {
                         result.add(info.toShortString());
-                        dataSet.remove(info);
+                        itr.remove();
                     }
                 }
             }
             if(sender.hasPermission(Permissions.LIST_OTHERS)) {
-                for (TokenInfo info : dataSet) {
+                Iterator<TokenInfo> itr = dataSet.iterator();
+                while(itr.hasNext()){
+                    TokenInfo info = itr.next();
                     if ((info.tokenType != TokenType.ADMIN) && (info.playerName.equals(senderName) == false)) {
                         result.add(info.toShortString());
-                        dataSet.remove(info);
+                        itr.remove();
                     }
                 }
             }
             if(sender.hasPermission(Permissions.LIST_ADMIN)){
-                for(TokenInfo info : dataSet) {
+                Iterator<TokenInfo> itr = dataSet.iterator();
+                while(itr.hasNext()){
+                    TokenInfo info = itr.next();
                     if (info.tokenType == TokenType.ADMIN) {
                         result.add(info.toShortString());
-                        dataSet.remove(info);
+                        itr.remove();
                     }
                 }
             }
