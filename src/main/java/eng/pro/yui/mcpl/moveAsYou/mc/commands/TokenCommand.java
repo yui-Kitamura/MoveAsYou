@@ -3,6 +3,7 @@ package eng.pro.yui.mcpl.moveAsYou.mc.commands;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenInfo;
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenType;
+import eng.pro.yui.mcpl.moveAsYou.consts.Permission;
 import eng.pro.yui.mcpl.moveAsYou.exception.RateLimitedException;
 import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
 import org.bukkit.ChatColor;
@@ -65,7 +66,7 @@ public class TokenCommand implements ICommand{
         }
 
         if(commandSender instanceof Player sender) {
-            if(sender.hasPermission("moveAsYou.token") == false) {
+            if(sender.hasPermission(Permission.TOKEN) == false) {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
                 return;
             }
@@ -78,7 +79,7 @@ public class TokenCommand implements ICommand{
                     generated = MoveAsYou.tokenManager().generateToken(sender, TokenType.STREAMING);
                     break;
                 case ADMIN:
-                    if (sender.hasPermission("moveAsYou.token.admin") == false) {
+                    if (sender.hasPermission(Permission.TOKEN_ADMIN) == false) {
                         sender.sendMessage(ChatColor.RED + "You don't have permission to issue admin token.");
                         return;
                     }
