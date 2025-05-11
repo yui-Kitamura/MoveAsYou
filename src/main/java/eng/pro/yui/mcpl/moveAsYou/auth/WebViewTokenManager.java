@@ -116,15 +116,74 @@ public class WebViewTokenManager {
         return true;
     }
     
-    public List<TokenText> getTokensByPlayerName(PlayerName playerName){
-         List<TokenText> tokens = new ArrayList<TokenText>();
-         for(TokenInfo token : tokenStore.values()){
-             if(token.playerName.equals(playerName)){
-                 tokens.add(token.token);
-             }
-         }
-         MoveAsYou.log().info("Found tokens count for player " + playerName + " is "+ tokens.size());
-         return tokens;
+    /** senderの権限に応じてTokenInfoのテキスト情報リストを返す */
+    public List<String> getTokenInfo(CommandSender sender){
+        Collection<TokenInfo> dataSet = tokenStore.values(); 
+        List<String> result = new ArrayList<>();
+        if(sender instanceof Player p) {
+            PlayerName senderName = new PlayerName(p);
+            if (sender.hasPermission(Permissions.LIST)) {
+                for (TokenInfo info : dataSet) {
+                    if ((info.tokenType != TokenType.ADMIN) && info.playerName.equals(senderName)) {
+                        result.add(info.toShortString());
+                        dataSet.remove(info);
+                    }
+                }
+            }
+            if(sender.hasPermission(Permissions.LIST_OTHERS)) {
+                for (TokenInfo info : dataSet) {
+                    if ((info.tokenType != TokenType.ADMIN) && (info.playerName.equals(senderName) == false)) {
+                        result.add(info.toShortString());
+                        dataSet.remove(info);
+                    }
+                }
+            }
+            if(sender.hasPermission(Permissions.LIST_ADMIN)){
+                for(TokenInfo info : dataSet) {
+                    if (info.tokenType == TokenType.ADMIN) {
+                        result.add(info.toShortString());
+                        dataSet.remove(info);
+                    }
+                }
+            }
+        }else if(sender instanceof ConsoleCommandSender) {
+            for (TokenInfo info : dataSet) {
+                result.add(info.toShortString());
+            }
+        }
+        if(result.isEmpty()) {
+            result.add("nothing to show");
+        }
+        return result;
+    }
+    /** senderの権限とrequestのplayerNameに応じてTokenInfoのテキスト情報リストを返す */
+    public List<String> getTokensByPlayerName(CommandSender sender, PlayerName playerName){
+        if(sender instanceof ConsoleCommandSender && playerName == null) {
+            throw new IllegalArgumentException("required parameter PlayerName is missed");
+        }
+        if(sender instanceof Player p) {
+            if (playerName == null) {
+                playerName = new PlayerName(p);
+            }
+            if (new PlayerName(p).equals(playerName)) {
+                if (p.hasPermission(Permissions.LIST) == false) {
+                    throw new CommandPermissionException();
+                }
+            } else {
+                if (p.hasPermission(Permissions.LIST_OTHERS) == false) {
+                    throw new CommandPermissionException();
+                }
+            }
+        }
+        //permission OK
+        List<String> result = new ArrayList<>();
+        for(TokenInfo token : tokenStore.values()){
+            if(token.playerName.equals(playerName)){
+                result.add(token.toShortString());
+            }
+        }
+        MoveAsYou.log().info("Found tokens count for player " + playerName + " is "+ result.size());
+        return result;
     }
 
     /**
