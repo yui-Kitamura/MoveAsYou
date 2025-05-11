@@ -53,6 +53,8 @@ public final class MoveAsYou extends JavaPlugin {
     
     private static BukkitTask monitorTask;
     
+    public static final String br = "\n";
+    
     // constructor
     public MoveAsYou(){
         super();

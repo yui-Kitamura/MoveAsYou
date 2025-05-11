@@ -116,7 +116,7 @@ public class TokenCommand implements ICommand{
              *  */
             StringBuilder sb = new StringBuilder();
             for(String s : MoveAsYou.tokenManager().getTokenInfo(commandSender)) {
-                sb.append(s).append(System.lineSeparator());
+                sb.append(s).append(MoveAsYou.br);
             }
             commandSender.sendMessage(sb.toString());
             return;
@@ -127,7 +127,7 @@ public class TokenCommand implements ICommand{
              * */
             StringBuilder sb = new StringBuilder();
             for (String s : MoveAsYou.tokenManager().getTokensByPlayerName(commandSender, new PlayerName(args[2]))) {
-                sb.append(s).append(System.lineSeparator());
+                sb.append(s).append(MoveAsYou.br);
             }
             commandSender.sendMessage(sb.toString());
             return;
