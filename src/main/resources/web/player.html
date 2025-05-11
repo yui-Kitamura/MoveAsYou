@@ -47,7 +47,7 @@
             if (startTime < (now - 1000)){
                 //1秒経過していたら
                 if (frameCount < 10 || 300 < frameCount){
-                    console.warn(`[${new Date().toISOString()}]FPS：${FPS}`);
+                    console.warn(`[${new Date().toISOString()}]BAD-FPS：${frameCount} keep:${FPS}`);
                     return;
                 }
                 FPS = frameCount;
