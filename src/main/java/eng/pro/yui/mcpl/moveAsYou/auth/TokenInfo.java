@@ -18,11 +18,19 @@ public class TokenInfo {
     /* pkg-prv */ long lastActivityTimeStamp;
     /* pkg-prv */ long expireAt;
     int limitCnt;
+    
     public String getLimitCount(){
         if(limitCnt > 100) {
             return "over100";
         }else {
             return String.valueOf(limitCnt);
+        }
+    }
+    public String getExpireAt(){
+        if(expireAt == Long.MAX_VALUE) {
+            return "unlimited";
+        }else {
+            return TokenInfo.formatter.format(Instant.ofEpochMilli(expireAt));
         }
     }
     
@@ -106,8 +114,7 @@ public class TokenInfo {
         String ccEnd = ccStart.isEmpty() ? "" : ChatColor.RESET.toString();
         return String.format("Token: '%s', player: %s, type: %s, expireAt:%s, usageCount: %s",
                 ccStart+token.value()+ccEnd, ccStart+playerName.value()+ccEnd, tokenType.name(),
-                formatter.format(Instant.ofEpochMilli(expireAt)),
-                getLimitCount()
+                getExpireAt(), getLimitCount()
         );
     }
     
@@ -120,7 +127,7 @@ public class TokenInfo {
                 playerName, tokenType, token,
                 formatter.format(Instant.ofEpochMilli(getGeneratedTimeStamp)),
                 formatter.format(Instant.ofEpochMilli(lastActivityTimeStamp)),
-                formatter.format(Instant.ofEpochMilli(expireAt)), getLimitCount()
+                getExpireAt(), getLimitCount()
         );
     }
 
