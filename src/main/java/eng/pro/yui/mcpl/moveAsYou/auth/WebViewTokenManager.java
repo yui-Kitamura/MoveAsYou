@@ -126,7 +126,18 @@ public class WebViewTokenManager {
          MoveAsYou.log().info("Found tokens count for player " + playerName + " is "+ tokens.size());
          return tokens;
     }
-    
+
+    /**
+     * 現在保存されているトークンの統計情報を取得します。<br/>
+     * 以下の情報を含む文字列を返します：
+     * <ul>
+     * <li>全トークン数</li>
+     * <li>ONE_TIMEトークンの数</li>
+     * <li>STREAMINGトークンの数</li>
+     * <li>ADMINトークンの数</li>
+     * </ul>
+     * @return 各統計情報が改行で区切られた文字列
+     */
     public String getStats(){
         StringBuilder sb = new StringBuilder();
         sb.append("Tokens: ").append(tokenStore.size()).append(System.lineSeparator());
