@@ -3,10 +3,9 @@ package eng.pro.yui.mcpl.moveAsYou.web;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.auth.TokenText;
 import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
-import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.data.HtmlText;
-import eng.pro.yui.mcpl.moveAsYou.web.data.PlayerInfo;
 import org.bukkit.event.player.PlayerAnimationEvent;
 
 import java.io.IOException;
@@ -171,5 +170,9 @@ public class WebServer {
     
     public static void socketSendEvent(PlayerAnimationEvent event){
         socketServer.sendPlayerAnimationEvent(event);
+    }
+    
+    public static void socketSendTokenDisabled(TokenText token){
+        socketServer.sendTokenRevoked(token);
     }
 }

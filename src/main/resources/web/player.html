@@ -243,11 +243,17 @@
             };
 
             socket.onclose = function(event) {
+                if (event.code === 1001) {
+                    alert('サーバーが閉じられました');
+                }
                 if (event.code === 4000) {
                     alert('Tokenが正しくない可能性があります');
                 }
                 if (event.code === 4001) {
                     alert('プレイヤーがオフラインになった可能性があります');
+                }
+                if (event.code === 4003) {
+                    alert('Tokenが無効化されました');
                 }
                 if(event.code === 4029){
                     alert('レート制限に抵触しています');
@@ -255,7 +261,10 @@
                     socket = null;
                     connectWebSocket = undefined;
                 }
-                console.warn('Socket通信が切断されました');
+                if (event.code === 4302) { // bgColor
+                    alert('ページを再読み込みしてください');
+                }
+                console.warn(`Socket通信が切断されました(${event.code})`);
                 document.getElementById('gameArea').classList.add('hidden');
                 document.getElementById('tokenForm').classList.remove('hidden');
             };

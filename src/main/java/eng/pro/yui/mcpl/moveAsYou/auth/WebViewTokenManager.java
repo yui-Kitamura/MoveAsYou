@@ -5,6 +5,7 @@ import eng.pro.yui.mcpl.moveAsYou.consts.Permissions;
 import eng.pro.yui.mcpl.moveAsYou.exception.CommandPermissionException;
 import eng.pro.yui.mcpl.moveAsYou.exception.RateLimitedException;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
+import eng.pro.yui.mcpl.moveAsYou.web.WebServer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -51,6 +52,15 @@ public class WebViewTokenManager {
         TokenInfo generated = new TokenInfo(TokenText.generate(TokenType.ADMIN), admin);
         tokenStore.put(generated.token, generated);
         return tokenStore.get(generated.token);
+    }
+    
+    public void revokeToken(TokenText token){
+        if(tokenStore.containsKey(token) == false) {
+            throw new IllegalArgumentException("token not declared");
+        }
+        tokenStore.get(token).makeDisabled();
+        WebServer.socketSendTokenDisabled(token);
+        MoveAsYou.log().info("Token("+ token.value() +") revoked");
     }
     
     /** 
@@ -115,6 +125,31 @@ public class WebViewTokenManager {
             MoveAsYou.log().info("Removed token " + token.value() + " was already invalid.");
         }
         return true;
+    }
+
+    /**
+     * @param name 抽出対象プレイヤー名（null可）
+     * @return 対象プレイヤーが発行したTokenのリスト。引数がnullの場合、全員
+     */
+    public List<TokenText> getToken(PlayerName name){
+        List<TokenText> result = new ArrayList<>();
+        for(TokenInfo info : tokenStore.values()) {
+            if (name == null || info.playerName.equals(name)) {
+                //null=未指定 or 一致 を返す
+                result.add(info.token);
+            }
+        }
+        return result;
+    }
+    /** typeに合致するTokenのリストを返す */
+    public List<TokenText> getToken(TokenType type){
+        List<TokenText> result = new ArrayList<>();
+        for(TokenInfo info : tokenStore.values()) {
+            if (info.tokenType == type) {
+                result.add(info.token);
+            }
+        }
+        return result;
     }
     
     /** senderの権限に応じてTokenInfoのテキスト情報リストを返す */
