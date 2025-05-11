@@ -164,6 +164,7 @@ public class TokenCommand implements ICommand{
                 throw new CommandPermissionException();
             }
             MoveAsYou.tokenManager().revokeToken(tokenText);
+            commandSender.sendMessage("Token has revoked");
             return;
         }catch(IllegalArgumentException ignore) { /* nothing to do */ }
         switch (subCommand) {
