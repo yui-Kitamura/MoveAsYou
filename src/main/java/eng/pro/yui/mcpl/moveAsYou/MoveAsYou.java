@@ -7,7 +7,7 @@ import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
 import eng.pro.yui.mcpl.moveAsYou.config.PlayerSettingManager;
 import eng.pro.yui.mcpl.moveAsYou.mc.EventHandlers;
 import eng.pro.yui.mcpl.moveAsYou.mc.commands.MAYCommandHandler;
-import eng.pro.yui.mcpl.moveAsYou.mc.commands.PlayerMoveMonitor;
+import eng.pro.yui.mcpl.moveAsYou.mc.PlayerMoveMonitor;
 import eng.pro.yui.mcpl.moveAsYou.web.WebServer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
