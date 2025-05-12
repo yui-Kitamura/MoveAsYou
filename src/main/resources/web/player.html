@@ -107,6 +107,17 @@
             });
         </script>
       </dl>
+      <p id="alertZone"></p>
+      <script>
+        function showAlert(txt){
+            if (txt){
+                document.getElementById('alertZone').innerText = txt;
+                console.warn(txt);
+            }else{
+                document.getElementById('alertZone').innerText = null;
+            }
+        }
+      </script>
       <div class="token-form" id="tokenForm">
         <label>サーバーで発行されたトークン：<input type="text" id="tokenInput" placeholder="apple-gold-ingot"></label>
         <button onclick="connectToServer()">接続</button>
