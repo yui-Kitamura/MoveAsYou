@@ -20,6 +20,18 @@ public class MAYTabCompleter implements TabCompleter {
                                       @NotNull String alias, String[] args) {
         List<String> resultList = new ArrayList<>();
         
+        /* 
+         * may token onetime
+         * may token stream
+         * may token admin
+         * may token list
+         * may token list <playerName>
+         * may token revoke
+         * may token revoke all <playerName>
+         * may token revoke admin
+         * may stats
+         */
+        
         //TODO implement
 
         return resultList;
