@@ -198,9 +198,10 @@
         let socket;
 
         function connectToServer() {
+            showAlert(); //クリア
             const token = document.getElementById('tokenInput').value;
             if (!token) {
-                alert('トークンを入力してください');
+                showAlert('トークンを入力してください');
                 return;
             }
 
@@ -218,13 +219,13 @@
                     if (response.status === 200) {
                         connectWebSocket(token);
                     } else if (response.status === 429) {
-                        alert('接続数が制限を超えています。しばらく待ってから再度お試しください。');
+                        showAlert('接続数が制限を超えています。しばらく待ってから再度お試しください。');
                         connectWebSocket = undefined;
                         sendSocketMessage = undefined;
                     } else if (response.status === 400) {
-                        alert('入力したトークンが有効か確認してください');
+                        showAlert('入力したトークンが有効か確認してください');
                     } else {
-                        alert('不明なエラー');
+                        showAlert('不明なエラー');
                         console.error('Authentication failed with status:', response.status);
                     }
                 })
@@ -256,25 +257,25 @@
 
             socket.onclose = function(event) {
                 if (event.code === 1001) {
-                    alert('サーバーが閉じられました');
+                    showAlert('サーバーが閉じられました');
                 }
                 if (event.code === 4000) {
-                    alert('Tokenが正しくない可能性があります');
+                    showAlert('Tokenが正しくない可能性があります');
                 }
                 if (event.code === 4001) {
-                    alert('プレイヤーがオフラインになった可能性があります');
+                    showAlert('プレイヤーがオフラインになった可能性があります');
                 }
                 if (event.code === 4003) {
-                    alert('Tokenが無効化されました');
+                    showAlert('Tokenが無効化されました');
                 }
                 if(event.code === 4029){
-                    alert('レート制限に抵触しています');
+                    showAlert('レート制限に抵触しています');
                     sendSocketMessage = undefined;
                     socket = null;
                     connectWebSocket = undefined;
                 }
                 if (event.code === 4302) { // bgColor
-                    alert('ページを再読み込みしてください');
+                    showAlert('ページを再読み込みしてください');
                 }
                 console.warn(`Socket通信が切断されました(${event.code})`);
                 document.getElementById('gameArea').classList.add('hidden');
@@ -292,7 +293,7 @@
                 console.log('送信: ' + message);
                 document.getElementById('messageInput').value = '';
             } else {
-                alert('サーバーに接続されていません');
+                showAlert('サーバーに接続されていません');
             }
         }
 
