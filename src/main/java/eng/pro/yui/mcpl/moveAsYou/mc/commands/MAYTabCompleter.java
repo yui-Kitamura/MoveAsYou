@@ -6,6 +6,7 @@ import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MAYTabCompleter implements TabCompleter {
@@ -35,5 +36,9 @@ public class MAYTabCompleter implements TabCompleter {
         //TODO implement
 
         return resultList;
+    }
+    
+    /* pkg-prv */ List<String> filter(List<String> list, String input){
+        return list.stream().filter(s -> s.toLowerCase().startsWith(input.toLowerCase())).toList();
     }
 }
