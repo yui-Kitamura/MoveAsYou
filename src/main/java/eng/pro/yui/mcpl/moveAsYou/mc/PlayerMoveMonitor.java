@@ -1,10 +1,9 @@
-package eng.pro.yui.mcpl.moveAsYou.mc.commands;
+package eng.pro.yui.mcpl.moveAsYou.mc;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.data.PlayerInfo;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerAnimationType;
 
 import java.util.HashMap;
 import java.util.Map;

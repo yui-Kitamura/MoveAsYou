@@ -26,7 +26,7 @@ public class TokenCommand implements ICommand{
     }
 
     public void run(@NotNull CommandSender commandSender, @NotNull String[] args) {
-        if(args.length < 1 || sub_TOKEN.equals(args[0]) == false) {
+        if(args.length < 1 || YuiFrame.StringUtil.eq(sub_TOKEN, args[0]) == false) {
             throw new RuntimeMAYException(new IllegalAccessException("wrong command body class has selected"));
         }
         
