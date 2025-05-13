@@ -8,6 +8,7 @@ import eng.pro.yui.mcpl.moveAsYou.config.PlayerSettingManager;
 import eng.pro.yui.mcpl.moveAsYou.mc.EventHandlers;
 import eng.pro.yui.mcpl.moveAsYou.mc.commands.MAYCommandHandler;
 import eng.pro.yui.mcpl.moveAsYou.mc.PlayerMoveMonitor;
+import eng.pro.yui.mcpl.moveAsYou.mc.commands.MAYTabCompleter;
 import eng.pro.yui.mcpl.moveAsYou.web.WebServer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -108,7 +109,7 @@ public final class MoveAsYou extends JavaPlugin {
     }
     private void addCommandHandler(){
         super.getCommand(MAYCommandHandler.COMMAND).setExecutor(new MAYCommandHandler());
-//        super.getCommand(cmdName).setTabCompleter(new CmdMngTabCompleter());
+        super.getCommand(MAYCommandHandler.COMMAND).setTabCompleter(new MAYTabCompleter());
     }
     private void addEventHandler(){
         this.getServer().getPluginManager().registerEvents(new EventHandlers(), this);
