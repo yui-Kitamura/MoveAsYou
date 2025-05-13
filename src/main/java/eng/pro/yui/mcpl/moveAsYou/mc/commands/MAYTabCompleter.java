@@ -7,7 +7,6 @@ import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 import pro.eng.yui.yuiframe.YuiFrame;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -18,13 +17,13 @@ public class MAYTabCompleter implements TabCompleter {
         // nothing to do
     }
 
-    private List<String> first = Arrays.asList("token","stats");
-    private List<String> tokenList = Arrays.asList(
+    private final List<String> first = Arrays.asList("token","stats");
+    private final List<String> tokenList = Arrays.asList(
             TokenType.ONE_TIME.alias, TokenType.STREAMING.alias, TokenType.ADMIN.alias,
             "list", "revoke"
     );
-    private List<String> tokenRevokeList = Arrays.asList("all", "admin");
-    private List<String> playerName = null;
+    private final List<String> tokenRevokeList = Arrays.asList("all", "admin");
+    private final List<String> playerName = null;
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command,

@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class SocketID {
     
-    private byte[] id;
+    private final byte[] id;
 
     // constructor
     public SocketID(byte[] id) {

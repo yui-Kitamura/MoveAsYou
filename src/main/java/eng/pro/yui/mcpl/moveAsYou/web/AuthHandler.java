@@ -46,8 +46,7 @@ public class AuthHandler implements HttpHandler {
         }else {
             WebServer.send(400, "Invalid token", exchange);
         }
-        return;
-        
+
     }
 
 }

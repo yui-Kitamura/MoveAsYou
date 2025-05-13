@@ -21,7 +21,7 @@ public class PlayerInfo implements ISocketPushInfo{
         return playerName;
     }
 
-    private BgColor bgColor;
+    private final BgColor bgColor;
     public BgColor getBgColor(){ 
         return bgColor;
     }
@@ -111,8 +111,7 @@ public class PlayerInfo implements ISocketPushInfo{
         if(yaw != other.yaw) { return false; }
         if(pitch != other.pitch) { return false; }
         if(isSneaking != other.isSneaking) { return false; }
-        if(!itemInHand.equals(other.itemInHand)) { return false; }
-        return true;
+        return itemInHand.equals(other.itemInHand);
     }
 
     @Override
