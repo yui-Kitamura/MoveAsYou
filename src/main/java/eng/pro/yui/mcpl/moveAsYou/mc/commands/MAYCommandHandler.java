@@ -32,6 +32,11 @@ public class MAYCommandHandler implements CommandExecutor {
                 statsCommand.run(commandSender, args);
                 return true;
             }
+            if(ConfigCommand.sub_CONFIG.equals(subCommand)) {
+                ConfigCommand configCommand = new ConfigCommand();
+                configCommand.run(commandSender, args);
+                return true;
+            }
             commandSender.sendMessage(ChatColor.RED + "Unknown sub command: " + subCommand);
 
         }catch(IllegalArgumentException e) {
