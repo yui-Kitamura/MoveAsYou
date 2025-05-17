@@ -10,5 +10,13 @@ class BgColorTest {
     void runGetByStr(){
         assertEquals(BgColor.BLUE, BgColor.get("blue"));
     }
+    @Test
+    void runGetByStrMixed(){
+        assertEquals(BgColor.GREEN, BgColor.get("GREen"));
+    }
+    @Test
+    void runGetByInt(){
+        assertEquals(BgColor.RED, BgColor.get(0xff0000));
+    }
 
 }

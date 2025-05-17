@@ -26,8 +26,9 @@ public enum BgColor {
         throw new IllegalArgumentException("color not defined");
     }
     public static BgColor get(String name){
+        String input = name.toUpperCase();
         for(BgColor c : BgColor.values()){
-            if(c.name().equals(name)){
+            if(c.name().equals(input)){
                 return c;
             }
         }
