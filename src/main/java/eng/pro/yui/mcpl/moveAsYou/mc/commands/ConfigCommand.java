@@ -25,7 +25,7 @@ public class ConfigCommand implements ICommand {
         if(args.length < 1 || YuiFrame.StringUtil.eq(sub_CONFIG, args[0]) == false) {
             throw new RuntimeMAYException(new IllegalAccessException("wrong command body class has selected"));
         }
-        if(args.length < 5) {
+        if(args.length < 4) {
             throw new IllegalArgumentException("required parameters are missed");
         }
 
