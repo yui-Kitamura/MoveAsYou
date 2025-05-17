@@ -74,4 +74,33 @@ public class PlayerSetting {
         return config;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 17;
+        hash = hash * 31 + playerUUID.hashCode();
+        hash = hash * 31 + playerName.hashCode();
+        hash = hash * 31 + backGroundColor.hashCode();
+        hash = hash * 31 + Boolean.hashCode(doSneak);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null){ return false; }
+        if(this == obj){ return true; }
+        if(obj.getClass() != this.getClass()) { return false; }
+        PlayerSetting other = (PlayerSetting) obj;
+        if(!this.playerUUID.equals(other.playerUUID)){ return false; }
+        if(!this.playerName.equals(other.playerName)){ return false; }
+        if(this.backGroundColor != other.backGroundColor){ return false; }
+        if(this.doSneak != other.doSneak){ return false; }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("PlayerSetting{UUID:%s,Name:%s,BgColor:%s,Sneak:%s}",
+                playerUUID.toString(), playerName.value(), backGroundColor.name(), doSneak
+        );
+    }
 }
