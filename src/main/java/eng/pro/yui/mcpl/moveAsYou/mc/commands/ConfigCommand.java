@@ -28,6 +28,9 @@ public class ConfigCommand implements ICommand {
         if(args.length < 4) {
             throw new IllegalArgumentException("required parameters are missed");
         }
+        if(4 < args.length) {
+            throw new IllegalArgumentException("too many parameters");
+        }
 
         final PlayerName targetName = new PlayerName(args[1]);
         final String configKey = args[2].toLowerCase();
