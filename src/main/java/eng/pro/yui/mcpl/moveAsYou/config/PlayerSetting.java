@@ -2,6 +2,7 @@ package eng.pro.yui.mcpl.moveAsYou.config;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.consts.BgColor;
+import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.UUID;
@@ -16,11 +17,11 @@ public class PlayerSetting {
         this.playerUUID = playerUUID;
     }
 
-    private String playerName;
-    public String getPlayerName() {
+    private PlayerName playerName;
+    public PlayerName getPlayerName() {
         return playerName;
     }
-    public void setPlayerName(String playerName) {
+    public void setPlayerName(PlayerName playerName) {
         this.playerName = playerName;
     }
 
@@ -42,7 +43,7 @@ public class PlayerSetting {
     
     public PlayerSetting(UUID playerUUID){
         setPlayerUUID(playerUUID);
-        setPlayerName(MoveAsYou.plugin().getServer().getOfflinePlayer(playerUUID).getName());
+        setPlayerName(new PlayerName(MoveAsYou.plugin().getServer().getOfflinePlayer(playerUUID).getName()));
         setBackGroundColor(BgColor.GREEN);
         setDoSneak(true);
 
@@ -54,7 +55,7 @@ public class PlayerSetting {
     
     public PlayerSetting(UUID playerUUID, YamlConfiguration config){
         setPlayerUUID(playerUUID);
-        setPlayerName(config.getString("playerName"));
+        setPlayerName(new PlayerName(config.getString("playerName")));
         setBackGroundColor(BgColor.get(config.getString("backGroundColor")));
         setDoSneak(config.getBoolean("doSneak"));
 
@@ -67,7 +68,7 @@ public class PlayerSetting {
     public YamlConfiguration toFile(){
         YamlConfiguration config = new YamlConfiguration();
         config.set("playerUUID", getPlayerUUID().toString());
-        config.set("playerName", getPlayerName());
+        config.set("playerName", getPlayerName().value());
         config.set("backGroundColor", getBackGroundColor().name());
         config.set("doSneak", isDoSneak());
         return config;
