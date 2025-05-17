@@ -9,6 +9,11 @@ import java.util.UUID;
 
 public class PlayerSetting {
     
+    public static final String KEY_PLAYER_UUID = "playerUUID";
+    public static final String KEY_PLAYER_NAME = "playerName";
+    public static final String KEY_BG_COLOR = "backGroundColor";
+    public static final String KEY_DO_SNEAK = "doSneak";
+    
     private UUID playerUUID;
     public UUID getPlayerUUID() {
         return playerUUID;
@@ -55,9 +60,9 @@ public class PlayerSetting {
     
     public PlayerSetting(UUID playerUUID, YamlConfiguration config){
         setPlayerUUID(playerUUID);
-        setPlayerName(new PlayerName(config.getString("playerName")));
-        setBackGroundColor(BgColor.get(config.getString("backGroundColor")));
-        setDoSneak(config.getBoolean("doSneak"));
+        setPlayerName(new PlayerName(config.getString(KEY_PLAYER_NAME)));
+        setBackGroundColor(BgColor.get(config.getString(KEY_BG_COLOR)));
+        setDoSneak(config.getBoolean(KEY_DO_SNEAK));
 
         MoveAsYou.log().info("Player Setting has loaded for player " + getPlayerName());
         MoveAsYou.log().info("UUID: " + getPlayerUUID().toString());
@@ -67,10 +72,10 @@ public class PlayerSetting {
     
     public YamlConfiguration toFile(){
         YamlConfiguration config = new YamlConfiguration();
-        config.set("playerUUID", getPlayerUUID().toString());
-        config.set("playerName", getPlayerName().value());
-        config.set("backGroundColor", getBackGroundColor().name());
-        config.set("doSneak", isDoSneak());
+        config.set(KEY_PLAYER_UUID, getPlayerUUID().toString());
+        config.set(KEY_PLAYER_NAME, getPlayerName().value());
+        config.set(KEY_BG_COLOR, getBackGroundColor().name());
+        config.set(KEY_DO_SNEAK, isDoSneak());
         return config;
     }
 
