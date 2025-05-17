@@ -44,7 +44,7 @@ public class MAYTabCompleter implements TabCompleter {
          * may token revoke all <playerName>
          * may token revoke admin
          * may stats
-         * may config <key> <playerName> <value>
+         * may config <playerName> <key> <value>
          */
         if(args.length == 0) {
             return filter(first, "");
@@ -63,7 +63,7 @@ public class MAYTabCompleter implements TabCompleter {
             }
             /* /may config ? */
             if(YuiFrame.StringUtil.eq(args[0], "config")) {
-                return filter(configKeyList, args[1]);
+                return playerName;
             }
         }
         if(args.length == 3) {
@@ -78,12 +78,7 @@ public class MAYTabCompleter implements TabCompleter {
             }
             /* /may config <key> ? */
             if(YuiFrame.StringUtil.eq(args[0], "config")) {
-                if (YuiFrame.StringUtil.eq(args[1], PlayerSetting.KEY_BG_COLOR)) {
-                    return playerName;
-                }
-                if (YuiFrame.StringUtil.eq(args[1], PlayerSetting.KEY_DO_SNEAK)) {
-                    return playerName;
-                }
+                return filter(configKeyList, args[2]);
             }
         }
         if(args.length == 4) {
