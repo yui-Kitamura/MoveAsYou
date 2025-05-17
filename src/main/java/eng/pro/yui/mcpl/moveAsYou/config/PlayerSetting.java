@@ -32,12 +32,12 @@ public class PlayerSetting {
         this.backGroundColor = backGroundColor;
     }
     
-    private boolean DoSneak;
+    private boolean doSneak;
     public boolean isDoSneak() {
-        return DoSneak;
+        return doSneak;
     }
     public void setDoSneak(boolean doSneak) {
-        DoSneak = doSneak;
+        this.doSneak = doSneak;
     }
     
     public PlayerSetting(UUID playerUUID){
