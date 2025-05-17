@@ -1,5 +1,8 @@
 package eng.pro.yui.mcpl.moveAsYou.consts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum BgColor {
     GREEN(0x00ff80),
     BLUE(0x0080ff),
@@ -26,12 +29,22 @@ public enum BgColor {
         throw new IllegalArgumentException("color not defined");
     }
     public static BgColor get(String name){
+        if(name == null){ return null; }
+        String input = name.toUpperCase();
         for(BgColor c : BgColor.values()){
-            if(c.name().equals(name)){
+            if(c.name().equals(input)){
                 return c;
             }
         }
         throw new IllegalArgumentException("color not defined");
+    }
+    
+    public static List<String> names(){
+        List<String> result = new ArrayList<>();
+        for(BgColor c : BgColor.values()) {
+            result.add(c.name());
+        }
+        return result;
     }
     
     
