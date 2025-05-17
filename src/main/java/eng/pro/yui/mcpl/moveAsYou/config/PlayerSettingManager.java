@@ -1,6 +1,7 @@
 package eng.pro.yui.mcpl.moveAsYou.config;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.web.WebServer;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -56,6 +57,7 @@ public class PlayerSettingManager {
     public void updatePlayerSetting(UUID playerUUID, PlayerSetting newSetting){
         playerSettings.put(playerUUID, newSetting); // set or replace
         save(playerUUID);
+        WebServer.socketSendSettingsUpdateNotify(playerSettings.get(playerUUID).getPlayerName()); //フロントへ通知
     }
     
     public PlayerSetting get(UUID playerUUID) {

@@ -5,6 +5,7 @@ import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenText;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.data.AnimationInfo;
+import eng.pro.yui.mcpl.moveAsYou.web.data.ConfigUpdateInfo;
 import eng.pro.yui.mcpl.moveAsYou.web.data.PlayerInfo;
 import eng.pro.yui.mcpl.moveAsYou.web.data.SocketID;
 import org.bukkit.entity.Player;
@@ -134,6 +135,16 @@ public class SimpleWebSocketServer extends WebSocketServer {
                 con.send(sendInfo.toJsonString());
             }
         }        
+    }
+    
+    public void sendPlayerConfigChanged(PlayerName targetPlayer){
+        ConfigUpdateInfo info = new ConfigUpdateInfo();
+        for(WebSocket con : getConnections()) {
+            SocketID key = new SocketID(con);
+            if (targetPlayer.equals(connectionAndPlayer.get(key).playerName)) {
+                con.send(info.toJsonString());
+            }
+        }
     }
     
     public void sendTokenRevoked(TokenText token){

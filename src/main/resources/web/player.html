@@ -272,6 +272,9 @@
                 if(data.animationType){
                     animationEvent(data);
                 }
+                if(data.hasNewSettings){
+                    notifySettingsUpdate();
+                }
             };
 
             socket.onclose = function(event) {
@@ -399,6 +402,10 @@
             swing();
         }
         
+        function notifySettingsUpdate(){
+            showAlert("表示設定が変更されています。ページを再読み込みして接続し直してください");
+            setInterval(()=>{showAlert()}, 60 * 1000);
+        }
         
         const skinView = document.getElementById('minecraft-skin');
         const skinViewHead = document.getElementById('mc-head');

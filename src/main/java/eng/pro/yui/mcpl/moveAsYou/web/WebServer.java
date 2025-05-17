@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpServer;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenText;
 import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
+import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.data.HtmlText;
 import org.bukkit.event.player.PlayerAnimationEvent;
 
@@ -170,6 +171,10 @@ public class WebServer {
     
     public static void socketSendEvent(PlayerAnimationEvent event){
         socketServer.sendPlayerAnimationEvent(event);
+    }
+    
+    public static void socketSendSettingsUpdateNotify(PlayerName playerName){
+        socketServer.sendPlayerConfigChanged(playerName);
     }
     
     public static void socketSendTokenDisabled(TokenText token){
