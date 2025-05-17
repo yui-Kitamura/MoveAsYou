@@ -28,6 +28,8 @@ public class MAYTabCompleter implements TabCompleter {
     private final List<String> configKeyList = Arrays.asList(
             PlayerSetting.KEY_BG_COLOR, PlayerSetting.KEY_DO_SNEAK
     );
+    private final List<String> booleanList = Arrays.asList(Boolean.toString(true), Boolean.toString(false));
+    
     private final List<String> playerName = null;
     private final List<String> nothingToShow = Collections.emptyList();
 
@@ -96,7 +98,7 @@ public class MAYTabCompleter implements TabCompleter {
                     return filter(BgColor.names(), args[3]);
                 }
                 if (YuiFrame.StringUtil.eq(args[2], PlayerSetting.KEY_DO_SNEAK)) {
-                    return Arrays.asList(Boolean.toString(true), Boolean.toString(false));
+                    return filter(booleanList, args[3]);
                 }
             }
         }
