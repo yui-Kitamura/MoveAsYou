@@ -24,6 +24,7 @@ public class MAYTabCompleter implements TabCompleter {
     );
     private final List<String> tokenRevokeList = Arrays.asList("all", "admin");
     private final List<String> playerName = null;
+    private final List<String> nothingToShow = Collections.emptyList();
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command,
@@ -52,7 +53,7 @@ public class MAYTabCompleter implements TabCompleter {
             }
             /* /may stats ? */
             if(YuiFrame.StringUtil.eq(args[0], "stats")) {
-                return Collections.emptyList();
+                return nothingToShow;
             }
         }
         if(args.length == 3) {
@@ -76,7 +77,7 @@ public class MAYTabCompleter implements TabCompleter {
                 }
             }
         }
-        return Collections.emptyList();
+        return nothingToShow;
     }
     
     /* pkg-prv */ List<String> filter(List<String> list, String input){
