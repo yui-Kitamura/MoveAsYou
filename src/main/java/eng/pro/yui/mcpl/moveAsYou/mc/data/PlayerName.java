@@ -51,6 +51,7 @@ public class PlayerName {
         return name.equals(other.name);
     }
 
+    /** recommend to use <code>value</code> method */
     @Override
     public String toString() {
         return name;
