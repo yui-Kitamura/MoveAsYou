@@ -30,6 +30,12 @@ permissions:
   moveAsYou.config.admin.bgcl:
     description: 他プレイヤー分の背景色設定
     default: op
+  moveAsYou.config.self.sneak:
+    description: 自身のスニーク演出設定
+    default: true
+  moveAsYou.config.admin.sneak:
+    description: 他プレイヤー分のスニーク演出設定
+    default: op
 
 commands:
   MoveAsYou:
