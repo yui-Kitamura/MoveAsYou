@@ -76,7 +76,7 @@ public class MAYTabCompleter implements TabCompleter {
                     return filter(tokenRevokeList, args[2]);
                 }
             }
-            /* /may config <key> ? */
+            /* /may config <playerName> ? */
             if(YuiFrame.StringUtil.eq(args[0], "config")) {
                 return filter(configKeyList, args[2]);
             }
@@ -90,12 +90,12 @@ public class MAYTabCompleter implements TabCompleter {
                     }
                 }
             }
-            /* /may config <key> <playerName> ? */
+            /* /may config <playerName> <key> ? */
             if(YuiFrame.StringUtil.eq(args[0], "config")) {
-                if (YuiFrame.StringUtil.eq(args[1], PlayerSetting.KEY_BG_COLOR)) {
-                    return BgColor.names();
+                if (YuiFrame.StringUtil.eq(args[2], PlayerSetting.KEY_BG_COLOR)) {
+                    return filter(BgColor.names(), args[3]);
                 }
-                if (YuiFrame.StringUtil.eq(args[1], PlayerSetting.KEY_DO_SNEAK)) {
+                if (YuiFrame.StringUtil.eq(args[2], PlayerSetting.KEY_DO_SNEAK)) {
                     return Arrays.asList(Boolean.toString(true), Boolean.toString(false));
                 }
             }
