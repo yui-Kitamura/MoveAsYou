@@ -165,6 +165,30 @@ public class WebServer {
         ex.printStackTrace();
     }
     
+    public static void sendPlane(int code, String text, HttpExchange exchange){
+        MoveAsYou.log().info("Sending " + code + " " + text);
+
+        byte[] byteBased = text.getBytes(StandardCharsets.UTF_8);
+
+        try {
+            exchange.getResponseHeaders().set("Content-Type", "text/plain; charset=UTF-8");
+            exchange.sendResponseHeaders(code, byteBased.length);
+        }catch(IOException unexpected) {
+            MoveAsYou.log().warning("FAILED to send header: " + unexpected.getMessage());
+            throw new RuntimeMAYException(unexpected);
+        }
+        try(OutputStream out = exchange.getResponseBody()){
+            out.write(byteBased);
+            out.flush();
+        }catch(IOException unexpected) {
+            MoveAsYou.log().warning("FAILED to send response to web server: " + unexpected.getMessage());
+            throw new RuntimeMAYException(unexpected);
+        }finally {
+            MoveAsYou.log().info("Web server sent " + code +" for request path "+ exchange.getRequestURI());
+            exchange.close(); //明示的なclose
+        }
+    }
+    
     public static void socketSendMonitor(){
         socketServer.sendPlayerInfo();
     }

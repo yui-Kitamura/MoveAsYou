@@ -246,6 +246,17 @@
                         sendSocketMessage = undefined;
                     } else if (response.status === 400) {
                         showAlert('入力したトークンが有効か確認してください');
+                        response.text().then((txt)=>{
+                            if (txt === 'expired') {
+                                showAlert('トークンは期限切れです');
+                            }
+                            if (txt === 'used') {
+                                showAlert('トークンの利用回数制限を超過しました');
+                            }
+                            if (txt === 'limited') {
+                                showAlert('トークンの利用制限に抵触しています');
+                            }
+                        });
                     } else {
                         showAlert('不明なエラー');
                         console.error('Authentication failed with status:', response.status);
@@ -286,6 +297,15 @@
                 }
                 if (event.code === 4000) {
                     showAlert('Tokenが正しくない可能性があります');
+                }
+                if (event.code === 4100) {
+                    showAlert('トークンは期限切れです');
+                }
+                if (event.code === 4200) {
+                    showAlert('トークンの利用回数制限を超過しました');
+                }
+                if (event.code === 4300) {
+                    showAlert('トークンの利用制限に抵触しています');
                 }
                 if (event.code === 4001) {
                     showAlert('プレイヤーがオフラインになった可能性があります');

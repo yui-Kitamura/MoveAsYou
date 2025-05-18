@@ -3,6 +3,7 @@ package eng.pro.yui.mcpl.moveAsYou.web;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.auth.WebViewTokenManager;
 import eng.pro.yui.mcpl.moveAsYou.web.data.AuthRequestInfo;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class AuthHandler implements HttpHandler {
         }
 
         if (! "POST".equals(exchange.getRequestMethod())) {
-            WebServer.send(405, "Method not allowed", exchange);
+            WebServer.sendPlane(405, "Method not allowed", exchange);
             return;
         }
 
@@ -36,15 +37,15 @@ public class AuthHandler implements HttpHandler {
         MoveAsYou.log().info("Auth request: " + requestInfo);
 
         if (requestInfo == null || requestInfo.token == null || requestInfo.playerName == null) {
-            WebServer.send(400, "Invalid request body", exchange);
+            WebServer.sendPlane(400, "Invalid request body", exchange);
             return;
         }
-        
-        boolean valid = MoveAsYou.tokenManager().validate(requestInfo.token, requestInfo.playerName);
-        if(valid) {
-            WebServer.send(200, "OK", exchange);
+
+        WebViewTokenManager.ValidateResult valid = MoveAsYou.tokenManager().validate(requestInfo.token, requestInfo.playerName);
+        if(valid.success) {
+            WebServer.sendPlane(200, "OK", exchange);
         }else {
-            WebServer.send(400, "Invalid token", exchange);
+            WebServer.sendPlane(400, valid.message, exchange);
         }
 
     }
