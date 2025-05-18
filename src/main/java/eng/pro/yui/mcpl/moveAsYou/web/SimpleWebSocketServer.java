@@ -3,6 +3,7 @@ package eng.pro.yui.mcpl.moveAsYou.web;
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenText;
+import eng.pro.yui.mcpl.moveAsYou.auth.WebViewTokenManager;
 import eng.pro.yui.mcpl.moveAsYou.mc.data.PlayerName;
 import eng.pro.yui.mcpl.moveAsYou.web.data.AnimationInfo;
 import eng.pro.yui.mcpl.moveAsYou.web.data.ConfigUpdateInfo;
@@ -93,7 +94,8 @@ public class SimpleWebSocketServer extends WebSocketServer {
         TokenText t = new TokenText(token);
         SocketID socketID = new SocketID(con);
         PlayerName pn = connectionAndPlayer.get(socketID).playerName;
-        if(MoveAsYou.tokenManager().validateForNew(t, pn)){
+        WebViewTokenManager.ValidateResult result = MoveAsYou.tokenManager().validateForNew(t, pn);
+        if(result.success){
             Player online = MoveAsYou.plugin().getServer().getPlayer(pn.value());
             if(online == null){ 
                 con.close(4001, "player not found");
@@ -103,7 +105,13 @@ public class SimpleWebSocketServer extends WebSocketServer {
             MoveAsYou.playerMonitor().addPlayer(online);
             connectionAndPlayer.get(socketID).setToken(t);
         }else {
-            con.close(4000, "invalid token");
+            switch(result) {
+                case NOT_EXISTS -> con.close(4000, result.message);
+                case EXPIRED -> con.close(4100, result.message);
+                case USED -> con.close(4200, result.message);
+                case LIMITED -> con.close(4300, result.message);
+                default -> con.close(4000, "bad request");
+            }
             return;
         }
     }

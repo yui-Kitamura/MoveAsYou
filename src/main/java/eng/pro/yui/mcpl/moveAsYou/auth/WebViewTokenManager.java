@@ -18,6 +18,22 @@ import java.util.concurrent.TimeUnit;
 
 public class WebViewTokenManager {
     
+    public enum ValidateResult {
+        OK(true, "ok"),
+        NOT_EXISTS(false, "invalid"),
+        LIMITED(false, "limited"),
+        EXPIRED(false, "expired"),
+        USED(false, "used");
+        
+        public final boolean success;
+        public final String message;
+        ValidateResult(boolean success, String message){
+            this.success = success;
+            this.message = message;
+        }
+        
+    }
+    
     /** tokenからtokenInfoを取得 */
     private final Map<TokenText, TokenInfo> tokenStore;
     
@@ -66,15 +82,15 @@ public class WebViewTokenManager {
     /** 
      * 有効期限内であることの検証と、期限の延長
      * ONE_TIMEは個人用途に限定 */
-    public boolean validate(TokenText token, PlayerName playerName){
+    public ValidateResult validate(TokenText token, PlayerName playerName){
         TokenInfo stored = tokenStore.get(token);
         if(stored == null) {
             MoveAsYou.log().warning("Token " + token + ": not exist");
-            return false;
+            return ValidateResult.NOT_EXISTS;
         }
         if(stored.isValid() == false){
             MoveAsYou.log().warning("Token " + token + ": already expired");
-            return false;
+            return ValidateResult.EXPIRED;
         }
         switch(stored.tokenType) {
             case ADMIN:
@@ -85,26 +101,26 @@ public class WebViewTokenManager {
             case ONE_TIME:
                 if (stored.playerName.equals(playerName) == false) {
                     MoveAsYou.log().warning("Token " + token + ": player " + playerName + " does not match expected player name");
-                    return false;
+                    return ValidateResult.LIMITED;
                 }
                 break;
         }
        
         stored.refreshTokenActivity();
-        return true;
+        return ValidateResult.OK;
     }
-    public boolean validateForNew(TokenText token, PlayerName playerName){
-        boolean valid = validate(token, playerName);
-        if(valid) {
+    public ValidateResult validateForNew(TokenText token, PlayerName playerName){
+        ValidateResult valid = validate(token, playerName);
+        if(valid.success) {
             //Tokenの残利用回数も確認する
             TokenInfo stored = tokenStore.get(token);
             if (stored.isAllowedToGenerateNewConnect() == false) {
                 MoveAsYou.log().warning("Token " + token.value() + ": player " + playerName + " is not allowed to generate new connect");
-                return false;
+                return ValidateResult.USED;
             }
-            return true;
+            return ValidateResult.OK;
         }else {
-            return false;
+            return valid;
         }
     }
     
