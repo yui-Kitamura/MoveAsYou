@@ -42,6 +42,9 @@
           margin: 0;
       }
       
+      h1 img {
+          vertical-align: middle
+      }
       body>header p {
           font-style: italic;
       }
@@ -95,7 +98,7 @@
 </head>
 <body th:class="${bgColor}">
   <header>
-    <h1><img src="/static/mayLogo_small.png" alt="logo" height="2em"><span th:text="${playerName}"></span></h1>
+    <h1><img src="/static/mayLogo_small.png" alt="logo" height="36px"><span th:text="${playerName}"></span></h1>
     <p><span id="fpsDisplay">60</span>FPS</p><script>getCurrentFPS(); //初回計測指示</script>
   </header>
   <main>
