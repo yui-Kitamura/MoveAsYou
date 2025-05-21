@@ -4,6 +4,7 @@ import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenInfo;
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenText;
 import eng.pro.yui.mcpl.moveAsYou.auth.TokenType;
+import eng.pro.yui.mcpl.moveAsYou.consts.Consts;
 import eng.pro.yui.mcpl.moveAsYou.consts.Permissions;
 import eng.pro.yui.mcpl.moveAsYou.exception.CommandPermissionException;
 import eng.pro.yui.mcpl.moveAsYou.exception.RateLimitedException;
@@ -119,7 +120,7 @@ public class TokenCommand implements ICommand{
              *  */
             StringBuilder sb = new StringBuilder();
             for(String s : MoveAsYou.tokenManager().getTokenInfo(commandSender)) {
-                sb.append(s).append(MoveAsYou.br);
+                sb.append(s).append(Consts.br);
             }
             commandSender.sendMessage(sb.toString());
             return;
@@ -130,7 +131,7 @@ public class TokenCommand implements ICommand{
              * */
             StringBuilder sb = new StringBuilder();
             for (String s : MoveAsYou.tokenManager().getTokensByPlayerName(commandSender, new PlayerName(args[2]))) {
-                sb.append(s).append(MoveAsYou.br);
+                sb.append(s).append(Consts.br);
             }
             commandSender.sendMessage(sb.toString());
             return;

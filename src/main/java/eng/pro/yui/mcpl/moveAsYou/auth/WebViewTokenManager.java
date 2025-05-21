@@ -1,6 +1,7 @@
 package eng.pro.yui.mcpl.moveAsYou.auth;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
+import eng.pro.yui.mcpl.moveAsYou.consts.Consts;
 import eng.pro.yui.mcpl.moveAsYou.consts.Permissions;
 import eng.pro.yui.mcpl.moveAsYou.exception.CommandPermissionException;
 import eng.pro.yui.mcpl.moveAsYou.exception.RateLimitedException;
@@ -258,7 +259,7 @@ public class WebViewTokenManager {
      */
     public String getStats(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Tokens: ").append(tokenStore.size()).append(MoveAsYou.br);
+        sb.append("Tokens: ").append(tokenStore.size()).append(Consts.br);
         int onetime = 0, stream = 0, admin = 0;
         for(TokenInfo token : tokenStore.values()){
             switch(token.tokenType) {
@@ -268,8 +269,8 @@ public class WebViewTokenManager {
                 default -> {}
             }
         }
-        sb.append("Token for ").append(TokenType.ONE_TIME).append(": ").append(onetime).append(MoveAsYou.br);
-        sb.append("Token for ").append(TokenType.STREAMING).append(": ").append(stream).append(MoveAsYou.br);
+        sb.append("Token for ").append(TokenType.ONE_TIME).append(": ").append(onetime).append(Consts.br);
+        sb.append("Token for ").append(TokenType.STREAMING).append(": ").append(stream).append(Consts.br);
         sb.append("Token for ").append(TokenType.ADMIN).append(": ").append(admin);
         return sb.toString();
     }
