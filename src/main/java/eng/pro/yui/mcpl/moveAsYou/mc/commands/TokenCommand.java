@@ -97,6 +97,9 @@ public class TokenCommand implements ICommand{
 
         }else if(commandSender instanceof ConsoleCommandSender sender) {
             try {
+                if(requestType != TokenType.ADMIN) {
+                    throw new IllegalArgumentException("console is only allowed to issue ADMIN token");
+                }
                 TokenInfo generated = MoveAsYou.tokenManager().generateToken(sender);
                 sender.sendMessage(generated.token.value());
             }catch(RateLimitedException rateEx) {
