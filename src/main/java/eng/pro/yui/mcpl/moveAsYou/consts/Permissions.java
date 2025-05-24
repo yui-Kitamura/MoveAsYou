@@ -2,6 +2,8 @@ package eng.pro.yui.mcpl.moveAsYou.consts;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import java.util.List;
 
@@ -57,6 +59,12 @@ public final class Permissions {
                     throw new IllegalArgumentException("unexpected permission declared:" + p.getName());
             }
         }
+    }
+    
+    public static boolean has(Permissible entity, Permission permission){
+        if(entity instanceof ConsoleCommandSender) { return true; }
+        
+        return entity.hasPermission(permission);
     }
 
 }
