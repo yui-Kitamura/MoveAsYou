@@ -26,11 +26,9 @@ public class HelpCommand implements ICommand {
     
     @Override
     public void run(CommandSender sender, String[] args) {
-        /*
-         * /may help bar
-         */
         HelpMode mode = HelpMode.NORMAL;
-        if(args.length > 2) {
+        if(args.length >= 2) {
+            /* /may [help,bar] */
             String option = args[1];
             if(YuiFrame.StringUtil.eq(option, HelpMode.CONFIG.name())) {
                 mode = HelpMode.CONFIG;
