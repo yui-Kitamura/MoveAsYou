@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import eng.pro.yui.mcpl.moveAsYou.auth.WebViewTokenManager;
 import eng.pro.yui.mcpl.moveAsYou.config.MoveAsYouConfig;
 import eng.pro.yui.mcpl.moveAsYou.config.PlayerSettingManager;
+import eng.pro.yui.mcpl.moveAsYou.config.PluginVersion;
 import eng.pro.yui.mcpl.moveAsYou.mc.EventHandlers;
 import eng.pro.yui.mcpl.moveAsYou.mc.commands.MAYCommandHandler;
 import eng.pro.yui.mcpl.moveAsYou.mc.PlayerMoveMonitor;
@@ -100,6 +101,7 @@ public final class MoveAsYou extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
         this.getLogger().info("MoveAsYou is enabled!");
+        PluginVersion.read();
         addCommandHandler();
         addEventHandler();
         startUpWebServer();
