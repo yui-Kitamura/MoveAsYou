@@ -46,7 +46,7 @@ public class HelpCommand implements ICommand {
     
     private String runNormalCommandHelp(CommandSender sender){
         StringBuilder sb = new StringBuilder();
-        final String calledCmd = ChatColor.AQUA + "/" + alias + IStrConst.EMPTY;
+        final String calledCmd = ChatColor.AQUA + "/" + alias + IStrConst.SPACE;
         sb.append("===").append(Consts.MAYDecorated).append("===").append(ChatColor.RESET).append(Consts.br);
         
         if(has(sender, Permissions.TOKEN, true)) {
@@ -101,7 +101,7 @@ public class HelpCommand implements ICommand {
          * may config <playerName> <key> <value>
          */
         StringBuilder sb = new StringBuilder();
-        final String calledCmd = ChatColor.AQUA + "/" + alias + IStrConst.EMPTY;
+        final String calledCmd = ChatColor.AQUA + "/" + alias + IStrConst.SPACE;
         sb.append("===").append(Consts.MAYDecorated).append("===")
                 .append(ChatColor.DARK_GREEN).append(" = config help =")
                 .append(ChatColor.RESET).append(Consts.br);
