@@ -73,9 +73,9 @@ public class PluginVersion {
                 }
             }
             if(hasLatest()) {
-                MoveAsYou.log().warning("plugin "+ Consts .MAYDecorated +" has new version!");
+                MoveAsYou.log().warning("plugin MoveAsYou has new version!");
             }else {
-                MoveAsYou.log().info("plugin "+ Consts.MAYDecorated +" is running with the latest version.");
+                MoveAsYou.log().info("plugin MoveAsYou is running with the latest version.");
             }
         } catch (MalformedURLException e) {
             throw new RuntimeMAYException("illegal url", e);
