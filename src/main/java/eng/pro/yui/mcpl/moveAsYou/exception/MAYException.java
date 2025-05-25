@@ -8,6 +8,10 @@ public class MAYException extends Exception {
         super(message);
     }
     
+    public MAYException(String message, Throwable cause){
+        super(message, cause);
+    }
+    
     public void log(){
         MoveAsYou.log().warning(this.getMessage());
     }
