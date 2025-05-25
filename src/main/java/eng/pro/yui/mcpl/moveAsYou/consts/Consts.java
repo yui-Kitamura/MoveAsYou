@@ -11,6 +11,6 @@ public final class Consts {
     /** MoveAsYou装飾テキスト */
     public static final String MAYDecorated =
             "" + ChatColor.RESET + ChatColor.ITALIC +
-            ChatColor.BLUE + "Move" + ChatColor.RED + "As" + ChatColor.GREEN + "You" + 
+            ChatColor.RED + "Move" + ChatColor.GREEN + "As" + ChatColor.BLUE + "You" + 
             ChatColor.RESET;
 }
