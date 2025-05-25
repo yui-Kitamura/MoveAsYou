@@ -1,8 +1,6 @@
 package eng.pro.yui.mcpl.moveAsYou.config;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
-import eng.pro.yui.mcpl.moveAsYou.consts.Consts;
-import eng.pro.yui.mcpl.moveAsYou.exception.MAYException;
 import eng.pro.yui.mcpl.moveAsYou.exception.RuntimeMAYException;
 
 import java.io.IOException;
