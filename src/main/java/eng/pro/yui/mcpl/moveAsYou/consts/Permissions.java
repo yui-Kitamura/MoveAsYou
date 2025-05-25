@@ -2,6 +2,8 @@ package eng.pro.yui.mcpl.moveAsYou.consts;
 
 import eng.pro.yui.mcpl.moveAsYou.MoveAsYou;
 
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import java.util.List;
 
@@ -57,6 +59,21 @@ public final class Permissions {
                     throw new IllegalArgumentException("unexpected permission declared:" + p.getName());
             }
         }
+    }
+    /** 
+     * @return 権限を有する時<code>true</code>、それ以外は<code>false</code>. ただし、Consoleからは常に<code>true</code> */
+    public static boolean has(Permissible entity, Permission permission){
+        return has(entity, permission, false);
+    }
+
+    /**
+     * @param ignoreConsole Consoleからの実行を拒否する場合<code>true</code>
+     * @return 権限の有無をbooleanで返す. ただし、Consoleについてはignoreフラグを考慮する.
+     */
+    public static boolean has(Permissible entity, Permission permission, boolean ignoreConsole){
+        if(entity instanceof ConsoleCommandSender) { return !ignoreConsole; }
+
+        return entity.hasPermission(permission);
     }
 
 }

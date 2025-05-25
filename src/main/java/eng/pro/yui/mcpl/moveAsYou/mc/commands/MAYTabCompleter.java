@@ -19,7 +19,7 @@ public class MAYTabCompleter implements TabCompleter {
         // nothing to do
     }
 
-    private final List<String> first = Arrays.asList("token","stats","config");
+    private final List<String> first = Arrays.asList("token","stats","config","help");
     private final List<String> tokenList = Arrays.asList(
             TokenType.ONE_TIME.alias, TokenType.STREAMING.alias, TokenType.ADMIN.alias,
             "list", "revoke"
@@ -28,6 +28,7 @@ public class MAYTabCompleter implements TabCompleter {
     private final List<String> configKeyList = Arrays.asList(
             PlayerSetting.KEY_BG_COLOR, PlayerSetting.KEY_DO_SNEAK
     );
+    private final List<String> helpList = Arrays.asList("config");
     private final List<String> booleanList = Arrays.asList(Boolean.toString(true), Boolean.toString(false));
     
     private final List<String> playerName = null;
@@ -47,6 +48,7 @@ public class MAYTabCompleter implements TabCompleter {
          * may token revoke admin
          * may stats
          * may config <playerName> <key> <value>
+         * may help
          */
         if(args.length == 0) {
             return filter(first, "");
@@ -66,6 +68,10 @@ public class MAYTabCompleter implements TabCompleter {
             /* /may config ? */
             if(YuiFrame.StringUtil.eq(args[0], "config")) {
                 return playerName;
+            }
+            /* /may help ? */
+            if(YuiFrame.StringUtil.eq(args[0], "help")) {
+                return filter(helpList, args[1]);
             }
         }
         if(args.length == 3) {
