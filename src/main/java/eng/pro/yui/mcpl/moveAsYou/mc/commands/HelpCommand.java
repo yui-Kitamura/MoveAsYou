@@ -49,19 +49,19 @@ public class HelpCommand implements ICommand {
         
         if(has(sender, Permissions.TOKEN, true)) {
             sb.append(calledCmd).append("token onetime").append(ChatColor.RESET)
-                    .append(":").append("1回限り有効の表示連携トークンを発行します").append(Consts.br);
+                    .append(" :").append("1回限り有効の表示連携トークンを発行します").append(Consts.br);
         }
         if(has(sender, Permissions.TOKEN, true)) {
             sb.append(calledCmd).append("token stream").append(ChatColor.RESET)
-                    .append(":").append("配信向け再利用可能トークンを発行します").append(Consts.br);
+                    .append(" :").append("配信向け再利用可能トークンを発行します").append(Consts.br);
         }
         if(has(sender, Permissions.TOKEN_ADMIN)) {
             sb.append(calledCmd).append("token admin").append(ChatColor.RESET)
-                    .append(":").append("管理者トークンを発行します").append(Consts.br);
+                    .append(" :").append("管理者トークンを発行します").append(Consts.br);
         }
         if(has(sender, Permissions.LIST)) {
             sb.append(calledCmd).append("token list").append(ChatColor.RESET)
-                    .append(":").append("発行したトークンの一覧を表示します");
+                    .append(" :").append("発行したトークンの一覧を表示します");
             if(has(sender, Permissions.LIST_ADMIN)) {
                 sb.append("。管理者トークンを含みます");
             }
@@ -69,23 +69,23 @@ public class HelpCommand implements ICommand {
         }
         if(has(sender, Permissions.LIST_OTHERS)) {
             sb.append(calledCmd).append("token list ").append(ChatColor.ITALIC).append("playerName").append(ChatColor.RESET)
-                    .append(":").append("指定ユーザについて有効なトークンの一覧を表示します");
+                    .append(" :").append("指定ユーザについて有効なトークンの一覧を表示します");
             sb.append(Consts.br);
         }
         if(has(sender, Permissions.TOKEN)) {
             sb.append(calledCmd).append("token revoke ").append(ChatColor.ITALIC).append("token-code").append(ChatColor.RESET)
-                    .append(":").append("指定トークンを無効にします").append(Consts.br);
+                    .append(" :").append("指定トークンを無効にします").append(Consts.br);
         }
         if(has(sender, Permissions.TOKEN_ADMIN)) {
             sb.append(calledCmd).append("token revoke all ")
                     .append(ChatColor.ITALIC).append("playerName").append(ChatColor.RESET)
-                    .append(":").append("指定プレイヤーのトークンを無効にします").append(Consts.br);
+                    .append(" :").append("指定プレイヤーのトークンを無効にします").append(Consts.br);
             sb.append(calledCmd).append("token revoke admin").append(ChatColor.RESET)
-                    .append(":").append("管理者トークンをすべて無効にします").append(Consts.br);
+                    .append(" :").append("管理者トークンをすべて無効にします").append(Consts.br);
         }
         if(has(sender, Permissions.STATS_ADMIN)) {
             sb.append(calledCmd).append("stats").append(ChatColor.RESET)
-                    .append(":").append("トークンの発行状況を表示します").append(Consts.br);
+                    .append(" :").append("トークンの発行状況を表示します").append(Consts.br);
         }
         
         sb.append(calledCmd).append("help config").append(ChatColor.RESET)
@@ -108,7 +108,7 @@ public class HelpCommand implements ICommand {
             sb.append(calledCmd).append("config ").append(sender.getName())
                     .append(" backgroundcolor ")
                     .append(ChatColor.ITALIC).append("colorName").append(ChatColor.RESET)
-                    .append(":").append("ウェブ画面で表示する背景色を設定します")
+                    .append(" :").append("ウェブ画面で表示する背景色を設定します")
                     .append(ChatColor.RESET).append(Consts.br);
         }
         if(has(sender, CONFIG_ADMIN_BGCOLOR)) {
@@ -116,7 +116,7 @@ public class HelpCommand implements ICommand {
                     .append(ChatColor.RESET).append(ChatColor.AQUA)
                     .append(" bagkgroundcolor ")
                     .append(ChatColor.ITALIC).append("colorName").append(ChatColor.RESET)
-                    .append(":").append("指定プレイヤーのウェブ画面で表示する背景色を設定します")
+                    .append(" :").append("指定プレイヤーのウェブ画面で表示する背景色を設定します")
                     .append(ChatColor.RESET).append(Consts.br);
         }
         if(has(sender, CONFIG_SELF_SNEAK, true)) {
