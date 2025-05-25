@@ -60,7 +60,7 @@ public class HelpCommand implements ICommand {
                     .append(":").append("管理者トークンを発行します").append(Consts.br);
         }
         if(has(sender, Permissions.LIST)) {
-            sb.append(calledCmd).append("list").append(ChatColor.RESET)
+            sb.append(calledCmd).append("token list").append(ChatColor.RESET)
                     .append(":").append("発行したトークンの一覧を表示します");
             if(has(sender, Permissions.LIST_ADMIN)) {
                 sb.append("。管理者トークンを含みます");
@@ -68,19 +68,19 @@ public class HelpCommand implements ICommand {
             sb.append(Consts.br);
         }
         if(has(sender, Permissions.LIST_OTHERS)) {
-            sb.append(calledCmd).append("list ").append(ChatColor.ITALIC).append("playerName").append(ChatColor.RESET)
+            sb.append(calledCmd).append("token list ").append(ChatColor.ITALIC).append("playerName").append(ChatColor.RESET)
                     .append(":").append("指定ユーザについて有効なトークンの一覧を表示します");
             sb.append(Consts.br);
         }
         if(has(sender, Permissions.TOKEN)) {
-            sb.append(calledCmd).append("revoke ").append(ChatColor.ITALIC).append("token-code").append(ChatColor.RESET)
+            sb.append(calledCmd).append("token revoke ").append(ChatColor.ITALIC).append("token-code").append(ChatColor.RESET)
                     .append(":").append("指定トークンを無効にします").append(Consts.br);
         }
         if(has(sender, Permissions.TOKEN_ADMIN)) {
-            sb.append(calledCmd).append("revoke all ")
+            sb.append(calledCmd).append("token revoke all ")
                     .append(ChatColor.ITALIC).append("playerName").append(ChatColor.RESET)
                     .append(":").append("指定プレイヤーのトークンを無効にします").append(Consts.br);
-            sb.append(calledCmd).append("revoke admin").append(ChatColor.RESET)
+            sb.append(calledCmd).append("token revoke admin").append(ChatColor.RESET)
                     .append(":").append("管理者トークンをすべて無効にします").append(Consts.br);
         }
         if(has(sender, Permissions.STATS_ADMIN)) {
