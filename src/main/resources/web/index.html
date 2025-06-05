@@ -8,10 +8,32 @@
 <body>
   <header>
     <h1>MoveAsYou</h1>
+    <p>配信者向けスキン投影プラグインのサーバーページへようこそ</p>
   </header>
   <main>
     <section id="s_help">
-      
+      <h2>使い方</h2>
+      <section id="s_guid">
+        <p>サーバーにログインした状態で、表示したいプレイヤーのスキン投影ページを開いてください。
+          Minecraft内のコマンド実行で発行されるトークンを入力欄に入力して接続してください。</p>
+      </section>
+      <section id="s_token">
+        <section>
+          <p>トークンは3種類あります。用途に合わせて使い分けてください。</p>
+          <dl>
+            <dt>使い捨てトークン</dt><dd>発行したプレイヤーのみに有効で、1回限り有効です。</dd>
+            <dt>配信向けトークン</dt><dd>複数回使用可能です。トークンを知る視聴者全員が使えます。</dd>
+            <dt>管理者用トークン</dt><dd>管理者専用のトークンで、すべての機能にアクセスできます。</dd>
+          </dl>
+          <p>いずれもサーバーの停止で無効化されます。</p>
+        </section>
+        <h3>トークン発行コマンド</h3>
+        <dl>
+          <dt>使い捨てトークン</dt><dd><code>/moveasyou token</code></dd>
+          <dt>配信向けトークン</dt><dd><code>/moveasyou token stream</code></dd>
+          <dt>管理者用トークン</dt><dd><code>/moveasyou token admin</code></dd>
+        </dl>
+      </section>
     </section>
     <section id="s_users">
     
