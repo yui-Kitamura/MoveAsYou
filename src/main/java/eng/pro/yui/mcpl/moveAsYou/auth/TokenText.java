@@ -87,7 +87,7 @@ public final class TokenText {
     // Block（ブロック系）
     private static final List<String> BLOCKS = List.of(
             "acacia", "bamboo", "birch", "brick",
-            "cactus", "cherry", "clay", "cobble", "glass", "glowstone",
+            "cactus", "cherry", "clay", "cobble", "glass",
             "honey", "jungle", "nether", "obsidian", "paper", "prism",
             "quartz", "redstone", "spruce", "stone", "wool"
     );
