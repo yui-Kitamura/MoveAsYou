@@ -13,18 +13,27 @@
       :root {
           --size: 24;
       }
+      body, header, main, footer {
+          margin: 0;
+          padding: 0;
+      }
+      section {
+          padding: 15px;
+      }
   </style>
   <link rel="stylesheet" href="/static/rgb.css">
   <link rel="stylesheet" href="/static/skin3d.css">
 </head>
-<body class="green">
-  <header>
-    <h1 style="background-color: aliceblue"><img src="/static/mayLogo_small.png" alt="logo" height="36px"><span
+<body>
+  <header style="background-color: aliceblue">
+    <section>
+    <h1><img src="/static/mayLogo_small.png" alt="logo" height="36px"><span
         style="color: red">Move</span><span style="color: limegreen">As</span><span
         style="color: blue">You</span></h1>
     <p>配信者向けスキン投影プラグインのサーバーページへようこそ</p>
+    </section>
   </header>
-  <main>
+  <main class="green">
     <section id="s_help">
       <h2>使い方</h2>
       <section id="s_guid">
@@ -103,5 +112,10 @@
                         rel="noopener">GitHub sponsor</a></p>
     </section>
   </main>
+  <footer style="background-color: aliceblue">
+    <section>
+    ©2025- Yui-KITAMURA
+    </section>
+  </footer>
 </body>
 </html>

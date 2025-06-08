@@ -16,6 +16,10 @@
 .blue .warn {
     color: crimson;
 }
+.blue a,
+.blue a:visited {
+    color: goldenrod;
+}
 .red {
     background-color: red;
     color: mediumblue;
