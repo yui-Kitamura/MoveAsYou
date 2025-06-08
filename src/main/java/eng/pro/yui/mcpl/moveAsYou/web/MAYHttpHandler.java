@@ -45,6 +45,11 @@ public class MAYHttpHandler implements HttpHandler {
         for(Player p : all) {
             result.add(new IndexPlayer(p));
         }
+        Collections.shuffle(result);
+        while(result.size() > 10) {
+            result.remove(result.size()-1);
+        }
+        
         return result;
     }
     
