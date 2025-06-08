@@ -52,8 +52,8 @@ public final class TokenText {
             throw new IllegalArgumentException("Invalid token count (must be between 3 and 5)");
         }
         List<String> parts = new ArrayList<>();
-        parts.add(SPECIAL_ITEMS.get(random.nextInt(SPECIAL_ITEMS.size())));
-        parts.add(MODIFIERS.get(random.nextInt(MODIFIERS.size())));
+        parts.add(MOBS.get(random.nextInt(MOBS.size())));
+        parts.add(RARE_BLOCKS.get(random.nextInt(RARE_BLOCKS.size())));
         
         for(int i = 2; i < wordCount; i++){
             parts.add(all().get(random.nextInt(all().size())));
@@ -84,32 +84,30 @@ public final class TokenText {
         return true;
     }
 
-    private final static List<String> COMMON_ITEMS = List.of(
-            "acacia", "amethyst", "andesite", "birch", "brick",
-            "cactus", "clay", "coal", "cobble", "copper", "diamond",
-            "diorite", "emerald", "glass", "glowstone", "gold",
-            "granite", "iron", "jungle", "lapis", "leather",
-            "obsidian", "paper", "quartz",
-            "redstone", "slime", "spruce", "stone", "wool"
+    // Block（ブロック系）
+    private static final List<String> BLOCKS = List.of(
+            "acacia", "bamboo", "birch", "brick",
+            "cactus", "cherry", "clay", "cobble", "glass", "glowstone",
+            "honey", "jungle", "nether", "obsidian", "paper", "prism",
+            "quartz", "redstone", "spruce", "stone", "wool"
     );
 
-    private final static List<String> SPECIAL_ITEMS = List.of(
-            "bamboo", "beacon", "blaze", "chorus",
-            "cherry", "elytra", "ender", "heart",
-            "honey", "nether", "phantom", "prism",
-            "totem", "trident", "turtle", "wither"
-
+    // Mob（モブ/生物系）
+    private static final List<String> MOBS = List.of(
+            "blaze", "ender", "leather", "phantom",
+            "sheep", "slime", "turtle", "wither"
     );
 
-    private final static List<String> MODIFIERS = List.of(
-            "broken", "dark", "enchanted", "flaming", "frozen",
-            "glowing", "golden", "lucky", "shiny", "slow", "weakness"
+    // Ore, Rare Blocks（鉱石・レアブロック）
+    private static final List<String> RARE_BLOCKS = List.of(
+            "amethyst", "beacon", "coal", "copper", "diamond",
+            "elytra", "emerald", "gold", "iron",
+            "quartz", "totem", "trident"
     );
-
     private static List<String> all(){
-        List<String> all = new ArrayList<>(COMMON_ITEMS);
-        all.addAll(MODIFIERS);
-        all.addAll(SPECIAL_ITEMS);
+        List<String> all = new ArrayList<>(BLOCKS);
+        all.addAll(MOBS);
+        all.addAll(RARE_BLOCKS);
         return all;
     }
     
