@@ -4,13 +4,118 @@
   <meta charset="UTF-8">
   <title>MoveAsYou</title>
   <link rel="icon" href="/static/mayLogo_small.png">
+  <style>
+      .player-item {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+      }
+      :root {
+          --size: 24;
+      }
+      body, header, main, footer {
+          margin: 0;
+          padding: 0;
+      }
+      section {
+          padding: 15px;
+      }
+  </style>
+  <link rel="stylesheet" href="/static/rgb.css">
+  <link rel="stylesheet" href="/static/skin3d.css">
 </head>
 <body>
-  <header>
-    <h1>MoveAsYou</h1>
+  <header style="background-color: aliceblue">
+    <section>
+    <h1><img src="/static/mayLogo_small.png" alt="logo" height="36px"><span
+        style="color: red">Move</span><span style="color: limegreen">As</span><span
+        style="color: blue">You</span></h1>
+    <p>配信者向けスキン投影プラグインのサーバーページへようこそ</p>
+    </section>
   </header>
-  <main>
-    <p>テストページ</p>
+  <main class="green">
+    <section id="s_help">
+      <h2>使い方</h2>
+      <section id="s_guid">
+        <p>サーバーにログインした状態で、表示したいプレイヤーのスキン投影ページを開いてください。
+          Minecraft内のコマンド実行で発行されるトークンを入力欄に入力して接続してください。</p>
+      </section>
+      <section id="s_token" class="blue">
+        <section>
+          <p>トークンは3種類あります。用途に合わせて使い分けてください。</p>
+          <dl>
+            <dt>使い捨てトークン</dt><dd>発行したプレイヤーのみに有効で、1回限り有効です。</dd>
+            <dt>配信向けトークン</dt><dd>複数回使用可能です。トークンを知る視聴者全員が使えます。</dd>
+            <dt>管理者用トークン</dt><dd>管理者専用のトークンで、すべての機能にアクセスできます。</dd>
+          </dl>
+          <p>いずれもサーバーの停止で無効化されます。</p>
+        </section>
+        <h3>トークン発行コマンド</h3>
+        <dl>
+          <dt>使い捨てトークン</dt><dd><code>/moveasyou token</code></dd>
+          <dt>配信向けトークン</dt><dd><code>/moveasyou token stream</code></dd>
+          <dt>管理者用トークン</dt><dd><code>/moveasyou token admin</code></dd>
+        </dl>
+      </section>
+    </section>
+    <section id="s_users">
+      <h2>ユーザーリンク</h2>
+      <p>オンラインのユーザのページの例です</p>
+      <ul style="list-style: none">
+        <li th:each="user : ${users}">
+          <div class="player-item" th:id="@{'mc-'+${user.mcid}}">
+            <div class="skin-container" th:data-skinurl="${user.skinUrl}">
+              <div class="head cube">
+                <div class="front"></div>
+                <div class="accessories">
+                  <div class="front"></div>
+                </div>
+              </div>
+            </div>
+            <a th:href="@{'~/p/' + ${user.mcid}}" th:text="${user.mcid}"></a>
+          </div>
+        </li>
+        <script>
+            document.querySelectorAll('[data-skinurl]').forEach(ele => {
+                const url = ele.getAttribute('data-skinurl');
+                ele.style.setProperty('--skin-image', `url("${url}")`);
+            });
+        </script>
+      </ul>
+      <form id="playerSearchForm">
+        <label for="playerName">プレイヤー名を入力してスキン投影ページへ移動：</label>
+        <input type="text" id="playerName" name="playerName" required>
+        <button type="submit">移動</button>
+      </form>
+      <script>
+          function navigateToPlayer(event) {
+              event.preventDefault();
+              const playerName = document.getElementById('playerName').value;
+              if (playerName) {
+                  window.location.href = '/p/' + encodeURIComponent(playerName);
+              }
+          }
+          document.getElementById('playerSearchForm').addEventListener('submit', navigateToPlayer)
+      </script>
+    </section>
+    <section id="s_link" lang="en" class="blue">
+      <h2>Links</h2>
+      <p class="link-item">
+        GitHub repository <a href="https://github.com/yui-Kitamura/MoveAsYou" target="_blank"
+                             rel="noopener">yui-Kitamura/MoveAsYou</a>. Report any issues on here.
+      </p>
+      <p class="link-item">
+        Plugin Author <a href="https://yui-kitamura.eng.pro/private/" target="_blank"
+                         rel="noopener">Yui-KITAMURA's website</a>.
+      </p>
+      <p>Support via <a href="https://github.com/sponsors/yui-Kitamura" target="_blank"
+                        rel="noopener">GitHub sponsor</a></p>
+    </section>
   </main>
+  <footer style="background-color: aliceblue">
+    <section>
+    ©2025- Yui-KITAMURA
+    </section>
+  </footer>
 </body>
 </html>

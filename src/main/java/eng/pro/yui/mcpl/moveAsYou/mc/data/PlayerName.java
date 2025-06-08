@@ -5,6 +5,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -20,7 +21,7 @@ public class PlayerName {
         }
         this.name = name;
     }
-    public PlayerName(Player player){
+    public PlayerName(OfflinePlayer player){
         if(player == null) {
             throw new IllegalArgumentException("Player cannot be null");
         }

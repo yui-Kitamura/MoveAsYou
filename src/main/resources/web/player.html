@@ -3,37 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title th:text="${playerName}">｜MoveAsYou</title>
+  <meta name="robots" content="noindex">
   <link rel="icon" href="/static/mayLogo_small.png">
   <style>
       .token-form {
           margin: 20px;
           padding: 20px;
-      }
-
-      .hidden {
-          display: none;
-      }
-      
-      .green {
-          background-color: limegreen;
-          color: darkred;
-      }
-      .green #alertZone {
-          color: red;
-      }
-      .blue {
-          background-color: darkblue;
-          color: gold;
-      }
-      .blue #alertZone {
-          color: crimson;
-      }
-      .red {
-          background-color: red;
-          color: mediumblue;
-      }
-      .red #alertZone {
-          color: limegreen;
       }
       
       #alertZone {
@@ -49,6 +24,7 @@
           font-style: italic;
       }
   </style>
+  <link rel="stylesheet" href="/static/rgb.css">
   <link rel="stylesheet" href="/static/skin3d.css">
   <style th:inline="css">
       #minecraft-skin {
@@ -129,7 +105,7 @@
             });
         </script>
       </dl>
-      <p id="alertZone"></p>
+      <p id="alertZone" class="warn"></p>
       <script>
         function showAlert(txt){
             if (txt){
