@@ -54,7 +54,7 @@
       <ul>
         <li th:each="user : ${users}">
           <div class="player-item" th:id="@{'mc-'+${user.mcid}}">
-            <div class="skin-container" th:data-skinurl="${user.skinurl}">
+            <div class="skin-container" th:data-skinurl="${user.skinUrl}">
               <div class="head cube">
                 <div class="front"></div>
                 <div class="accessories">

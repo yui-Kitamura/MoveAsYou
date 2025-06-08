@@ -6,9 +6,9 @@ import org.bukkit.profile.PlayerProfile;
 
 public class IndexPlayer {
     
-    PlayerName mcid;
-    String skinUrl;
-    String onlineFor;
+    public final String mcid;
+    public final String skinUrl;
+    public final String onlineFor;
     
     private static final long hours = 60*60*1000L;
     private static final long minutes = 60*1000L;
@@ -18,7 +18,7 @@ public class IndexPlayer {
     }
     
     public IndexPlayer(OfflinePlayer player, long baseTimestamp){
-        mcid = new PlayerName(player);
+        mcid = new PlayerName(player).value();
         PlayerProfile profile = player.getPlayerProfile();
         if(profile.getTextures().getSkin() != null){
             skinUrl = profile.getTextures().getSkin().toString();
