@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <title>MoveAsYou</title>
   <link rel="icon" href="/static/mayLogo_small.png">
+  <style>
+      .player-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+      }
+
+      [data-skinurl] {
+          --skin-url: attr(data-skinurl);
+      }
+
+  </style>
+  <link rel="stylesheet" href="/static/skin3d.css">
 </head>
 <body>
   <header>
@@ -36,7 +49,39 @@
       </section>
     </section>
     <section id="s_users">
-    
+      <h2>ユーザーリンク</h2>
+      <p>ページ読み込み時にオンラインのユーザの一部です</p>
+      <ul>
+        <li th:each="user : ${users}">
+          <div class="player-item" th:id="@{'mc-'+${user.mcid}}">
+            <div class="skin-container" th:data-skinurl="${user.skinurl}">
+              <div class="head cube">
+                <div class="front"></div>
+                <div class="accessories">
+                  <div class="front"></div>
+                </div>
+              </div>
+            </div>
+            <a th:href="@{'/p/' + ${user.mcid}}" th:text="${user.name}"></a>
+            <span th:text="${user.onlineFor}"></span>
+          </div>
+        </li>
+      </ul>
+      <form id="playerSearchForm">
+        <label for="playerName">プレイヤー名を入力してスキン投影ページへ移動：</label>
+        <input type="text" id="playerName" name="playerName" required>
+        <button type="submit">移動</button>
+      </form>
+      <script>
+          function navigateToPlayer(event) {
+              event.preventDefault();
+              const playerName = document.getElementById('playerName').value;
+              if (playerName) {
+                  window.location.href = '/p/' + encodeURIComponent(playerName);
+              }
+          }
+          document.getElementById('playerSearchForm').addEventListener('submit', navigateToPlayer)
+      </script>
     </section>
     <section id="s_link" lang="en">
       <h2>Links</h2>
