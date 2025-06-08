@@ -10,11 +10,9 @@
           align-items: center;
           gap: 10px;
       }
-
-      [data-skinurl] {
-          --skin-url: attr(data-skinurl);
+      :root {
+          --size: 24;
       }
-
   </style>
   <link rel="stylesheet" href="/static/skin3d.css">
 </head>
@@ -51,7 +49,7 @@
     <section id="s_users">
       <h2>ユーザーリンク</h2>
       <p>ページ読み込み時にオンラインのユーザの一部です</p>
-      <ul>
+      <ul style="list-style: none">
         <li th:each="user : ${users}">
           <div class="player-item" th:id="@{'mc-'+${user.mcid}}">
             <div class="skin-container" th:data-skinurl="${user.skinUrl}">
@@ -62,10 +60,15 @@
                 </div>
               </div>
             </div>
-            <a th:href="@{'~/p/' + ${user.mcid}}" th:text="${user.name}"></a>
-            <span th:text="${user.onlineFor}"></span>
+            <a th:href="@{'~/p/' + ${user.mcid}}" th:text="${user.mcid}"></a>
           </div>
         </li>
+        <script>
+            document.querySelectorAll('[data-skinurl]').forEach(ele => {
+                const url = ele.getAttribute('data-skinurl');
+                ele.style.setProperty('--skin-image', `url("${url}")`);
+            });
+        </script>
       </ul>
       <form id="playerSearchForm">
         <label for="playerName">プレイヤー名を入力してスキン投影ページへ移動：</label>

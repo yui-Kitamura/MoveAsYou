@@ -39,12 +39,11 @@ public class MAYHttpHandler implements HttpHandler {
     }
     
     private List<IndexPlayer> getPlayerList(){
-        long current = System.currentTimeMillis();
         Collection<? extends Player> all = MoveAsYou.plugin().getServer().getOnlinePlayers();
         
         List<IndexPlayer> result = new ArrayList<>();
         for(Player p : all) {
-            result.add(new IndexPlayer(p, current));
+            result.add(new IndexPlayer(p));
         }
         return result;
     }
