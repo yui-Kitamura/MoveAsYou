@@ -1,0 +1,25 @@
+.hidden {
+    display: none;
+}
+
+.green {
+    background-color: limegreen;
+    color: darkred;
+}
+.green .warn {
+    color: red;
+}
+.blue {
+    background-color: darkblue;
+    color: gold;
+}
+.blue .warn {
+    color: crimson;
+}
+.red {
+    background-color: red;
+    color: mediumblue;
+}
+.red .warn {
+    color: limegreen;
+}

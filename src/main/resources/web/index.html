@@ -14,11 +14,14 @@
           --size: 24;
       }
   </style>
+  <link rel="stylesheet" href="/static/rgb.css">
   <link rel="stylesheet" href="/static/skin3d.css">
 </head>
-<body>
+<body class="green">
   <header>
-    <h1>MoveAsYou</h1>
+    <h1 style="background-color: aliceblue"><img src="/static/mayLogo_small.png" alt="logo" height="36px"><span
+        style="color: red">Move</span><span style="color: limegreen">As</span><span
+        style="color: blue">You</span></h1>
     <p>配信者向けスキン投影プラグインのサーバーページへようこそ</p>
   </header>
   <main>
@@ -28,7 +31,7 @@
         <p>サーバーにログインした状態で、表示したいプレイヤーのスキン投影ページを開いてください。
           Minecraft内のコマンド実行で発行されるトークンを入力欄に入力して接続してください。</p>
       </section>
-      <section id="s_token">
+      <section id="s_token" class="blue">
         <section>
           <p>トークンは3種類あります。用途に合わせて使い分けてください。</p>
           <dl>
@@ -86,7 +89,7 @@
           document.getElementById('playerSearchForm').addEventListener('submit', navigateToPlayer)
       </script>
     </section>
-    <section id="s_link" lang="en">
+    <section id="s_link" lang="en" class="red">
       <h2>Links</h2>
       <p class="link-item">
         GitHub repository <a href="https://github.com/yui-Kitamura/MoveAsYou" target="_blank"
