@@ -44,7 +44,7 @@ public class MAYHttpHandler implements HttpHandler {
         
         List<IndexPlayer> result = new ArrayList<>();
         for(Player p : all) {
-            IndexPlayer ip = new IndexPlayer(p, current);
+            result.add(new IndexPlayer(p, current));
         }
         return result;
     }
