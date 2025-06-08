@@ -62,7 +62,7 @@
                 </div>
               </div>
             </div>
-            <a th:href="@{'/p/' + ${user.mcid}}" th:text="${user.name}"></a>
+            <a th:href="@{'~/p/' + ${user.mcid}}" th:text="${user.name}"></a>
             <span th:text="${user.onlineFor}"></span>
           </div>
         </li>
